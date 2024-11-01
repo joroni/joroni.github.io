@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>CRUD Operation</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+            crossorigin="anonymous"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+            integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+        <link rel="stylesheet" href="style/style.css" />
+        <link rel="stylesheet" hrrel="stylesheet" href="style/userList.css" />
+        <link rel="icon" href="img/tab-bar-icon.png" />
+    </head>
+    <body>
+        <div id="storeageInfo"></div>
+        <!-- navbar start -->
+        <!-- <h4 class="m-2 ms-3 text-center">CRUD OPERATIONS IN LOCALSTORAGE</h4> -->
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-light">
+            <div class="container">
+                <a
+                    class="btn btn-custom-nofill"
+                    data-bs-toggle="offcanvas"
+                    href="#offcanvasExample"
+                    role="button"
+                    aria-controls="offcanvasExample"
+                >
+                    <i class="fa-solid fa-bars"></i>
+                </a>
+                <!--    <button
+                    class="btn btn-primary"
+                    type="button"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasExample"
+                    aria-controls="offcanvasExample"
+                >
+                    Button with data-bs-target
+                </button> -->
+
+                <form class="navbar-form">
+                    <div class="input-group">
+                        <input
+                            class="form-control"
+                            type="search"
+                            name="search"
+                            aria-describedby="search-addon"
+                            oninput="searchBar()"
+                            id="serachProductText"
+                        />
+                        <span class="input-group-btn">
+                            <button class="form-control btn btn-outline-success" type="button">
+                                <i class="bx bx-search-alt-2"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+
+                <!--  <form class="d-flex">
+                    <input
+                        type="search"
+                        class="search-bar form-control me-2"
+                        placeholder="Search"
+                        aria-label="Search"
+                        aria-describedby="search-addon"
+                        id="serachProductText"
+                        oninput="searchBar()"
+                    />
+                    <button class="form-control btn btn-outline-success" type="button">
+                        <i class="bx bx-search-alt-2"></i>
+                    </button>
+                </form> -->
+
+                <div class="form-check form-switch">
+                    <input class="form-check-input" value="isPlaying" type="checkbox" id="filterIsPlaying" />
+                    <label class="form-check-label" for="filterIsPlaying">Playing</label>
+                </div>
+
+                <div class="navbar-brand d-flex justify-content-between">
+                    <!-- <div id="mySelect"></div> -->
+                    <!--  <a class="navbar-brand d-flex justify-content-between"> -->
+                    <!--  <button type="button" class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#addDataModal">Add Data</button> -->
+                    <!-- </a> -->
+                    <!--    <a class="navbar-brand d-flex justify-content-between">
+                  <button type="button" class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#showTableModal">Show Table</button>
+                  </a> -->
+
+                    <!--   <select class="form-select sort-btn ms-2" id="sort-select" aria-label="Default select example">
+                        <option value="refresh-btn" disabled>-----Restore-Filter-----</option>
+                        <option value="refresh-btn">Reset filter</option>
+                        <option selected disabled>-Filter By-</option>
+                        <option value="asc">ID</option>
+                        <option value="name">Name</option>
+                        <option value="scratch">Scratch</option>
+                    </select>
+
+                    <div class="dropdown">
+                        <button
+                            class="btn btn-secondary dropdown-toggle"
+                            type="button"
+                            id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >
+                            Dropdown button
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </div> -->
+                    <form class="">
+                        <div class="form-group">
+                            <label class="hidden" for="exampleFormControlSelect1">Example select</label>
+                            <select
+                                class="form-control"
+                                class="form-select sort-btn ms-2"
+                                id="sort-select"
+                                aria-label="Default select example"
+                            >
+                                <option value="refresh-btn" disabled>-----Restore-Filter-----</option>
+                                <option value="refresh-btn">Reset filter</option>
+                                <option selected disabled>Filter By</option>
+                                <option value="asc">ID</option>
+                                <option value="name">Name</option>
+                                <option value="scratch">Scratch</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </nav>
+
+        <div id="alertNotification" class="hidden alert alert-dismissible fade" role="alert">
+            <div id="alertMssage">You should check in on some of those fields below.</div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <main class="container">
+            <div class="card-container d-flex flex-wrap row" id="curd-table">
+                <div class="mt-5 row"></div>
+            </div>
+            <div class="card-container d-flex flex-wrap row" id="sort-table">
+                <div class="mt-5 row"></div>
+            </div>
+
+            <!-- <div class="user-list">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="articles card">
+                            <div class="card-close">
+                                <div class="dropdown">
+                                    <a
+                                        href="#"
+                                        class="dropdown-toggle arrow-none card-drop show"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="true"
+                                    >
+                                        <i class="mdi mdi-dots-vertical"></i>
+                                    </a>
+                                    <div
+                                        class="dropdown-menu dropdown-menu-end show"
+                                        data-popper-placement="bottom-end"
+                                        style="
+                                            position: absolute;
+                                            inset: 0px 0px auto auto;
+                                            margin: 0px;
+                                            transform: translate(0px, 31px);
+                                        "
+                                    >
+                                        
+                                        <a href="javascript:void(0);" class="dropdown-item">Sales Report</a>
+                                        
+                                        <a href="javascript:void(0);" class="dropdown-item">Export Report</a>
+                                        
+                                        <a href="javascript:void(0);" class="dropdown-item">Profit</a>
+                                        
+                                        <a href="javascript:void(0);" class="dropdown-item">Action</a>
+                                    </div>
+                                </div>
+                                <div class="dropdown">
+                                    <button
+                                        type="button"
+                                        id="closeCard4"
+                                        data-toggle="dropdown"
+                                        aria-haspopup="true"
+                                        aria-expanded="false"
+                                        class="dropdown-toggle"
+                                    >
+                                        <i class="fa fa-ellipsis-v"></i>
+                                    </button>
+                                    <div
+                                        aria-labelledby="closeCard4"
+                                        class="dropdown-menu dropdown-menu-right has-shadow"
+                                    >
+                                        <a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a
+                                        ><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-header d-flex align-items-center">
+                                <h2 class="h3">Trending Articles</h2>
+                                <div class="badge badge-rounded bg-green">4 New</div>
+                            </div>
+                            <div class="card-body no-padding">
+                                <div class="item d-flex align-items-center">
+                                    <div class="image">
+                                        <img
+                                            src="https://bootdey.com/img/Content/avatar/avatar2.png"
+                                            alt="..."
+                                            class="img-fluid rounded-circle"
+                                        />
+                                    </div>
+                                    <div class="text">
+                                        <a href="#"> <h3 class="h5">Lorem Ipsum Dolor</h3></a
+                                        ><small>Posted on 5th June 2017 by Aria Smith. </small>
+                                    </div>
+                                </div>
+                                <div class="item d-flex align-items-center">
+                                    <div class="image">
+                                        <img
+                                            src="https://bootdey.com/img/Content/avatar/avatar3.png"
+                                            alt="..."
+                                            class="img-fluid rounded-circle"
+                                        />
+                                    </div>
+                                    <div class="text">
+                                        <a href="#"> <h3 class="h5">Lorem Ipsum Dolor</h3></a
+                                        ><small>Posted on 5th June 2017 by Frank Williams. </small>
+                                    </div>
+                                </div>
+                                <div class="item d-flex align-items-center">
+                                    <div class="image">
+                                        <img
+                                            src="https://bootdey.com/img/Content/avatar/avatar4.png"
+                                            alt="..."
+                                            class="img-fluid rounded-circle"
+                                        />
+                                    </div>
+                                    <div class="text">
+                                        <a href="#"> <h3 class="h5">Lorem Ipsum Dolor</h3></a
+                                        ><small>Posted on 5th June 2017 by Ashley Wood. </small>
+                                    </div>
+                                </div>
+                                <div class="item d-flex align-items-center">
+                                    <div class="image">
+                                        <img
+                                            src="https://bootdey.com/img/Content/avatar/avatar5.png"
+                                            alt="..."
+                                            class="img-fluid rounded-circle"
+                                        />
+                                    </div>
+                                    <div class="text">
+                                        <a href="#"> <h3 class="h5">Lorem Ipsum Dolor</h3></a
+                                        ><small>Posted on 5th June 2017 by Jason Doe. </small>
+                                    </div>
+                                </div>
+                                <div class="item d-flex align-items-center">
+                                    <div class="image">
+                                        <img
+                                            src="https://bootdey.com/img/Content/avatar/avatar6.png"
+                                            alt="..."
+                                            class="img-fluid rounded-circle"
+                                        />
+                                    </div>
+                                    <div class="text">
+                                        <a href="#"> <h3 class="h5">Lorem Ipsum Dolor</h3></a
+                                        ><small>Posted on 5th June 2017 by Sam Martinez. </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="articles card">
+                            <div class="card-close">
+                                <div class="dropdown">
+                                    <button
+                                        type="button"
+                                        id="closeCard4"
+                                        data-toggle="dropdown"
+                                        aria-haspopup="true"
+                                        aria-expanded="false"
+                                        class="dropdown-toggle"
+                                    >
+                                        <i class="fa fa-ellipsis-v"></i>
+                                    </button>
+                                    <div
+                                        aria-labelledby="closeCard4"
+                                        class="dropdown-menu dropdown-menu-right has-shadow"
+                                    >
+                                        <a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a
+                                        ><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a>
+                                    </div>
+                                </div>
+                            </div>
+                              <div class="card-header d-flex align-items-center">
+                                <h2 class="h3">Trending Articles</h2>
+                                <div class="badge badge-rounded bg-green">4 New</div>
+                            </div>
+                            <div class="card-body no-padding">
+                                <div class="item d-flex align-items-center">
+                                    <div class="image">
+                                        <img
+                                            src="https://bootdey.com/img/Content/avatar/avatar6.png"
+                                            alt="..."
+                                            class="img-fluid rounded-circle"
+                                        />
+                                    </div>
+                                    <div class="text">
+                                        <a href="#"> <h3 class="h5">Lorem Ipsum Dolor</h3></a
+                                        ><small>Posted on 5th June 2017 by Aria Smith. </small>
+                                    </div>
+                                </div>
+                                <div class="item d-flex align-items-center">
+                                    <div class="image">
+                                        <img
+                                            src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                                            alt="..."
+                                            class="img-fluid rounded-circle"
+                                        />
+                                    </div>
+                                    <div class="text">
+                                        <a href="#"> <h3 class="h5">Lorem Ipsum Dolor</h3></a
+                                        ><small>Posted on 5th June 2017 by Frank Williams. </small>
+                                    </div>
+                                </div>
+                                <div class="item d-flex align-items-center">
+                                    <div class="image">
+                                        <img
+                                            src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                                            alt="..."
+                                            class="img-fluid rounded-circle"
+                                        />
+                                    </div>
+                                    <div class="text">
+                                        <a href="#"> <h3 class="h5">Lorem Ipsum Dolor</h3></a
+                                        ><small>Posted on 5th June 2017 by Ashley Wood. </small>
+                                    </div>
+                                </div>
+                                <div class="item d-flex align-items-center">
+                                    <div class="image">
+                                        <img
+                                            src="https://bootdey.com/img/Content/avatar/avatar5.png"
+                                            alt="..."
+                                            class="img-fluid rounded-circle"
+                                        />
+                                    </div>
+                                    <div class="text">
+                                        <a href="#"> <h3 class="h5">Lorem Ipsum Dolor</h3></a
+                                        ><small>Posted on 5th June 2017 by Jason Doe. </small>
+                                    </div>
+                                </div>
+                                <div class="item d-flex align-items-center">
+                                    <div class="image">
+                                        <img
+                                            src="https://bootdey.com/img/Content/avatar/avatar6.png"
+                                            alt="..."
+                                            class="img-fluid rounded-circle"
+                                        />
+                                    </div>
+                                    <div class="text">
+                                        <a href="#"> <h3 class="h5">Lorem Ipsum Dolor</h3></a
+                                        ><small>Posted on 5th June 2017 by Sam Martinez. </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </main>
+        <!-- navbar end -->
+
+        <!-- Add Module Start -->
+        <div class="modal fade" id="addDataModal" tabindex="-1" aria-labelledby="addDataModal" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal-content" id="form">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="addDataModal">Add Data</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="name"
+                                    placeholder="Enter Name"
+                                    aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-default"
+                                />
+                                <small id="name-error-msg" style="color: red"></small>
+                            </div>
+                            <div class="form-group mt-2">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="scorecard"
+                                    placeholder="Enter Scores"
+                                    aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-default"
+                                />
+                                <small id="scorecard-error-msg" style="color: red"></small>
+                            </div>
+                            <div class="form-group mt-2">
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    id="grp1"
+                                    placeholder="Enter grp1"
+                                    aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-default"
+                                />
+                                <small id="grp1-error-msg" style="color: red"></small>
+                            </div>
+                            <div class="form-group mt-2">
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    id="grp2"
+                                    placeholder="Enter grp2"
+                                    aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-default"
+                                />
+                                <small id="grp2-error-msg" style="color: red"></small>
+                            </div>
+                            <div class="form-group mt-2">
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    id="senrs"
+                                    placeholder="Enter senrs"
+                                    aria-label="Sizing example input"
+                                    aria-describedby="inputGroup-sizing-default"
+                                />
+                                <small id="senrs-error-msg" style="color: red"></small>
+                            </div>
+                            <div class="form-group mt-2 u-tagsinput" id="mySelect">
+                                <!-- <input type="text" class="form-control h-25" data-role="tagsinput" id="division" placeholder="Enter Division"
+                          />  -->
+                                <!--  <select class="form-control h-25" id="division" ></select> -->
+                                <input
+                                    type="text"
+                                    class="form-control h-25"
+                                    id="division"
+                                    placeholder="Enter Division"
+                                />
+                                <small id="disc-error-msg" style="color: red"></small>
+                            </div>
+                            <div class="form-group mt-2">
+                                <input type="file" class="form-control" id="inputGroupFile01" />
+                                <small id="image-error-msg" style="color: red"></small>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn submitButton w-100" id="submitdata" onclick="AddData()">
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Module Start -->
+        <div
+            class="modal fade"
+            id="exampleModal-2"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal-content" id="form">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Update Player</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <!------- TABS -->
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button
+                                        class="nav-link active"
+                                        id="home-tab"
+                                        data-bs-toggle="tab"
+                                        data-bs-target="#home-tab-pane"
+                                        type="button"
+                                        role="tab"
+                                        aria-controls="home-tab-pane"
+                                        aria-selected="true"
+                                    >
+                                        SCORING
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button
+                                        class="nav-link"
+                                        id="profile-tab"
+                                        data-bs-toggle="tab"
+                                        data-bs-target="#profile-tab-pane"
+                                        type="button"
+                                        role="tab"
+                                        aria-controls="profile-tab-pane"
+                                        aria-selected="false"
+                                    >
+                                        DIVISION
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button
+                                        class="nav-link"
+                                        id="contact-tab"
+                                        data-bs-toggle="tab"
+                                        data-bs-target="#contact-tab-pane"
+                                        type="button"
+                                        role="tab"
+                                        aria-controls="contact-tab-pane"
+                                        aria-selected="false"
+                                    >
+                                        CONFIG
+                                    </button>
+                                </li>
+                            </ul>
+                            <form>
+                                <div class="tab-content" id="myTabContent">
+                                    <div
+                                        class="tab-pane fade show active"
+                                        id="home-tab-pane"
+                                        role="tabpanel"
+                                        aria-labelledby="home-tab"
+                                        tabindex="0"
+                                    >
+                                        <div class="container p-3">
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div id="image-div"></div>
+                                                </div>
+                                                <div class="form-group hidden">
+                                                    <label for="exampleFormControlInput1">Member ID:</label>
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="id-edit"
+                                                        aria-label="Sizing example input"
+                                                        aria-describedby="inputGroup-sizing-default"
+                                                        disabled
+                                                    />
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <!-- <label for="exampleFormControlSelect1 hidden">Full Name</label> -->
+                                                    <input
+                                                        type="text"
+                                                        disabled
+                                                        class="form-control"
+                                                        id="name-edit"
+                                                        placeholder="Enter name"
+                                                        aria-label="Sizing example input"
+                                                        aria-describedby="inputGroup-sizing-default"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-group mt-2">
+                                                        <label for="exampleFormControlSelect1"
+                                                            >Scores: <span id="arrCount"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div id="scoreInputs" class="row"></div>
+                                            <div class="row">
+                                                <div class="col col-lg-4 col-md-6 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlSelect1">&nbsp;</label>
+                                                        <button
+                                                            type="button"
+                                                            id="addscore"
+                                                            class="btn btn-outline-success w-100"
+                                                        >
+                                                            <span class="bt-icon material-icons"> add </span>&nbsp;ADD
+                                                            SCORE
+                                                        </button>
+                                                        <!-- <button
+                                                            type="button"
+                                                            class="form-control btn btn-success w-100"
+                                                            id="addscore"
+                                                        >
+                                                            <span class="material-icons"> add </span>ADD SCORE
+                                                        </button> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div id="ajxForm" class="col-md-4"></div>
+                                                <div id="ajxAlert" class="col-md-4"></div>
+                                            </div>
+                                        </div>
+
+                                        <!-- SCORING -->
+                                    </div>
+                                    <div
+                                        class="tab-pane fade"
+                                        id="profile-tab-pane"
+                                        role="tabpanel"
+                                        aria-labelledby="profile-tab"
+                                        tabindex="0"
+                                    >
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-group mt-2">
+                                                        <label for="exampleFormControlSelect1">Scratch</label>
+                                                        <input
+                                                            type="number"
+                                                            class="form-control"
+                                                            id="scratch-edit"
+                                                            placeholder="Enter name"
+                                                            aria-label="Sizing example input"
+                                                            aria-describedby="inputGroup-sizing-default"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group mt-2">
+                                                        <label for="exampleFormControlSelect1">Group1</label>
+                                                        <input
+                                                            type="number"
+                                                            class="form-control"
+                                                            id="hdcpGrp1-edit"
+                                                            placeholder="Enter name"
+                                                            aria-label="Sizing example input"
+                                                            aria-describedby="inputGroup-sizing-default"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group mt-2">
+                                                        <label for="exampleFormControlSelect1">Group2</label>
+                                                        <input
+                                                            type="number"
+                                                            class="form-control"
+                                                            id="hdcpGrp2-edit"
+                                                            placeholder="Enter name"
+                                                            aria-label="Sizing example input"
+                                                            aria-describedby="inputGroup-sizing-default"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group mt-2">
+                                                        <label for="exampleFormControlSelect1">Senior</label>
+                                                        <input
+                                                            type="number"
+                                                            class="form-control"
+                                                            id="hdcpSenr-edit"
+                                                            placeholder="Enter name"
+                                                            aria-label="Sizing example input"
+                                                            aria-describedby="inputGroup-sizing-default"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group mt-2 u-tagsinput">
+                                            <label for="exampleFormControlTextarea1">Division</label>
+                                            <!--    <input type="text" class="form-control h-25"  id="division-edit" data-role="tagsinput" placeholder="Division" /> -->
+                                            <input
+                                                type="text"
+                                                class="form-control h-25"
+                                                id="division-edit"
+                                                placeholder="Division"
+                                            />
+                                        </div>
+
+                                        <div class="container hidden">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-group mt-2">
+                                                        <label for="exampleFormControlSelect1">Scratch</label>
+                                                        <input
+                                                            type="number"
+                                                            class="form-control"
+                                                            id="scratch-live"
+                                                            placeholder="Enter name"
+                                                            aria-label="Sizing example input"
+                                                            aria-describedby="inputGroup-sizing-default"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group mt-2">
+                                                        <label for="exampleFormControlSelect1">Group1</label>
+                                                        <input
+                                                            type="number"
+                                                            class="form-control"
+                                                            id="hdcpGrp1-live"
+                                                            placeholder="Enter name"
+                                                            aria-label="Sizing example input"
+                                                            aria-describedby="inputGroup-sizing-default"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group mt-2">
+                                                        <label for="exampleFormControlSelect1">Group2</label>
+                                                        <input
+                                                            type="number"
+                                                            class="form-control"
+                                                            id="hdcpGrp2-live"
+                                                            placeholder="Enter name"
+                                                            aria-label="Sizing example input"
+                                                            aria-describedby="inputGroup-sizing-default"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group mt-2">
+                                                        <label for="exampleFormControlSelect1">Senior</label>
+                                                        <input
+                                                            type="number"
+                                                            class="form-control"
+                                                            id="hdcpSenr-live"
+                                                            placeholder="Enter name"
+                                                            aria-label="Sizing example input"
+                                                            aria-describedby="inputGroup-sizing-default"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-group mt-2">
+                                                        <label for="exampleFormControlSelect1">grp1</label>
+                                                        <input
+                                                            type="number"
+                                                            class="form-control"
+                                                            id="grp1-edit"
+                                                            placeholder="Enter grp1"
+                                                            aria-label="Sizing example input"
+                                                            aria-describedby="inputGroup-sizing-default"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group mt-2">
+                                                        <label for="exampleFormControlSelect1">grp2</label>
+                                                        <input
+                                                            type="number"
+                                                            class="form-control"
+                                                            id="grp2-edit"
+                                                            placeholder="Enter grp2"
+                                                            aria-label="Sizing example input"
+                                                            aria-describedby="inputGroup-sizing-default"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group mt-2">
+                                                        <label for="exampleFormControlSelect1">senrs</label>
+                                                        <input
+                                                            type="number"
+                                                            class="form-control"
+                                                            id="senrs-edit"
+                                                            placeholder="Enter senrs"
+                                                            aria-label="Sizing example input"
+                                                            aria-describedby="inputGroup-sizing-default"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- DIVISION -->
+                                    </div>
+                                    <div
+                                        class="tab-pane fade"
+                                        id="contact-tab-pane"
+                                        role="tabpanel"
+                                        aria-labelledby="contact-tab"
+                                        tabindex="0"
+                                    >
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-group mt-2">
+                                                        <label for="exampleFormControlSelect1">On Pot</label>
+                                                        <input
+                                                            type="number"
+                                                            class="form-control"
+                                                            id="onPot-edit"
+                                                            placeholder="Enter name"
+                                                            aria-label="Sizing example input"
+                                                            aria-describedby="inputGroup-sizing-default"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-group mt-2">
+                                                        <label for="exampleFormControlSelect1">Playing</label>
+                                                        <input
+                                                            type="number"
+                                                            class="form-control"
+                                                            id="isPlaying-edit"
+                                                            placeholder="Enter name"
+                                                            aria-label="Sizing example input"
+                                                            aria-describedby="inputGroup-sizing-default"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <label for="exampleFormControlSelect1">Scorecards</label>
+                                            <input
+                                                type="text"
+                                                class="form-control"
+                                                id="scorecard-edit"
+                                                placeholder="Enter Scores"
+                                                aria-label="Sizing example input"
+                                                aria-describedby="inputGroup-sizing-default"
+                                            />
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <label for="exampleFormControlSelect1">Image</label>
+                                            <input type="file" class="form-control" id="image-edit" />
+                                        </div>
+
+                                        <!-- CONFIG -->
+                                    </div>
+                                </div>
+                            </form>
+                            <!------- TABS -->
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success btn-lg w-100" id="update">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Edit Module End -->
+
+        <!-- Add Module End -->
+
+        <!-- Show Table Start -->
+        <div class="modal fade" id="showTableModal" tabindex="-1" aria-labelledby="showTableModal" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal-content" id="form">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="showTableModal">Data</h1>
+                        <button
+                            type="button"
+                            id="close-btn"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body overflow-scroll">
+                        <div class="row col">
+                            <div class="form-group" id="TableDataExport"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn submitButton w-100" id="submitData" onclick="tableToCSV()">
+                            Export
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating button -->
+        <div class="sticky-bottoms">
+            <div class="fab-container">
+                <div class="fab shadow">
+                    <div class="fab-content">
+                        <span class="material-icons">menu</span>
+                    </div>
+                </div>
+                <div class="sub-button shadow">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#addDataModal">
+                        <span class="material-icons">add</span>
+                    </a>
+                </div>
+                <div class="sub-button shadow">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#showTableModal">
+                        <span class="material-icons">table_chart</span>
+                    </a>
+                </div>
+                <div class="sub-button shadow">
+                    <a href="google.com" target="_blank">
+                        <span class="material-icons">language</span>
+                    </a>
+                </div>
+                <div class="sub-button shadow">
+                    <a href="google.com" target="_blank">
+                        <span class="material-icons">help_outline</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- offcanvas button -->
+
+        <div
+            class="offcanvas offcanvas-start"
+            tabindex="-1"
+            id="offcanvasExample"
+            aria-labelledby="offcanvasExampleLabel"
+        >
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Menu</h5>
+                <button
+                    type="button"
+                    class="btn-close text-reset"
+                    data-bs-dismiss="offcanvas"
+                    aria-label="Close"
+                ></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3" id="navItems">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="?isPlaying=">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="?isPlaying=">All Members</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" id="isPlayingList" href="?isPlaying=checked">Now Playing</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >
+                            Filter By
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li>
+                                <hr class="dropdown-divider" />
+                            </li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="d-flex mt-3 hidden" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+
+                <div class="dropdown mt-3 hidden">
+                    <button
+                        class="btn btn-secondary dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-bs-toggle="dropdown"
+                    >
+                        Dropdown button
+                    </button>
+
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <!--   <form>
+                            <div class="form-group">
+                                <label class="hidden" for="exampleFormControlSelect1">Example select</label>
+                                <select
+                                    class="form-control"
+                                    class="form-select sort-btn ms-2"
+                                    id="sort-select"
+                                    aria-label="Default select example"
+                                >
+                                    <option value="refresh-btn" disabled>-----Restore-Filter-----</option>
+                                    <option value="refresh-btn">Reset filter</option>
+                                    <option selected disabled>Filter By</option>
+                                    <option value="asc">ID</option>
+                                    <option value="name">Name</option>
+                                    <option value="scratch">Scratch</option>
+                                </select>
+                            </div>
+                        </form> -->
+
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- offcanvas button -->
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+            crossorigin="anonymous"
+        ></script>
+        <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+
+        <script src="script/script.js"></script>
+
+        <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"
+        ></script>
+        <!-- Bootstrap tags input JS -->
+
+        <script src="script/exportExcel.js"></script>
+        <!-- <button id="scroll-btn" class="show">↑</button> -->
+    </body>
+</html>
