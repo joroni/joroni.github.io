@@ -29,6 +29,21 @@ body {
     position: relative;
 }
 
+.py-8  {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.thumb-md {
+  height: 50px;
+  width: 50px;
+  display: table-cell;
+}
+
+.ms-2 {
+  margin-left: .5rem !important;
+  display: table;
+}
+
 .nav-bar {
   background-color: rgb(255, 255, 255);
   box-shadow: 1px 2px 6px 1px rgb(141, 141, 141);
@@ -320,14 +335,24 @@ table.mytble thead {
   height: 88px;
   width: 88px;
 }
+ol.mt-5.row.list-group.list-group-numbered {
+  width: 100%;
+  padding-left: 1rem;
+}
 .img-thumbnail {
-  padding: 0.25rem;
+  /* padding: 0.25rem; */
+  padding: 0;
   background-color: #fff;
   border: 1px solid #dee2e6;
   border-radius: 0.25rem;
   max-width: 100%;
   height: auto;
 }
+
+.btn-success:disabled > span {
+  color: #146c43;
+}
+
 .text-pink {
   color: #ff679b !important;
 }

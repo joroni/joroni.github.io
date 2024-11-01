@@ -214,85 +214,22 @@ function showData() {
                     return `${element.scratch}`;
                 }
             };
-            html += `<div class="col-lg-4">
-        <div class='text-center card-box' data-key="${element.id}">
-    <div class='member-card pt-2 pb-2'>
-        <div class='thumb-lg member-thumb mx-auto'>
-        ${img()}
-        </div>
-        <div class>
-          <h4>${element.name}</h4>
-          <p class='hidden text-muted'>
-              @Founder <span>| </span
-                ><span><a href='#' class='text-pink'>websitename.com</a></span>
-          </p>
-        </div>
-        <ul class='hidden social-links list-inline'>
-          <li class='list-inline-item'>
-              <a
-                title
-                data-placement='top'
-                data-toggle='tooltip'
-                class='tooltips'
-                href
-                data-original-title='Facebook'
-                ><i class='fa fa-facebook'></i
-                ></a>
-          </li>
-          <li class='list-inline-item'>
-              <a
-                title
-                data-placement='top'
-                data-toggle='tooltip'
-                class='tooltips'
-                href
-                data-original-title='Twitter'
-                ><i class='fa fa-twitter'></i
-                ></a>
-          </li>
-          <li class='list-inline-item'>
-              <a
-                title
-                data-placement='top'
-                data-toggle='tooltip'
-                class='tooltips'
-                href
-                data-original-title='Skype'
-                ><i class='fa fa-skype'></i
-                ></a>
-          </li>
-        </ul>
-        <button
-        onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2'
-          type='button'
-          class='btn btn-primary mt-3 btn-rounded waves-effect w-md waves-light'
-          >
-     Manage
-        </button>
-        <div class='mt-4'>
-          <div class='row'>
-              <div class='col-4'>
-                <div class='mt-3'>
-                    <h4>${scrTch()}</h4>
-                    <p class='mb-0 text-muted'><small>P/F SCRATCH</small></p>
-                </div>
-              </div>
-              <div class='col-4'>
-                <div class='mt-3'>
-                    <h4>6952</h4>
-                    <p class='mb-0 text-muted'>Income amounts</p>
-                </div>
-              </div>
-              <div class='col-4'>
-                <div class='mt-3'> 
-                    <button onclick='deleteData("${index}")' type='button' class='btn'><i class="fa-sharp fa-solid fa-trash" style="color: #FF0000"></i></button>
-                </div>
-              </div>
-          </div>
-        </div>
-    </div>
-  </div>
-</div>`;
+
+            html += `<li  data-key="${
+                element.id
+            }" class="py-8 list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 thumb-md member-thumb" onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2'>
+                        ${img()}
+                    </div>
+                    <div class="ms-2 me-auto"  onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2'>
+                        <div class="fw-bold">${element.name}</div>
+                        ${scrTch()} points
+                    </div>
+                      <button onclick='deleteData("${index}")' type="button" class="btn">
+                                            <i class="fa-sharp fa-solid fa-trash" style="color: #ff0000"></i>
+                                        </button>
+                    <span class="badge text-bg-primary rounded-pill">14</span>
+                </li>`;
         });
     }
     document.querySelector("#curd-table > .row").innerHTML = html;
@@ -424,6 +361,7 @@ function deleteData(index) {
  *
  * @param index
  */
+
 function editData(index) {
     let productList,
         scratch = 0,
@@ -446,6 +384,7 @@ function editData(index) {
         buildScorObjs(productList[index], arrayNums);
     }
 
+    // document.getElementById("update").disabled = true;
     scratch = arrayNums.reduce((accumulator, currentValue) => {
         return accumulator + currentValue;
     }, 0);
@@ -554,6 +493,7 @@ function editData(index) {
 
     document.querySelector("#addscore").onclick = function () {
         document.querySelector("#addscore").classList.add("hidden");
+        document.querySelector("#update").disabled = true;
         let productList;
         if (localStorage.getItem("productList") == null) {
             productList = [];
@@ -576,6 +516,8 @@ function editData(index) {
 
         document.querySelector("#acceptScore").onclick = function () {
             acCeptNewScore(index);
+            document.querySelector("#acceptScore").disabled = true;
+            document.getElementById("update").disabled = false;
         };
 
         let glive = document.getElementById("Glive");
@@ -730,6 +672,7 @@ function editData(index) {
   Added score successfully! Click "UPDATE" to save.
 </div>`;
         document.getElementById("ajxAlert").innerHTML = virtualAlert;
+        // document.getElementById("update").disabled = false;
 
         let arrString = productList[index].scorecard.toString();
         arrItems = arrString.split(delimiter);
@@ -752,23 +695,11 @@ function editData(index) {
         productList[index].isPlaying = document.getElementById("isPlaying-edit").value;
         // this line is used to convert the array to a JSON string before it is saved to local storage.
 
-        /*  document.getElementById("id-edit").value = "";
-        document.getElementById("name-edit").value = "";
-        document.getElementById("scorecard-edit").value = "";
-        document.getElementById("scratch-edit").value = "";
-        document.getElementById("grp1-edit").value = "";
-        document.getElementById("grp2-edit").value = "";
-        document.getElementById("senrs-edit").value = "";
-        document.getElementById("division-edit").value = "";
-        document.getElementById("onPot-edit").value = "";
-        document.getElementById("isPlaying-edit").value = ""; */
         document.getElementById("close-btn").click();
         localStorage.setItem("productList", JSON.stringify(productList));
-        // The is method, which refreshes the page with the updated data.
+
         showTable();
         showData();
-
-        //location.reload();
     }
 
     function upDateItem(index) {
@@ -874,119 +805,47 @@ function searchProduct(sortedItem) {
       </div>`;
     } else {
         sortedItem.forEach(function (element, index) {
-            html += `<div class="col-lg-4">
-        <div class='text-center card-box' data-key="${element.id}">
-    <div class='member-card pt-2 pb-2'>
-        <div class='thumb-lg member-thumb mx-auto'>
-          <img
-              src="${element.image}"
+            let img = function () {
+                if (!element.image) {
+                    return `<img src='./img/no-pic.jpg'
               class='rounded-circle img-thumbnail'
               alt='profile-image'
-              />
-        </div>
-        <div class>
-          <h4>${element.name}</h4>
-          <p class='hidden text-muted'>
-              @Founder <span>| </span
-                ><span><a href='#' class='text-pink'>websitename.com</a></span>
-          </p>
-        </div>
-        <ul class='hidden social-links list-inline'>
-          <li class='list-inline-item'>
-              <a
-                title
-                data-placement='top'
-                data-toggle='tooltip'
-                class='tooltips'
-                href
-                data-original-title='Facebook'
-                ><i class='fa fa-facebook'></i
-                ></a>
-          </li>
-          <li class='list-inline-item'>
-              <a
-                title
-                data-placement='top'
-                data-toggle='tooltip'
-                class='tooltips'
-                href
-                data-original-title='Twitter'
-                ><i class='fa fa-twitter'></i
-                ></a>
-          </li>
-          <li class='list-inline-item'>
-              <a
-                title
-                data-placement='top'
-                data-toggle='tooltip'
-                class='tooltips'
-                href
-                data-original-title='Skype'
-                ><i class='fa fa-skype'></i
-                ></a>
-          </li>
-        </ul>
-        <button
-        onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2'
-          type='button'
-          class='btn btn-primary mt-3 btn-rounded waves-effect w-md waves-light'
-          >
-     Manage
-        </button>
-        <div class='mt-4'>
-          <div class='row'>
-              <div class='col-4'>
-                <div class='mt-3'>
-                    <h4>${element.scratch}</h4>
-                    <p class='mb-0 text-muted'>Pinfalls Scratch</p>
-                </div>
-              </div>
-              <div class='col-4'>
-                <div class='mt-3'>
-                    <h4>6952</h4>
-                    <p class='mb-0 text-muted'>Income amounts</p>
-                </div>
-              </div>
-              <div class='col-4'>
-                <div class='mt-3'>
-                    <h4>1125</h4>
-                    <p class='mb-0 text-muted'>Total Transactions</p>
-                </div>
-              </div>
-          </div>
-        </div>
-    </div>
-  </div>
-</div>`;
+              />`;
+                } else {
+                    return `<img
+              src='${element.image}'
+              class='rounded-circle img-thumbnail'
+              alt='profile-image'
+              />`;
+                }
+            };
+
+            let scrTch = function () {
+                if (!element.scratch) {
+                    return `0`;
+                } else {
+                    return `${element.scratch}`;
+                }
+            };
+            html += `<li  data-key="${
+                element.id
+            }" class="py-8 list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 thumb-md member-thumb" onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2'>
+                        ${img()}
+                    </div>
+                    <div class="ms-2 me-auto"  onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2'>
+                        <div class="fw-bold">${element.name}</div>
+                        ${scrTch()} points
+                    </div>
+                      <button onclick='deleteData("${index}")' type="button" class="btn">
+                                            <i class="fa-sharp fa-solid fa-trash" style="color: #ff0000"></i>
+                                        </button>
+                    <span class="badge text-bg-primary rounded-pill">14</span>
+                </li>`;
         });
-        /* sortedItem.forEach(function (element, index) {
-            html += `<div>
-        <div class='row gx-2'>
-        <div class='col'>
-        <div class='p-3'>
-        <div class='card d-flex card-all'>
-        <div class='card-body'style=" height: 11rem; width: 16rem;">
-        <h5 class='card-title text-center'><strong>Player</strong> ${element.id} </h5>
-        <img src="${element.image}" class="card-img-top" alt='Image' style=" height: 7rem; width: 7rem;">
-        </div>
-        <ul class='list-group list-group-flush'>
-        <li class='list-group-item'><strong>Name: </strong>  ${element.name}  </li>
-        <li class='list-group-item h-25'><strong>Division: </strong> ${element.division}  </li>
-        <li class='list-group-item'><strong>Scores: </strong>  ${element.scorecard}</li>
-        </ul>
-        <div class='card-body text-center'>
-         <button onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2' class='btn btn-success' style="width: 49%">Edit</button>
-         <button onclick='deleteData("${index}")' type='button' class='btn btn-danger' style="width: 49%">Delete</button>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>`;
-        });  */
     }
     document.querySelector("#curd-table").classList.add("d-none");
-    document.querySelector("#sort-table").innerHTML = html;
+    document.querySelector("#sort-table .mt-5.row").innerHTML = html;
 }
 
 /**
@@ -1066,7 +925,6 @@ function filterProduct(sortvalue) {
     if (sortvalue == "isPlaying") {
         sortedProduct = sortedProduct.filter((sortedProduct) => sortedProduct.isPlaying == "1");
         console.log("Playing", sortedProduct);
-
         return filteredData(sortedProduct);
     }
 
@@ -1123,121 +981,48 @@ function filteredData(sortedProduct) {
       </div>`;
     } else {
         sortedProduct.forEach(function (element, index) {
-            // This Below HTML code is generate Card For Sorted Items.
-            html += `<div class="col-lg-4">
-        <div class='text-center card-box' data-key="${element.id}">
-    <div class='member-card pt-2 pb-2'>
-        <div class='thumb-lg member-thumb mx-auto'>
-          <img
-              src="${element.image}"
+            let img = function () {
+                if (!element.image) {
+                    return `<img src='./img/no-pic.jpg'
               class='rounded-circle img-thumbnail'
               alt='profile-image'
-              />
-        </div>
-        <div class>
-          <h4>${element.name}</h4>
-          <p class='hidden text-muted'>
-              @Founder <span>| </span
-                ><span><a href='#' class='text-pink'>websitename.com</a></span>
-          </p>
-        </div>
-        <ul class='hidden social-links list-inline'>
-          <li class='list-inline-item'>
-              <a
-                title
-                data-placement='top'
-                data-toggle='tooltip'
-                class='tooltips'
-                href
-                data-original-title='Facebook'
-                ><i class='fa fa-facebook'></i
-                ></a>
-          </li>
-          <li class='list-inline-item'>
-              <a
-                title
-                data-placement='top'
-                data-toggle='tooltip'
-                class='tooltips'
-                href
-                data-original-title='Twitter'
-                ><i class='fa fa-twitter'></i
-                ></a>
-          </li>
-          <li class='list-inline-item'>
-              <a
-                title
-                data-placement='top'
-                data-toggle='tooltip'
-                class='tooltips'
-                href
-                data-original-title='Skype'
-                ><i class='fa fa-skype'></i
-                ></a>
-          </li>
-        </ul>
-        <button
-        onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2'
-          type='button'
-          class='btn btn-primary mt-3 btn-rounded waves-effect w-md waves-light'
-          >
-     Manage
-        </button>
-        <div class='mt-4'>
-          <div class='row'>
-              <div class='col-4'>
-                <div class='mt-3'>
-                    <h4>${element.scratch}</h4>
-                    <p class='mb-0 text-muted'>Pinfalls Scratch</p>
-                </div>
-              </div>
-              <div class='col-4'>
-                <div class='mt-3'>
-                    <h4>6952</h4>
-                    <p class='mb-0 text-muted'>Income amounts</p>
-                </div>
-              </div>
-              <div class='col-4'>
-                <div class='mt-3'>
-                    <h4>1125</h4>
-                    <p class='mb-0 text-muted'>Total Transactions</p>
-                </div>
-              </div>
-          </div>
-        </div>
-    </div>
-  </div>
-</div>`;
+              />`;
+                } else {
+                    return `<img
+              src='${element.image}'
+              class='rounded-circle img-thumbnail'
+              alt='profile-image'
+              />`;
+                }
+            };
+
+            let scrTch = function () {
+                if (!element.scratch) {
+                    return `0`;
+                } else {
+                    return `${element.scratch}`;
+                }
+            };
+            html += `<li  data-key="${
+                element.id
+            }" class="py-8 list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 thumb-md member-thumb" onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2'>
+                        ${img()}
+                    </div>
+                    <div class="ms-2 me-auto"  onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2'>
+                        <div class="fw-bold">${element.name}</div>
+                        ${scrTch()} points
+                    </div>
+                      <button onclick='deleteData("${index}")' type="button" class="btn">
+                                            <i class="fa-sharp fa-solid fa-trash" style="color: #ff0000"></i>
+                                        </button>
+                    <span class="badge text-bg-primary rounded-pill">14</span>
+                </li>`;
         });
-        /*  sortedProduct.forEach(function (element, index) {
-            // This Below HTML code is generate Card For Sorted Items.
-            html += `<div>
-        <div class='row gx-2'>
-        <div class='col'>
-        <div class='p-3'>
-        <div class='card d-flex card-all'>
-        <div class='card-body'style=" height: 11rem; width: 16rem;">
-        <h5 class='card-title text-center'><strong>Player</strong> ${element.id} </h5>
-        <img src="${element.image}" class="card-img-top" alt='Image' style=" height: 7rem; width: 7rem;">
-        </div>
-        <ul class='list-group list-group-flush'>
-        <li class='list-group-item'>Name:   <strong>${element.name}</strong>  </li>
-        <li class='hidden list-group-item h-25'>Playing  <strong>${element.isPlaying}</strong>  </li>
-        <li class='list-group-item'>Scratch: <strong>${element.scratch}</strong></li>
-        </ul>
-        <div class='card-body text-center'>
-         <button onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2' class='btn btn-success' style="width: 49%">Edit</button>
-         <button onclick='deleteData("${index}")' type='button' class='btn btn-danger' style="width: 49%">Delete</button>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>`;
-        }); */
     }
     document.querySelector("#curd-table").classList.add("d-none");
-    document.querySelector("#sort-table").innerHTML = html;
+    document.querySelector("#sort-table .mt-5.row").innerHTML = html;
+    localStorage.setItem("sortedProduct", JSON.stringify(sortedProduct));
 }
 
 function loadData() {

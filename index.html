@@ -39,15 +39,6 @@
                 >
                     <i class="fa-solid fa-bars"></i>
                 </a>
-                <!--    <button
-                    class="btn btn-primary"
-                    type="button"
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#offcanvasExample"
-                    aria-controls="offcanvasExample"
-                >
-                    Button with data-bs-target
-                </button> -->
 
                 <form class="navbar-form">
                     <div class="input-group">
@@ -67,60 +58,12 @@
                     </div>
                 </form>
 
-                <!--  <form class="d-flex">
-                    <input
-                        type="search"
-                        class="search-bar form-control me-2"
-                        placeholder="Search"
-                        aria-label="Search"
-                        aria-describedby="search-addon"
-                        id="serachProductText"
-                        oninput="searchBar()"
-                    />
-                    <button class="form-control btn btn-outline-success" type="button">
-                        <i class="bx bx-search-alt-2"></i>
-                    </button>
-                </form> -->
-
                 <div class="form-check form-switch">
                     <input class="form-check-input" value="isPlaying" type="checkbox" id="filterIsPlaying" />
                     <label class="form-check-label" for="filterIsPlaying">Playing</label>
                 </div>
 
                 <div class="navbar-brand d-flex justify-content-between">
-                    <!-- <div id="mySelect"></div> -->
-                    <!--  <a class="navbar-brand d-flex justify-content-between"> -->
-                    <!--  <button type="button" class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#addDataModal">Add Data</button> -->
-                    <!-- </a> -->
-                    <!--    <a class="navbar-brand d-flex justify-content-between">
-                  <button type="button" class="btn btn-primary btn-add" data-bs-toggle="modal" data-bs-target="#showTableModal">Show Table</button>
-                  </a> -->
-
-                    <!--   <select class="form-select sort-btn ms-2" id="sort-select" aria-label="Default select example">
-                        <option value="refresh-btn" disabled>-----Restore-Filter-----</option>
-                        <option value="refresh-btn">Reset filter</option>
-                        <option selected disabled>-Filter By-</option>
-                        <option value="asc">ID</option>
-                        <option value="name">Name</option>
-                        <option value="scratch">Scratch</option>
-                    </select>
-
-                    <div class="dropdown">
-                        <button
-                            class="btn btn-secondary dropdown-toggle"
-                            type="button"
-                            id="dropdownMenuButton1"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                        >
-                            Dropdown button
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </div> -->
                     <form class="">
                         <div class="form-group">
                             <label class="hidden" for="exampleFormControlSelect1">Example select</label>
@@ -149,238 +92,11 @@
         </div>
         <main class="container">
             <div class="card-container d-flex flex-wrap row" id="curd-table">
-                <div class="mt-5 row"></div>
+                <ul class="mt-5 row list-group list-group-numberedx"></ul>
             </div>
             <div class="card-container d-flex flex-wrap row" id="sort-table">
-                <div class="mt-5 row"></div>
+                <ol class="mt-5 row list-group list-group-numbered"></ol>
             </div>
-
-            <!-- <div class="user-list">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="articles card">
-                            <div class="card-close">
-                                <div class="dropdown">
-                                    <a
-                                        href="#"
-                                        class="dropdown-toggle arrow-none card-drop show"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="true"
-                                    >
-                                        <i class="mdi mdi-dots-vertical"></i>
-                                    </a>
-                                    <div
-                                        class="dropdown-menu dropdown-menu-end show"
-                                        data-popper-placement="bottom-end"
-                                        style="
-                                            position: absolute;
-                                            inset: 0px 0px auto auto;
-                                            margin: 0px;
-                                            transform: translate(0px, 31px);
-                                        "
-                                    >
-                                        
-                                        <a href="javascript:void(0);" class="dropdown-item">Sales Report</a>
-                                        
-                                        <a href="javascript:void(0);" class="dropdown-item">Export Report</a>
-                                        
-                                        <a href="javascript:void(0);" class="dropdown-item">Profit</a>
-                                        
-                                        <a href="javascript:void(0);" class="dropdown-item">Action</a>
-                                    </div>
-                                </div>
-                                <div class="dropdown">
-                                    <button
-                                        type="button"
-                                        id="closeCard4"
-                                        data-toggle="dropdown"
-                                        aria-haspopup="true"
-                                        aria-expanded="false"
-                                        class="dropdown-toggle"
-                                    >
-                                        <i class="fa fa-ellipsis-v"></i>
-                                    </button>
-                                    <div
-                                        aria-labelledby="closeCard4"
-                                        class="dropdown-menu dropdown-menu-right has-shadow"
-                                    >
-                                        <a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a
-                                        ><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-header d-flex align-items-center">
-                                <h2 class="h3">Trending Articles</h2>
-                                <div class="badge badge-rounded bg-green">4 New</div>
-                            </div>
-                            <div class="card-body no-padding">
-                                <div class="item d-flex align-items-center">
-                                    <div class="image">
-                                        <img
-                                            src="https://bootdey.com/img/Content/avatar/avatar2.png"
-                                            alt="..."
-                                            class="img-fluid rounded-circle"
-                                        />
-                                    </div>
-                                    <div class="text">
-                                        <a href="#"> <h3 class="h5">Lorem Ipsum Dolor</h3></a
-                                        ><small>Posted on 5th June 2017 by Aria Smith. </small>
-                                    </div>
-                                </div>
-                                <div class="item d-flex align-items-center">
-                                    <div class="image">
-                                        <img
-                                            src="https://bootdey.com/img/Content/avatar/avatar3.png"
-                                            alt="..."
-                                            class="img-fluid rounded-circle"
-                                        />
-                                    </div>
-                                    <div class="text">
-                                        <a href="#"> <h3 class="h5">Lorem Ipsum Dolor</h3></a
-                                        ><small>Posted on 5th June 2017 by Frank Williams. </small>
-                                    </div>
-                                </div>
-                                <div class="item d-flex align-items-center">
-                                    <div class="image">
-                                        <img
-                                            src="https://bootdey.com/img/Content/avatar/avatar4.png"
-                                            alt="..."
-                                            class="img-fluid rounded-circle"
-                                        />
-                                    </div>
-                                    <div class="text">
-                                        <a href="#"> <h3 class="h5">Lorem Ipsum Dolor</h3></a
-                                        ><small>Posted on 5th June 2017 by Ashley Wood. </small>
-                                    </div>
-                                </div>
-                                <div class="item d-flex align-items-center">
-                                    <div class="image">
-                                        <img
-                                            src="https://bootdey.com/img/Content/avatar/avatar5.png"
-                                            alt="..."
-                                            class="img-fluid rounded-circle"
-                                        />
-                                    </div>
-                                    <div class="text">
-                                        <a href="#"> <h3 class="h5">Lorem Ipsum Dolor</h3></a
-                                        ><small>Posted on 5th June 2017 by Jason Doe. </small>
-                                    </div>
-                                </div>
-                                <div class="item d-flex align-items-center">
-                                    <div class="image">
-                                        <img
-                                            src="https://bootdey.com/img/Content/avatar/avatar6.png"
-                                            alt="..."
-                                            class="img-fluid rounded-circle"
-                                        />
-                                    </div>
-                                    <div class="text">
-                                        <a href="#"> <h3 class="h5">Lorem Ipsum Dolor</h3></a
-                                        ><small>Posted on 5th June 2017 by Sam Martinez. </small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="articles card">
-                            <div class="card-close">
-                                <div class="dropdown">
-                                    <button
-                                        type="button"
-                                        id="closeCard4"
-                                        data-toggle="dropdown"
-                                        aria-haspopup="true"
-                                        aria-expanded="false"
-                                        class="dropdown-toggle"
-                                    >
-                                        <i class="fa fa-ellipsis-v"></i>
-                                    </button>
-                                    <div
-                                        aria-labelledby="closeCard4"
-                                        class="dropdown-menu dropdown-menu-right has-shadow"
-                                    >
-                                        <a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a
-                                        ><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a>
-                                    </div>
-                                </div>
-                            </div>
-                              <div class="card-header d-flex align-items-center">
-                                <h2 class="h3">Trending Articles</h2>
-                                <div class="badge badge-rounded bg-green">4 New</div>
-                            </div>
-                            <div class="card-body no-padding">
-                                <div class="item d-flex align-items-center">
-                                    <div class="image">
-                                        <img
-                                            src="https://bootdey.com/img/Content/avatar/avatar6.png"
-                                            alt="..."
-                                            class="img-fluid rounded-circle"
-                                        />
-                                    </div>
-                                    <div class="text">
-                                        <a href="#"> <h3 class="h5">Lorem Ipsum Dolor</h3></a
-                                        ><small>Posted on 5th June 2017 by Aria Smith. </small>
-                                    </div>
-                                </div>
-                                <div class="item d-flex align-items-center">
-                                    <div class="image">
-                                        <img
-                                            src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                                            alt="..."
-                                            class="img-fluid rounded-circle"
-                                        />
-                                    </div>
-                                    <div class="text">
-                                        <a href="#"> <h3 class="h5">Lorem Ipsum Dolor</h3></a
-                                        ><small>Posted on 5th June 2017 by Frank Williams. </small>
-                                    </div>
-                                </div>
-                                <div class="item d-flex align-items-center">
-                                    <div class="image">
-                                        <img
-                                            src="https://bootdey.com/img/Content/avatar/avatar1.png"
-                                            alt="..."
-                                            class="img-fluid rounded-circle"
-                                        />
-                                    </div>
-                                    <div class="text">
-                                        <a href="#"> <h3 class="h5">Lorem Ipsum Dolor</h3></a
-                                        ><small>Posted on 5th June 2017 by Ashley Wood. </small>
-                                    </div>
-                                </div>
-                                <div class="item d-flex align-items-center">
-                                    <div class="image">
-                                        <img
-                                            src="https://bootdey.com/img/Content/avatar/avatar5.png"
-                                            alt="..."
-                                            class="img-fluid rounded-circle"
-                                        />
-                                    </div>
-                                    <div class="text">
-                                        <a href="#"> <h3 class="h5">Lorem Ipsum Dolor</h3></a
-                                        ><small>Posted on 5th June 2017 by Jason Doe. </small>
-                                    </div>
-                                </div>
-                                <div class="item d-flex align-items-center">
-                                    <div class="image">
-                                        <img
-                                            src="https://bootdey.com/img/Content/avatar/avatar6.png"
-                                            alt="..."
-                                            class="img-fluid rounded-circle"
-                                        />
-                                    </div>
-                                    <div class="text">
-                                        <a href="#"> <h3 class="h5">Lorem Ipsum Dolor</h3></a
-                                        ><small>Posted on 5th June 2017 by Sam Martinez. </small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
         </main>
         <!-- navbar end -->
 
@@ -610,8 +326,8 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div id="ajxForm" class="col-md-4"></div>
-                                                <div id="ajxAlert" class="col-md-4"></div>
+                                                <div id="ajxForm" class="col-sm-12 col-md-6 col-lg-4"></div>
+                                                <div id="ajxAlert" class="col-sm-12 col-md-8 col-lg-6"></div>
                                             </div>
                                         </div>
 
@@ -679,17 +395,17 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div class="form-group mt-2 u-tagsinput">
-                                            <label for="exampleFormControlTextarea1">Division</label>
-                                            <!--    <input type="text" class="form-control h-25"  id="division-edit" data-role="tagsinput" placeholder="Division" /> -->
-                                            <input
-                                                type="text"
-                                                class="form-control h-25"
-                                                id="division-edit"
-                                                placeholder="Division"
-                                            />
+                                            <div class="form-group mt-2 u-tagsinput">
+                                                <label for="exampleFormControlTextarea1">Division</label>
+                                                <!--    <input type="text" class="form-control h-25"  id="division-edit" data-role="tagsinput" placeholder="Division" /> -->
+                                                <input
+                                                    type="text"
+                                                    class="form-control h-25"
+                                                    id="division-edit"
+                                                    placeholder="Division"
+                                                />
+                                            </div>
                                         </div>
 
                                         <div class="container hidden">
@@ -830,23 +546,23 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group mt-2">
-                                            <label for="exampleFormControlSelect1">Scorecards</label>
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                id="scorecard-edit"
-                                                placeholder="Enter Scores"
-                                                aria-label="Sizing example input"
-                                                aria-describedby="inputGroup-sizing-default"
-                                            />
-                                        </div>
-                                        <div class="form-group mt-2">
-                                            <label for="exampleFormControlSelect1">Image</label>
-                                            <input type="file" class="form-control" id="image-edit" />
-                                        </div>
 
+                                            <div class="form-group mt-2">
+                                                <label for="exampleFormControlSelect1">Scorecards</label>
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="scorecard-edit"
+                                                    placeholder="Enter Scores"
+                                                    aria-label="Sizing example input"
+                                                    aria-describedby="inputGroup-sizing-default"
+                                                />
+                                            </div>
+                                            <div class="form-group mt-2">
+                                                <label for="exampleFormControlSelect1">Image</label>
+                                                <input type="file" class="form-control" id="image-edit" />
+                                            </div>
+                                        </div>
                                         <!-- CONFIG -->
                                     </div>
                                 </div>
@@ -855,7 +571,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success btn-lg w-100" id="update">Update</button>
+                        <button type="button" class="btn btn-success btn-lg w-100" id="update">UPDATE</button>
                     </div>
                 </div>
             </div>
@@ -893,7 +609,7 @@
         </div>
 
         <!-- Floating button -->
-        <div class="sticky-bottoms">
+        <div class="sticky-bottomx fixed-bottom">
             <div class="fab-container">
                 <div class="fab shadow">
                     <div class="fab-content">
