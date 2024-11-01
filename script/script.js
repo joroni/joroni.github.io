@@ -225,10 +225,23 @@ function showData() {
                         <div class="fw-bold">${element.name}</div>
                         ${scrTch()} points
                     </div>
-                      <button onclick='deleteData("${index}")' type="button" class="btn">
-                                            <i class="fa-sharp fa-solid fa-trash" style="color: #ff0000"></i>
-                                        </button>
-                    <span class="badge text-bg-primary rounded-pill">14</span>
+                                <div class="m-widget4__progress ms-auto"><div class="m-widget4__progress-wrapper"> <span class="m-widget17__progress-number"> 63% </span> <span class="m-widget17__progress-label"> London </span><div class="progress m-progress--sm"><div class="progress-bar bg-danger" role="progressbar" style="width: 63%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="63"></div></div></div></div>
+                    <div class="dropdown ms-auto">
+                                        <i class="fas fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                        <ul class="dropdown-menu" style="">
+                                            <li>
+                                                <span class="dropdown-item" onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2'>
+                                                    <i class="fas fa-pen mx-2"></i> Update
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="dropdown-item" onclick='deleteData("${index}")'>
+                                                     <i class="fas mx-2 fa-solid fa-trash" style="color: #ff0000"></i> Delete
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    
                 </li>`;
         });
     }
@@ -393,7 +406,7 @@ function editData(index) {
     let addscore = document.getElementById("addscore");
     let arrCount = document.getElementById("arrCount");
     let scoreInputs = document.querySelectorAll(".score-inputs");
-    let arrCountString = arrayNums.length + " of " + numOfGames;
+    let arrCountString = arrayNums.length + "/" + numOfGames;
     if (arrayNums.length === numOfGames) {
         scrcard.disabled = true;
         addscore.disabled = true;
@@ -513,6 +526,8 @@ function editData(index) {
                                             <input type="number" id="Glive" style="margin-top: 0px;" class="score-inputs form-control form-control-lg" placeholder="" aria-label="" aria-describedby="button-addon2">
                                             <button class="btn btn-outline-success" type="button" id="acceptScore"> <span class="material-icons"> check </span></button>
                                           </div>`;
+
+        document.getElementById("Glive").focus();
 
         document.querySelector("#acceptScore").onclick = function () {
             acCeptNewScore(index);
@@ -720,7 +735,7 @@ function editData(index) {
             buildScorObjs(productList[index], arrayNums);
         }
         document.querySelector("#addscore").classList.remove("hidden");
-
+        //productList[index].step = document.getElementById("step-edit").value;
         productList[index].id = document.getElementById("id-edit").value;
         productList[index].name = document.getElementById("name-edit").value;
         productList[index].scorecard = document.getElementById("scorecard-edit").value;
@@ -734,6 +749,7 @@ function editData(index) {
         // this line is used to convert the array to a JSON string before it is saved to local storage.
 
         document.getElementById("id-edit").value = "";
+        //document.getElementById("id-edit").value = "";
         document.getElementById("name-edit").value = "";
         document.getElementById("scorecard-edit").value = "";
         document.getElementById("scratch-edit").value = "";
@@ -837,10 +853,23 @@ function searchProduct(sortedItem) {
                         <div class="fw-bold">${element.name}</div>
                         ${scrTch()} points
                     </div>
-                      <button onclick='deleteData("${index}")' type="button" class="btn">
-                                            <i class="fa-sharp fa-solid fa-trash" style="color: #ff0000"></i>
-                                        </button>
-                    <span class="badge text-bg-primary rounded-pill">14</span>
+                     <div class="m-widget4__progress ms-auto"><div class="m-widget4__progress-wrapper"> <span class="m-widget17__progress-number"> 63% </span> <span class="m-widget17__progress-label"> London </span><div class="progress m-progress--sm"><div class="progress-bar bg-danger" role="progressbar" style="width: 63%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="63"></div></div></div></div>
+                     <div class="dropdown ms-auto">
+                                        <i class="fas fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                        <ul class="dropdown-menu" style="">
+                                            <li>
+                                                <span class="dropdown-item" onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2'>
+                                                    <i class="fas fa-pen mx-2"></i> Update
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="dropdown-item" onclick='deleteData("${index}")'>
+                                                     <i class="fas mx-2 fa-solid fa-trash" style="color: #ff0000"></i> Delete
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                    <span class="badge text-bg-primary rounded-pill hidden">14</span>
                 </li>`;
         });
     }
@@ -1013,10 +1042,23 @@ function filteredData(sortedProduct) {
                         <div class="fw-bold">${element.name}</div>
                         ${scrTch()} points
                     </div>
-                      <button onclick='deleteData("${index}")' type="button" class="btn">
-                                            <i class="fa-sharp fa-solid fa-trash" style="color: #ff0000"></i>
-                                        </button>
-                    <span class="badge text-bg-primary rounded-pill">14</span>
+                     <div class="m-widget4__progress ms-auto"><div class="m-widget4__progress-wrapper"> <span class="m-widget17__progress-number"> 63% </span> <span class="m-widget17__progress-label"> London </span><div class="progress m-progress--sm"><div class="progress-bar bg-success" role="progressbar" style="width: 63%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="63"></div></div></div></div>
+                        <div class="dropdown ms-auto">
+                                        <i class="fas fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                        <ul class="dropdown-menu" style="">
+                                            <li>
+                                                <span class="dropdown-item" onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2'>
+                                                    <i class="fas fa-pen mx-2"></i> Update
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="dropdown-item" onclick='deleteData("${index}")'>
+                                                     <i class="fas mx-2 fa-solid fa-trash" style="color: #ff0000"></i> Delete
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                    <span class="badge text-bg-primary rounded-pill hidden">14</span>
                 </li>`;
         });
     }
@@ -1082,6 +1124,7 @@ function loadData() {
 }
 
 let numOfGames = 0;
+let diVisions = 0;
 function showTable() {
     let playerList = [];
     let lS = localStorage.getItem("productList");
@@ -1098,6 +1141,7 @@ function showTable() {
             numOfGames: "6",
             datetimeStart: "2018-06-12T02:30",
             datetimeEnd: "2018-06-12T19:30",
+            divisions: "3",
             division: [
                 {name: "Group 1", code: "grp1"},
                 {name: "Group 2", code: "grp2"},
@@ -1134,13 +1178,14 @@ function showTable() {
 
     const eventData = JSON.parse(localStorage.getItem("eventData"));
     numOfGames = parseInt(eventData[0].numOfGames);
+    diVisions = parseInt(eventData[0].divisions);
 
     console.log(numOfGames);
+    console.log("diVisions ", diVisions);
     let j = 0;
 
     while (j < numOfGames) {
         text += "G" + j++;
-        // scoreValues += `G` + [j++];
         console.log(j++);
         console.log(text);
     }
@@ -1267,3 +1312,13 @@ isPlayingList.onclick = function () {
 console.log(searchParams.has("isPlaying")); // true
 console.log(searchParams.get("isPlaying"));
 console.log(searchParams);
+
+function resetMockData() {
+    // Display a confirmation message to the user
+    if (confirm("This will reset your data. Proceed?")) {
+        localStorage.removeItem("eventData");
+        localStorage.removeItem("productList");
+        localStorage.removeItem("sortedProduct");
+        location.reload(); // Reload the current page
+    }
+}
