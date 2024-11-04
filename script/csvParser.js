@@ -91,7 +91,7 @@ fileInput.addEventListener("change", (e) => {
 
                 function makeTable(headers, csvRows, target = document.getElementById("target")) {
                     const newTable = document.createElement("table");
-                    newTable.classList.add("table-success", "table-striped");
+                    newTable.classList.add("table", "table-success", "table-striped");
 
                     const thead = document.createElement("thead");
                     for (header of headers) {
