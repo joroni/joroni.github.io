@@ -1,3 +1,20 @@
+/* let initEventData,
+    delimiter = ",";
+if (localStorage.getItem("initEventData") == null) {
+    initEventData = [];
+    alert("Import Data");
+} else {
+    initEventData = JSON.parse(localStorage.getItem("initEventData"));
+}
+ */
+
+let productList;
+if (localStorage.getItem("productList") == null) {
+    productList = [];
+} else {
+    productList = JSON.parse(localStorage.getItem("productList"));
+}
+
 let initialObj = [];
 const fileInput = document.getElementById("fileInput");
 
@@ -30,6 +47,7 @@ const readCSV = (file) => {
 
             const rows = csvText.split(/\r\n/g);
 
+            // const columHeaders = splitCSVColumns(rows.shift().toLowerCase());
             const columHeaders = splitCSVColumns(rows.shift().toLowerCase());
 
             rows.forEach((row, rowIndex) => {
@@ -46,8 +64,10 @@ const readCSV = (file) => {
                     //     errors.push(`Column ${i} on row ${rowIndex} is not a valid number.`);
                     // }
                     else {
-                        obj[columHeaders[i]] = columns[i].toLowerCase();
+                        //  obj[columHeaders[i]] = columns[i].toLowerCase();
+                        obj[columHeaders[i]] = columns[i];
                     }
+                    console.log("columns[i]", columns[i]);
                 }
                 objArray.push(obj);
             });
@@ -75,9 +95,9 @@ fileInput.addEventListener("change", (e) => {
 
             console.log(csvRows);
             if (csvRows) {
-                let d = 20,
+                /*  let d = 20,
                     divisions = ["div1", "div2", "div3", "div4", "div5", "div6", "div7", "div8", "div9", "div10"];
-
+ */
                 //  console.log(divItem);
                 /*   if (divItem in csvRows[0]) {
                     console.log(divItem);
@@ -91,12 +111,14 @@ fileInput.addEventListener("change", (e) => {
 
                 function makeTable(headers, csvRows, target = document.getElementById("target")) {
                     const newTable = document.createElement("table");
-                    newTable.classList.add("table", "table-success", "table-striped");
+                    newTable.classList.add("table", "table-striped");
 
                     const thead = document.createElement("thead");
                     for (header of headers) {
                         const th = document.createElement("th");
+                        th.setAttribute("scope", "col");
                         th.textContent = header;
+                        console.log(th);
                         thead.appendChild(th);
                     }
                     newTable.appendChild(thead);
@@ -113,60 +135,40 @@ fileInput.addEventListener("change", (e) => {
 
                     return target.appendChild(newTable);
                 }
-                /* 
-                const preview = document.getElementById("preview");
-                preview.innerHTML = JSON.stringify(csvRows)
-                .replaceAll("{", "&nbsp;&nbsp;&nbsp;&nbsp;{")
-                .replaceAll("[", "[<br>")
-                .replaceAll("]", "<br>]")
-                .replaceAll("},", "},<br>");
- */
-                console.log(csvRows);
 
-                let divi = [];
+                //   let divi = [];
                 for (let i = 0; i < csvRows.length; i++) {
                     console.log(csvRows.length + " items");
-
+                    let formatter = csvRows[i].division.toLowerCase();
                     csvRows[i].scorecard = "";
                     csvRows[i].isPlaying = "0";
                     csvRows[i].numOfGames = "0";
                     csvRows[i].onPot = "0";
                     csvRows[i].isPlaying = "0";
+                    csvRows[i].divisions = formatter;
+
+                    /*    const hasKey = (obj, key) => Object.keys(obj).includes(key);
+
+                    if (hasKey(csvRows[i], "div1")) {
+                        //  divi.push("div1");
+                        csvRows[i].divisioning.push("div1");
+                    } else if (hasKey(csvRows[i], "div2")) {
+                        // divi.push("div2");
+                        csvRows[i].divisioning.push("div2");
+                    } else {
+                        return false;
+                    } */
+
+                    /*  if ("div1" in csvRows[i]) {
+                        divi.push("div1");
+                    }
+                    if ("div2" in csvRows[i]) {
+                        divi.push("div2");
+                    }
+ */
+                    //    csvRows[i].divisioning = divi;
+                    //   console.log("divi ", divi);
                     console.log("csvRows[i]", csvRows[i]);
-
-                    let diviSion = csvRows[i].div1;
-                    divi.push(diviSion);
-                    // Example array
-                    /*  const array = csvRows[i];
-                    const element = diviSion;
-                    let exists = false;
-                    for (let i = 0; i < array.length; i++) {
-                        if (array[i] === element) {
-                            exists = true;
-                            break;
-                        }
-                    }
-
-                    console.log(exists);
-
-                    console.log(array); */
-
-                    switch (diviSion) {
-                        case csvRows[i].div2:
-                            divi.push(diviSion);
-                            break;
-                        case csvRows[i].div3:
-                            divi.push(diviSion);
-                            break;
-                        case csvRows[i].div4:
-                            divi.push(diviSion);
-                            break;
-                        default:
-                            divi.push(diviSion);
-                    }
-
-                    console.log(divi);
-
                     // Output: Proceed or continue driving.
                     /*  const hasKeyDeep = (obj, keys) => {
                         return (
@@ -185,7 +187,7 @@ fileInput.addEventListener("change", (e) => {
                     } */
                 }
                 console.log(csvRows);
-                localStorage.setItem("initEventData", JSON.stringify(csvRows));
+                localStorage.setItem("productList", JSON.stringify(csvRows));
             }
         })
         .catch((errors) => {

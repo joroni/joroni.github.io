@@ -183,6 +183,16 @@ function validateForm() {
  * @param none
  */
 function showData() {
+    /* let initEventData;
+
+    if (localStorage.getItem("initEventData") == null) {
+        initEventData = [];
+        alert("Import Data");
+    } else {
+        initEventData = JSON.parse(localStorage.getItem("initEventData"));
+        productList = initEventData;
+    } */
+
     let productList;
     if (localStorage.getItem("productList") == null) {
         productList = [];
@@ -197,7 +207,7 @@ function showData() {
         <div class="row gx-2">
           <div class="col">
             <div class="p-3">
-              <img src="img/no-data-found.png" class="img-fluid rounded mx-auto d-block" alt="No Products">
+              <img src="img/no-data-found.jpg" class="img-fluid rounded mx-auto d-block" alt="No Products">
             </div>
           </div>
         </div>
@@ -301,7 +311,7 @@ function AddData() {
     if (validateForm() == true) {
         let name = document.getElementById("name").value;
         let scorecard = document.getElementById("scorecard").value;
-        let division = document.getElementById("division").value;
+        let divisions = document.getElementById("divisions").value;
         let grp1 = document.getElementById("grp1").value;
         let grp2 = document.getElementById("grp2").value;
         let senrs = document.getElementById("senrs").value;
@@ -337,7 +347,7 @@ function AddData() {
             productList.push({
                 id: id,
                 name: name,
-                division: division,
+                divisions: divisions,
                 grp1: grp1,
                 grp2: grp2,
                 senrs: senrs,
@@ -429,7 +439,9 @@ function createDivInuts(index) {
     let filtered = [];
 
     for (let j = 0; j < arrayNums.length; j++) {
-        console.log("divisions ", arrayNums[j].hasOwnProperty("div2"));
+        if (("div1", arrayNums[j].hasOwnProperty("div1"))) {
+            console.log("div1", arrayNums[j].hasOwnProperty("div1"));
+        }
 
         /*   if (cards[i].helper) {
             filtered.push(cards[i].title);
@@ -454,7 +466,7 @@ function editData(index) {
     arrayNums = arrItems.map((i) => Number(i));
     console.log("current", arrayNums);
     console.log("current length", arrayNums.length);
-    if (arrayNums.length >= 1) {
+    if (arrayNums.length > 0) {
         buildScorObjs(productList[index], arrayNums);
     }
 
@@ -510,24 +522,129 @@ function editData(index) {
         return splitStr.join(" ");
     }
 
-    stepCountInput.value = arrayNums.length;
+    function createDivDynamicInputs(index) {
+        delimiter = ",";
+        let mydivString = productList[index].divisions.toString();
+        let temp;
+        divItems = mydivString.split(delimiter);
+        console.log("divItems", divItems);
+        /***** division assigned handicap  */
+        for (var i = 0; i < divItems.length; i++) {
+            temp = document.createElement("div");
+            temp.classList.add("col");
+            let temp0 = document.createElement("div");
+            temp0.classList.add("form-floating", "mb-3");
+            let temp1 = document.createElement("label");
+            temp1.innerHTML = divItems[i].toUpperCase() + " <small>(handicap)</small>";
+            let temp2 = document.createElement("input");
+            temp2.setAttribute("id", divItems[i] + "-edit");
+            temp2.classList.add("form-control");
+            temp2.type = "number";
+
+            temp0.appendChild(temp2);
+            temp0.appendChild(temp1);
+            temp.appendChild(temp0);
+            document.getElementById("divisionsGrp").appendChild(temp);
+        }
+
+        /***** division scoring with handicap  */
+        for (var j = 0; j < divItems.length; j++) {
+            temp = document.createElement("div");
+            temp.classList.add("col");
+            let temp0 = document.createElement("div");
+            temp0.classList.add("form-floating", "mb-3");
+            let temp1 = document.createElement("label");
+            temp1.innerHTML = divItems[j].toUpperCase() + "+ <small>(handicap)</small>";
+            let temp2 = document.createElement("input");
+            temp2.setAttribute("id", divItems[j] + "-plus_hndcp");
+            temp2.classList.add("form-control");
+            temp2.type = "number";
+
+            temp0.appendChild(temp2);
+            temp0.appendChild(temp1);
+            temp.appendChild(temp0);
+            document.getElementById("divisionsScoreHndcap").appendChild(temp);
+        }
+    }
+
+    createDivDynamicInputs(index);
+    stepCountInput.value = arrayNums;
     document.getElementById("id-edit").value = productList[index].id;
     document.getElementById("name-edit").value = titleCase(productList[index].name);
     document.getElementById("onPot-edit").value = productList[index].onPot;
     document.getElementById("isPlaying-edit").value = productList[index].isPlaying;
     document.getElementById("scorecard-edit").value = productList[index].scorecard;
+    if (productList[index].div1) {
+        document.getElementById("div1-edit").value = productList[index].div1;
+        productList[index].div1_plus_hndcp = addHndcp(productList[index].div1);
+        document.getElementById("div1-plus_hndcp").value = productList[index].div1_plus_hndcp;
+    }
 
-    document.getElementById("grp1-edit").value = productList[index].grp1;
+    if (productList[index].div2) {
+        document.getElementById("div2-edit").value = productList[index].div2;
+        productList[index].div2_plus_hndcp = addHndcp(productList[index].div2);
+        document.getElementById("div2-plus_hndcp").value = productList[index].div2_plus_hndcp;
+    }
+
+    if (productList[index].div3) {
+        document.getElementById("div3-edit").value = productList[index].div3;
+        productList[index].div3_plus_hndcp = addHndcp(productList[index].div3);
+        document.getElementById("div3-plus_hndcp").value = productList[index].div3_plus_hndcp;
+    }
+
+    if (productList[index].div4) {
+        document.getElementById("div4-edit").value = productList[index].div4;
+        productList[index].div4_plus_hndcp = addHndcp(productList[index].div4);
+        document.getElementById("div4-plus_hndcp").value = productList[index].div4_plus_hndcp;
+    }
+
+    if (productList[index].div5) {
+        document.getElementById("div5-edit").value = productList[index].div5;
+        productList[index].div5_plus_hndcp = addHndcp(productList[index].div5);
+        document.getElementById("div5-plus_hndcp").value = productList[index].div5_plus_hndcp;
+    }
+
+    if (productList[index].div6) {
+        document.getElementById("div6-edit").value = productList[index].div6;
+        productList[index].div6_plus_hndcp = addHndcp(productList[index].div6);
+        document.getElementById("div6-plus_hndcp").value = productList[index].div6_plus_hndcp;
+    }
+
+    if (productList[index].div7) {
+        document.getElementById("div7-edit").value = productList[index].div7;
+        productList[index].div7_plus_hndcp = addHndcp(productList[index].div7);
+        document.getElementById("div7-plus_hndcp").value = productList[index].div7_plus_hndcp;
+    }
+
+    if (productList[index].div8) {
+        document.getElementById("div8-edit").value = productList[index].div8;
+        productList[index].div8_plus_hndcp = addHndcp(productList[index].div8);
+        document.getElementById("div8-plus_hndcp").value = productList[index].div8_plus_hndcp;
+    }
+
+    if (productList[index].div9) {
+        document.getElementById("div9-edit").value = productList[index].div9;
+        productList[index].div9_plus_hndcp = addHndcp(productList[index].div9);
+        document.getElementById("div9-plus_hndcp").value = productList[index].div9_plus_hndcp;
+    }
+
+    if (productList[index].div10) {
+        document.getElementById("div10-edit").value = productList[index].div10;
+        productList[index].div10_plus_hndcp = addHndcp(productList[index].div10);
+        document.getElementById("div10-plus_hndcp").value = productList[index].div10_plus_hndcp;
+    }
+
+    /* document.getElementById("grp1-edit").value = productList[index].grp1;
     document.getElementById("grp2-edit").value = productList[index].grp2;
-    document.getElementById("senrs-edit").value = productList[index].senrs;
+    document.getElementById("senrs-edit").value = productList[index].senrs; */
 
     document.getElementById("scratch-edit").value = scratch;
-    document.getElementById("hdcpGrp1-edit").value = addHndcp(productList[index].grp1);
+    /*  document.getElementById("hdcpGrp1-edit").value = addHndcp(productList[index].grp1);
     document.getElementById("hdcpGrp2-edit").value = addHndcp(productList[index].grp2);
-    document.getElementById("hdcpSenr-edit").value = addHndcp(productList[index].senrs);
+    document.getElementById("hdcpSenr-edit").value = addHndcp(productList[index].senrs); */
 
-    document.getElementById("division-edit").value = productList[index].division;
-    document.getElementById("division-edit").setAttribute("value", productList[index].division);
+    document.getElementById("division-edit").value = productList[index].divisions;
+    document.getElementById("division-edit").setAttribute("value", productList[index].divisions);
     let imagePreview = document.getElementById("image-div");
     imagePreview.src = productList[index].image;
 
@@ -599,8 +716,12 @@ function editData(index) {
 
         ajaxForm.innerHTML = `<div class="input-group mb-3">
                                             <input type="number" id="Glive" style="margin-top: 0px;" class="score-inputs form-control form-control-lg" placeholder="" aria-label="" aria-describedby="button-addon2">
+                                          
                                             <button class="btn btn-outline-success" type="button" id="acceptScore"> <span class="material-icons"> check </span></button>
-                                          </div>`;
+                                           <div id="GliveFeedback" class="invalid-feedback">
+      Invalid score. Max value is 300.
+    </div>
+                                            </div>`;
 
         document.getElementById("Glive").focus();
 
@@ -616,6 +737,14 @@ function editData(index) {
             let value = e.target.value;
             console.log("curr Arr ", arrayNums);
             console.log("value ", value);
+            if (glive.value > 300) {
+                glive.classList.add("is-invalid");
+                document.querySelector("#acceptScore").disabled = true;
+                return false;
+            } else {
+                glive.classList.remove("is-invalid");
+                document.querySelector("#acceptScore").disabled = false;
+            }
 
             document.querySelector("#acceptScore").classList.add("btn-success");
             arrayNums.push(parseInt(value));
@@ -633,9 +762,9 @@ function editData(index) {
 
             document.getElementById("step-edit").value = arrayNums.length;
             document.getElementById("scratch-edit").value = scratchLive;
-            document.getElementById("hdcpGrp1-edit").value = addHndcp(productList[index].grp1);
+            /*  document.getElementById("hdcpGrp1-edit").value = addHndcp(productList[index].grp1);
             document.getElementById("hdcpGrp2-edit").value = addHndcp(productList[index].grp2);
-            document.getElementById("hdcpSenr-edit").value = addHndcp(productList[index].senrs);
+            document.getElementById("hdcpSenr-edit").value = addHndcp(productList[index].senrs); */
             console.log("arrayNums length ", arrayNums.length);
         };
     };
@@ -670,9 +799,9 @@ function editData(index) {
 
         document.getElementById("scratch-edit").value = scratchLive;
         document.getElementById("step-edit").value = arrayNums.length;
-        document.getElementById("hdcpGrp1-edit").value = addHndcp(productList[index].grp1);
+        /*  document.getElementById("hdcpGrp1-edit").value = addHndcp(productList[index].grp1);
         document.getElementById("hdcpGrp2-edit").value = addHndcp(productList[index].grp2);
-        document.getElementById("hdcpSenr-edit").value = addHndcp(productList[index].senrs);
+        document.getElementById("hdcpSenr-edit").value = addHndcp(productList[index].senrs); */
     };
 
     function buildScorObjs(curobj, arr) {
@@ -682,15 +811,16 @@ function editData(index) {
         let html = "";
         let scrItems = [];
 
-        if (arrayNums.length >= 1 && arrayNums[0] != 0) {
+        if (arrayNums.length > 0 && arrayNums[0] != 0) {
             arrayNums.forEach((element, index) => {
                 //  console.log("Index: " + index + " Value: " + element);
                 html += `<div class='col-lg-4 col-md-3 col-sm-6' data-index='${index}'>
-                        <div class='form-group mt-2'>
-                            <label for='exampleFormControlSelect1'>G-${index + 1}</label>
+                        <div class='form-floating mb-3 mt-2'>
+                          
                             <input disabled class="score-inputs form-control form-control-lg" type='number' key='${index}' title='${index}' value='${element}' id='g${
                     index + 1
                 }-live' placeholder='' aria-label='Game scores' aria-describedby='inputGroup-sizing-default'>
+                  <label for='exampleFormControlSelect1'>G-${index + 1}</label>
                         </div>
                     </div>`;
 
@@ -745,9 +875,9 @@ function editData(index) {
 
                     console.log("scratchLive ", scratchLive);
                     document.getElementById("scratch-edit").value = scratchLive;
-                    document.getElementById("hdcpGrp1-edit").value = addHndcp(productList[index].grp1);
+                    /*    document.getElementById("hdcpGrp1-edit").value = addHndcp(productList[index].grp1);
                     document.getElementById("hdcpGrp2-edit").value = addHndcp(productList[index].grp2);
-                    document.getElementById("hdcpSenr-edit").value = addHndcp(productList[index].senrs);
+                    document.getElementById("hdcpSenr-edit").value = addHndcp(productList[index].senrs); */
                 };
             }
         }
@@ -781,7 +911,7 @@ function editData(index) {
         productList[index].step = document.getElementById("step-edit").value;
         productList[index].name = document.getElementById("name-edit").value;
         productList[index].scorecard = document.getElementById("scorecard-edit").value;
-        productList[index].division = document.getElementById("division-edit").value;
+        productList[index].divisions = document.getElementById("division-edit").value;
         productList[index].grp1 = document.getElementById("grp1-edit").value;
         productList[index].grp2 = document.getElementById("grp2-edit").value;
         productList[index].senrs = document.getElementById("senrs-edit").value;
@@ -820,10 +950,11 @@ function editData(index) {
         productList[index].id = document.getElementById("id-edit").value;
         productList[index].name = document.getElementById("name-edit").value;
         productList[index].scorecard = document.getElementById("scorecard-edit").value;
-        productList[index].division = document.getElementById("division-edit").value;
-        productList[index].grp1 = document.getElementById("grp1-edit").value;
+        productList[index].divisions = document.getElementById("division-edit").value;
+
+        /*  productList[index].grp1 = document.getElementById("grp1-edit").value;
         productList[index].grp2 = document.getElementById("grp2-edit").value;
-        productList[index].senrs = document.getElementById("senrs-edit").value;
+        productList[index].senrs = document.getElementById("senrs-edit").value; */
         productList[index].scratch = document.getElementById("scratch-edit").value;
         productList[index].onPot = document.getElementById("onPot-edit").value;
         productList[index].isPlaying = document.getElementById("isPlaying-edit").value;
@@ -896,7 +1027,7 @@ function searchProduct(sortedItem) {
         <div class="row gx-2">
           <div class="col">
             <div class="p-3">
-              <img src="img/no-data-found.png" class="img-fluid rounded mx-auto d-block" alt="No Products">
+              <img src="img/no-data-found.jpg" class="img-fluid rounded mx-auto d-block" alt="No Products">
             </div>
           </div>
         </div>
@@ -1093,7 +1224,7 @@ function filteredData(sortedProduct) {
         <div class="row gx-2">
           <div class="col">
             <div class="p-3">
-              <img src="img/no-data-found.png" class="img-fluid rounded mx-auto d-block" alt="No Products">
+              <img src="img/no-data-found.jpg" class="img-fluid rounded mx-auto d-block" alt="No Products">
             </div>
           </div>
         </div>
@@ -1219,7 +1350,6 @@ function loadData() {
     } else {
         initEventData = JSON.parse(localStorage.getItem("initEventData"));
         productLists = initEventData;
-        localStorage.setItem("productList", JSON.stringify(productLists));
     }
 
     let playerList = "";
@@ -1288,7 +1418,7 @@ function showTable() {
 
     const eventData = JSON.parse(localStorage.getItem("eventData"));
     numOfGames = parseInt(eventData[0].numOfGames);
-    diVisions = parseInt(eventData[0].divisions);
+    diVisions = parseInt(eventData[0].divisionss);
 
     console.log(numOfGames);
     console.log("diVisions ", diVisions);
@@ -1386,7 +1516,7 @@ function showTable() {
 
     var myParent = document.getElementById("mySelect");
     //Create array of options to be added
-    var array = myDivision(eventList[0].division);
+    var array = myDivision(eventList[0].divisions);
 
     //Create and append select list
     var selectList = document.createElement("select");
@@ -1430,6 +1560,8 @@ function resetMockData() {
         localStorage.removeItem("eventData");
         localStorage.removeItem("productList");
         localStorage.removeItem("sortedProduct");
+        localStorage.removeItem("initEventData");
+
         location.reload(); // Reload the current page
     }
 }
