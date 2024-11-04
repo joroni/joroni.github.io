@@ -335,6 +335,30 @@ table.mytble thead {
   height: 88px;
   width: 88px;
 }
+.bt-0 {
+  border-top: none;
+}
+
+.max-w-s {
+  max-width: 120px;
+}
+.m-widget17__progress-number, .m-widget17__progress-label {
+  font-size: 12px;
+}
+.m-progress--sm {
+  height:6px;
+
+}
+#Glive:focus {
+  box-shadow: inset 0 0 0 1px black, 0 0 5px 1px green; 
+  outline: none;
+}
+
+
+
+.bb-0 {
+  border-bottom: none;
+}
 ol.mt-5.row.list-group.list-group-numbered {
   width: 100%;
   padding-left: 1rem;
@@ -349,6 +373,10 @@ ol.mt-5.row.list-group.list-group-numbered {
   height: auto;
 }
 
+.dropdown > i {
+  margin-top: 16.333px;
+  color: gray;
+}
 .btn-success:disabled > span {
   color: #146c43;
 }
