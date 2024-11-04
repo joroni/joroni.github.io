@@ -1,0 +1,4 @@
+id,name,image,div1,div2,div3,Division
+1,Dan Jukes,https://flowbite.com/application-ui/demo/images/users/neil-sims.png,,42,,Div2
+2,Jane Wilson,https://flowbite.com/application-ui/demo/images/users/roberta-casas.png,30,,35,"Div1,div3"
+3,Bernie Santos,https://flowbite.com/application-ui/demo/images/users/jese-leos.png,15,,,Div1

@@ -615,6 +615,36 @@
             </div>
         </div>
 
+        <!-- Upload CSV -->
+        <div class="modal fade" id="uploadCSVModal" tabindex="-1" aria-labelledby="uploadCSVModal" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal-content" id="form">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="uploadCSVModal">Import Data</h1>
+                        <button
+                            type="button"
+                            id="close-btn"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body overflow-scroll">
+                        <div class="row col">
+                            <input id="fileInput" class="form-input" type="file" accept=".csv" />
+
+                            <div id="preview" style="margin-top: 20px" class="form-input"></div>
+                        </div>
+                    </div>
+                    <!--  <div class="modal-footer">
+                        <button type="button" class="btn submitButton w-100" id="submitData" onclick="tableToCSV()">
+                            Export
+                        </button>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+
         <!-- Floating button -->
         <div class="sticky-bottomx fixed-bottom">
             <div class="fab-container">
@@ -639,7 +669,7 @@
                     </a>
                 </div>
                 <div class="sub-button shadow">
-                    <a href="google.com" target="_blank">
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#uploadCSVModal">
                         <span class="material-icons">help_outline</span>
                     </a>
                 </div>
@@ -864,7 +894,7 @@
             crossorigin="anonymous"
         ></script>
         <!-- Bootstrap tags input JS -->
-
+        <script src="script/csvParser.js"></script>
         <script src="script/exportExcel.js"></script>
         <!-- <button id="scroll-btn" class="show">↑</button> -->
     </body>

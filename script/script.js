@@ -1214,47 +1214,6 @@ function loadData() {
 
     let productLists = "";
 
-    let initEventData = [
-        {
-            id: "1",
-            name: "dan jukes",
-            image: "https://flowbite.com/application-ui/demo/images/users/neil-sims.png",
-            div1: "",
-            div2: "42",
-            div3: "",
-            division: "div2",
-            scorecard: "",
-            isPlaying: "0",
-            numOfGames: "0",
-            onPot: "0",
-        },
-        {
-            id: "2",
-            name: "jane wilson",
-            image: "https://flowbite.com/application-ui/demo/images/users/roberta-casas.png",
-            div1: "30",
-            div2: "",
-            div3: "35",
-            division: "div1,div3",
-            scorecard: "",
-            isPlaying: "0",
-            numOfGames: "0",
-            onPot: "0",
-        },
-        {
-            id: "3",
-            name: "bernie santos",
-            image: "https://flowbite.com/application-ui/demo/images/users/jese-leos.png",
-            div1: "15",
-            div2: "",
-            div3: "",
-            division: "div1",
-            scorecard: "",
-            isPlaying: "0",
-            numOfGames: "0",
-            onPot: "0",
-        },
-    ];
     if (localStorage.getItem("initEventData") == null) {
         initEventData = [];
     } else {
