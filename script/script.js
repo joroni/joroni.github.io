@@ -1219,6 +1219,7 @@ function loadData() {
     } else {
         initEventData = JSON.parse(localStorage.getItem("initEventData"));
         productLists = initEventData;
+        localStorage.setItem("productList", JSON.stringify(productLists));
     }
 
     let playerList = "";
@@ -1402,6 +1403,7 @@ function showTable() {
         selectList.appendChild(option);
     }
 }
+
 loadData();
 
 let navItems = document.querySelector("#navItems");

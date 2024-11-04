@@ -66,7 +66,7 @@ fileInput.addEventListener("change", (e) => {
     if (e.target.files.length > 0 && e.target.files[0] && e.target.files[0].type === "text/csv") {
         readCSV(e.target.files[0])
         .then((csvRows) => {
-            /* const preview = document.getElementById("preview");
+            /*    const preview = document.getElementById("preview");
             preview.innerHTML = JSON.stringify(csvRows)
             .replaceAll("{", "&nbsp;&nbsp;&nbsp;&nbsp;{")
             .replaceAll("[", "[<br>")
@@ -82,6 +82,47 @@ fileInput.addEventListener("change", (e) => {
                 /*   if (divItem in csvRows[0]) {
                     console.log(divItem);
                 } */
+
+                const fullHeaders = Object.keys(csvRows[0]); //use full header
+                // const selectedHeaders = ["name", "score"]; //or filter as needed
+
+                const table1 = makeTable(fullHeaders, csvRows);
+                // const table2 = makeTable(selectedHeaders, csvRows);
+
+                function makeTable(headers, csvRows, target = document.getElementById("target")) {
+                    const newTable = document.createElement("table");
+                    newTable.classList.add("table-success", "table-striped");
+
+                    const thead = document.createElement("thead");
+                    for (header of headers) {
+                        const th = document.createElement("th");
+                        th.textContent = header;
+                        thead.appendChild(th);
+                    }
+                    newTable.appendChild(thead);
+
+                    for (csvRow of csvRows) {
+                        const newRow = document.createElement("tr");
+                        for (header of headers) {
+                            const td = document.createElement("td");
+                            td.textContent = csvRow[header];
+                            newRow.appendChild(td);
+                        }
+                        newTable.appendChild(newRow);
+                    }
+
+                    return target.appendChild(newTable);
+                }
+                /* 
+                const preview = document.getElementById("preview");
+                preview.innerHTML = JSON.stringify(csvRows)
+                .replaceAll("{", "&nbsp;&nbsp;&nbsp;&nbsp;{")
+                .replaceAll("[", "[<br>")
+                .replaceAll("]", "<br>]")
+                .replaceAll("},", "},<br>");
+ */
+                console.log(csvRows);
+
                 let divi = [];
                 for (let i = 0; i < csvRows.length; i++) {
                     console.log(csvRows.length + " items");
