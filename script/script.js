@@ -25,6 +25,18 @@
 
 var rootElement = document.documentElement;
 
+/* function reloadOnClose() { */
+let btnCls = document.querySelectorAll(".btn-close");
+if (btnCls) {
+    for (i = 0; i < btnCls.length; i++) {
+        btnCls[i].addEventListener("click", function () {
+            console.log("reloaded");
+            location.reload();
+        });
+    }
+}
+/* } */
+
 function scrollToTop() {
     // Scroll to top logic
     rootElement.scrollTo({
@@ -192,6 +204,20 @@ function showData() {
       </div>`;
     } else {
         productList.forEach(function (element, index) {
+            /*   const str = element.name;
+            const newName = `${str[0].toUpperCase()}${str.slice(1)}`;
+ */
+            function titleCase(str) {
+                var splitStr = str.toLowerCase().split(" ");
+                for (var i = 0; i < splitStr.length; i++) {
+                    // You do not need to check if i is larger than splitStr length, as your for does that for you
+                    // Assign it back to the array
+                    splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+                }
+                // Directly return the joined string
+                return splitStr.join(" ");
+            }
+
             let img = function () {
                 if (!element.image) {
                     return `<img src='./img/no-pic.jpg'
@@ -222,10 +248,10 @@ function showData() {
                         ${img()}
                     </div>
                     <div class="ms-2 me-auto"  onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2'>
-                        <div class="fw-bold">${element.name}</div>
+                        <div class="fw-bold">${titleCase(element.name)}</div>
                         ${scrTch()} points
                     </div>
-                                <div class="m-widget4__progress ms-auto"><div class="m-widget4__progress-wrapper"> <span class="m-widget17__progress-number"> 63% </span> <span class="m-widget17__progress-label"> London </span><div class="progress m-progress--sm"><div class="progress-bar bg-danger" role="progressbar" style="width: 63%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="63"></div></div></div></div>
+                            
                     <div class="dropdown ms-auto">
                                         <i class="fas fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
                                         <ul class="dropdown-menu" style="">
@@ -315,6 +341,7 @@ function AddData() {
                 grp1: grp1,
                 grp2: grp2,
                 senrs: senrs,
+                step: step,
                 scorecard: scorecard,
                 image: reader.result,
             });
@@ -375,18 +402,52 @@ function deleteData(index) {
  * @param index
  */
 
-function editData(index) {
+let divisions = ["div1", "div2", "div3", "div4", "div5", "div6", "div7", "div8", "div9", "div10"];
+
+function calcPercentage(x, y) {
+    let stepCounts = ((x / y) * 100).toFixed();
+    console.log("step ", stepCounts);
+    return stepCounts;
+}
+
+function createDivInuts(index) {
     let productList,
-        scratch = 0,
-        /*   hdcpGrp1 = 0,
-    hdcpGrp2 = 0,
-    hdcpSenr = 0, */
         delimiter = ",";
     if (localStorage.getItem("productList") == null) {
         productList = [];
     } else {
         productList = JSON.parse(localStorage.getItem("productList"));
     }
+
+    let prodString = productList[index].scorecard.toString();
+    arrItems = prodString.split(delimiter);
+    arrayNums = arrItems.map((i) => Number(i));
+    console.log("current", arrayNums);
+    console.log("current length", arrayNums.length);
+
+    // myObject.hasOwnProperty("key1");
+    let filtered = [];
+
+    for (let j = 0; j < arrayNums.length; j++) {
+        console.log("divisions ", arrayNums[j].hasOwnProperty("div2"));
+
+        /*   if (cards[i].helper) {
+            filtered.push(cards[i].title);
+        } */
+    }
+    console.log(filtered);
+}
+function editData(index) {
+    let productList,
+        scratch = 0,
+        delimiter = ",";
+    if (localStorage.getItem("productList") == null) {
+        productList = [];
+    } else {
+        productList = JSON.parse(localStorage.getItem("productList"));
+    }
+
+    createDivInuts(index);
 
     let arrString = productList[index].scorecard.toString();
     arrItems = arrString.split(delimiter);
@@ -405,8 +466,10 @@ function editData(index) {
     let scrcard = document.getElementById("scorecard-edit");
     let addscore = document.getElementById("addscore");
     let arrCount = document.getElementById("arrCount");
+    let stepCountInput = document.getElementById("step-edit");
     let scoreInputs = document.querySelectorAll(".score-inputs");
     let arrCountString = arrayNums.length + "/" + numOfGames;
+
     if (arrayNums.length === numOfGames) {
         scrcard.disabled = true;
         addscore.disabled = true;
@@ -435,11 +498,25 @@ function editData(index) {
     }
 
     //console.log(scratch)
+
+    function titleCase(str) {
+        var splitStr = str.toLowerCase().split(" ");
+        for (var i = 0; i < splitStr.length; i++) {
+            // You do not need to check if i is larger than splitStr length, as your for does that for you
+            // Assign it back to the array
+            splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+        }
+        // Directly return the joined string
+        return splitStr.join(" ");
+    }
+
+    stepCountInput.value = arrayNums.length;
     document.getElementById("id-edit").value = productList[index].id;
-    document.getElementById("name-edit").value = productList[index].name;
+    document.getElementById("name-edit").value = titleCase(productList[index].name);
     document.getElementById("onPot-edit").value = productList[index].onPot;
     document.getElementById("isPlaying-edit").value = productList[index].isPlaying;
     document.getElementById("scorecard-edit").value = productList[index].scorecard;
+
     document.getElementById("grp1-edit").value = productList[index].grp1;
     document.getElementById("grp2-edit").value = productList[index].grp2;
     document.getElementById("senrs-edit").value = productList[index].senrs;
@@ -449,8 +526,6 @@ function editData(index) {
     document.getElementById("hdcpGrp2-edit").value = addHndcp(productList[index].grp2);
     document.getElementById("hdcpSenr-edit").value = addHndcp(productList[index].senrs);
 
-    /*  let addScore = document.getElementById('scorecard-edit')
-    addScore.val = addScore.value */
     document.getElementById("division-edit").value = productList[index].division;
     document.getElementById("division-edit").setAttribute("value", productList[index].division);
     let imagePreview = document.getElementById("image-div");
@@ -556,6 +631,7 @@ function editData(index) {
                 buildScorObjs(productList[index], arrayNums.filter(Number));
             }
 
+            document.getElementById("step-edit").value = arrayNums.length;
             document.getElementById("scratch-edit").value = scratchLive;
             document.getElementById("hdcpGrp1-edit").value = addHndcp(productList[index].grp1);
             document.getElementById("hdcpGrp2-edit").value = addHndcp(productList[index].grp2);
@@ -580,7 +656,8 @@ function editData(index) {
         scratchLive = arrayNums.reduce((accumulator, currentValue) => {
             return accumulator + currentValue;
         }, 0);
-
+        let step = calcPercentage(arrayNums.length, numOfGames);
+        console.log("step ", step);
         console.log("scratchLive ", scratchLive);
 
         function addHndcp(div) {
@@ -592,6 +669,7 @@ function editData(index) {
         }
 
         document.getElementById("scratch-edit").value = scratchLive;
+        document.getElementById("step-edit").value = arrayNums.length;
         document.getElementById("hdcpGrp1-edit").value = addHndcp(productList[index].grp1);
         document.getElementById("hdcpGrp2-edit").value = addHndcp(productList[index].grp2);
         document.getElementById("hdcpSenr-edit").value = addHndcp(productList[index].senrs);
@@ -610,7 +688,7 @@ function editData(index) {
                 html += `<div class='col-lg-4 col-md-3 col-sm-6' data-index='${index}'>
                         <div class='form-group mt-2'>
                             <label for='exampleFormControlSelect1'>G-${index + 1}</label>
-                            <input class="score-inputs form-control form-control-lg" type='number' key='${index}' title='${index}' value='${element}' id='g${
+                            <input disabled class="score-inputs form-control form-control-lg" type='number' key='${index}' title='${index}' value='${element}' id='g${
                     index + 1
                 }-live' placeholder='' aria-label='Game scores' aria-describedby='inputGroup-sizing-default'>
                         </div>
@@ -696,9 +774,11 @@ function editData(index) {
         console.log("current length", arrayNums.length);
         if (arrayNums.length >= 1) {
             buildScorObjs(productList[index], arrayNums);
+            document.getElementById("step-edit").value = arrayNums.length;
         }
 
         productList[index].id = document.getElementById("id-edit").value;
+        productList[index].step = document.getElementById("step-edit").value;
         productList[index].name = document.getElementById("name-edit").value;
         productList[index].scorecard = document.getElementById("scorecard-edit").value;
         productList[index].division = document.getElementById("division-edit").value;
@@ -710,7 +790,7 @@ function editData(index) {
         productList[index].isPlaying = document.getElementById("isPlaying-edit").value;
         // this line is used to convert the array to a JSON string before it is saved to local storage.
 
-        document.getElementById("close-btn").click();
+        // document.getElementById("close-btn").click();
         localStorage.setItem("productList", JSON.stringify(productList));
 
         showTable();
@@ -735,7 +815,8 @@ function editData(index) {
             buildScorObjs(productList[index], arrayNums);
         }
         document.querySelector("#addscore").classList.remove("hidden");
-        //productList[index].step = document.getElementById("step-edit").value;
+        productList[index].step = arrayNums.length;
+        productList[index].numOfGames = numOfGames;
         productList[index].id = document.getElementById("id-edit").value;
         productList[index].name = document.getElementById("name-edit").value;
         productList[index].scorecard = document.getElementById("scorecard-edit").value;
@@ -750,6 +831,7 @@ function editData(index) {
 
         document.getElementById("id-edit").value = "";
         //document.getElementById("id-edit").value = "";
+        document.getElementById("step-edit").value = "";
         document.getElementById("name-edit").value = "";
         document.getElementById("scorecard-edit").value = "";
         document.getElementById("scratch-edit").value = "";
@@ -843,6 +925,14 @@ function searchProduct(sortedItem) {
                     return `${element.scratch}`;
                 }
             };
+            let stepPercent = function () {
+                let perc = calcPercentage(element.step, element.numOfGames);
+                if (!element.step) {
+                    return ``;
+                } else {
+                    return `<div class="m-widget4__progress ms-auto"><div class="m-widget4__progress-wrapper"> <span class="m-widget17__progress-number"> ${perc}% </span> <span class="m-widget17__progress-label"> Complete </span><div class="progress m-progress--sm"><div class="progress-bar bg-success" role="progressbar" style="width: 17%;" aria-valuenow="${element.step}" aria-valuemin="0" aria-valuemax="${element.numOfGames}"></div></div></div></div>`;
+                }
+            };
             html += `<li  data-key="${
                 element.id
             }" class="py-8 list-group-item d-flex justify-content-between align-items-start">
@@ -853,7 +943,7 @@ function searchProduct(sortedItem) {
                         <div class="fw-bold">${element.name}</div>
                         ${scrTch()} points
                     </div>
-                     <div class="m-widget4__progress ms-auto"><div class="m-widget4__progress-wrapper"> <span class="m-widget17__progress-number"> 63% </span> <span class="m-widget17__progress-label"> London </span><div class="progress m-progress--sm"><div class="progress-bar bg-danger" role="progressbar" style="width: 63%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="63"></div></div></div></div>
+                   ${stepPercent()}
                      <div class="dropdown ms-auto">
                                         <i class="fas fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
                                         <ul class="dropdown-menu" style="">
@@ -1032,17 +1122,27 @@ function filteredData(sortedProduct) {
                     return `${element.scratch}`;
                 }
             };
+
+            let stepPercent = function () {
+                let perc = calcPercentage(element.step, element.numOfGames);
+                if (!element.step) {
+                    return ``;
+                } else {
+                    return `<div class="m-widget4__progress ms-auto"><div class="m-widget4__progress-wrapper"> <span class="m-widget17__progress-number"> ${perc}% </span> <span class="m-widget17__progress-label"> Complete </span><div class="progress m-progress--sm"><div class="progress-bar bg-success" role="progressbar" style="width: ${perc}%;" aria-valuenow="${element.step}" aria-valuemin="0" aria-valuemax="${element.numOfGames}"></div></div></div></div>`;
+                }
+            };
+
             html += `<li  data-key="${
                 element.id
             }" class="py-8 list-group-item d-flex justify-content-between align-items-start">
                     <div class="ms-2 thumb-md member-thumb" onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2'>
                         ${img()}
                     </div>
-                    <div class="ms-2 me-auto"  onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2'>
+                    <div class="ms-2 me-auto max-w-s"  onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2'>
                         <div class="fw-bold">${element.name}</div>
                         ${scrTch()} points
                     </div>
-                     <div class="m-widget4__progress ms-auto"><div class="m-widget4__progress-wrapper"> <span class="m-widget17__progress-number"> 63% </span> <span class="m-widget17__progress-label"> London </span><div class="progress m-progress--sm"><div class="progress-bar bg-success" role="progressbar" style="width: 63%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="63"></div></div></div></div>
+                    ${stepPercent()}
                         <div class="dropdown ms-auto">
                                         <i class="fas fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
                                         <ul class="dropdown-menu" style="">
@@ -1068,7 +1168,7 @@ function filteredData(sortedProduct) {
 }
 
 function loadData() {
-    const productLists = [
+    /*    const productLists = [
         {
             id: 1,
             name: "Dan Jukes",
@@ -1110,7 +1210,57 @@ function loadData() {
             division: ["grp1"],
             scorecard: "",
         },
+    ]; */
+
+    let productLists = "";
+
+    let initEventData = [
+        {
+            id: "1",
+            name: "dan jukes",
+            image: "https://flowbite.com/application-ui/demo/images/users/neil-sims.png",
+            div1: "",
+            div2: "42",
+            div3: "",
+            division: "div2",
+            scorecard: "",
+            isPlaying: "0",
+            numOfGames: "0",
+            onPot: "0",
+        },
+        {
+            id: "2",
+            name: "jane wilson",
+            image: "https://flowbite.com/application-ui/demo/images/users/roberta-casas.png",
+            div1: "30",
+            div2: "",
+            div3: "35",
+            division: "div1,div3",
+            scorecard: "",
+            isPlaying: "0",
+            numOfGames: "0",
+            onPot: "0",
+        },
+        {
+            id: "3",
+            name: "bernie santos",
+            image: "https://flowbite.com/application-ui/demo/images/users/jese-leos.png",
+            div1: "15",
+            div2: "",
+            div3: "",
+            division: "div1",
+            scorecard: "",
+            isPlaying: "0",
+            numOfGames: "0",
+            onPot: "0",
+        },
     ];
+    if (localStorage.getItem("initEventData") == null) {
+        initEventData = [];
+    } else {
+        initEventData = JSON.parse(localStorage.getItem("initEventData"));
+        productLists = initEventData;
+    }
 
     let playerList = "";
     let lS = localStorage.getItem("productList");
@@ -1174,7 +1324,7 @@ function showTable() {
         "active",
     ];
     //const keys_1 = ["name", "grp1", "grp2", "senrs", "scorecard"];
-    const keys_1 = ["name", "grp1", "grp2", "senrs", "g1", "g2", "g3", "g4", "g5", "g6"];
+    const keys_1 = ["name", "grp1", "grp2", "senrs", "step", "g1", "g2", "g3", "g4", "g5", "g6"];
 
     const eventData = JSON.parse(localStorage.getItem("eventData"));
     numOfGames = parseInt(eventData[0].numOfGames);
