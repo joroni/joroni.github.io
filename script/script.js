@@ -1,111 +1,79 @@
 /**
  * @projectName - CRUD Operation in LocalStorage
  *
- * @division - CRUD operation in LocalStorage with search and sort functionality is a JavaScript program
- *                that allows users to create, read, update, and delete items from a productList stored in
+ * @description - CRUD operation in LocalStorage with search and sort functionality is a JavaScript program
+ *                that allows users to create, read, update, and delete items from a memberLists stored in
  *                LocalStorage. It also includes search and sort functionality to easily find and organize
- *                products. Users can add, edit, and delete product details, including name, scorecard, division,
+ *                products. Users can add, edit, and delete product details, including name, price, description,
  *                and image. The program generates an HTML code for each product card and displays them on the
  *                webpage. This program provides an efficient way to manage and manipulate data in LocalStorage.
  *
- * @devloper - samarth dadhaniya
+ * @devloper - raymund niconi
  *
- * @github - https://github.com/samarthdadhaniya/CRUD-Operation-in-LocalStorage
+ * @github - https://github.com/joroni/maple-bowling-leaderboard
  */
 
 /**
  * @function validateForm
  *
- * @division Function validates form input for name, scorecard, division,
+ * @description Function validates form input for name, price, description,
  *              and image attachment, returning true if valid and false
  *              with error message if not.
  *
  * @param none
  */
 
-var rootElement = document.documentElement;
-
-/* function reloadOnClose() { */
 let btnCls = document.querySelectorAll(".btn-close");
 if (btnCls) {
-    for (i = 0; i < btnCls.length; i++) {
-        btnCls[i].addEventListener("click", function () {
-            console.log("reloaded");
+    for (s = 0; s < btnCls.length; s++) {
+        btnCls[s].addEventListener("click", function () {
             location.reload();
+            console.log("reloaded");
         });
     }
 }
-/* } */
 
-function scrollToTop() {
-    // Scroll to top logic
-    rootElement.scrollTo({
-        top: 0,
-        behavior: "smooth",
-    });
-}
+/****** EDIT INPUTS *******/
+let scorecard_edit = document.getElementById("scorecard-edit"),
+    name_show = document.getElementById("name-show"),
+    name_edit = document.getElementById("name-edit"),
+    id_edit = document.getElementById("id-edit"),
+    onpot_toggle = document.getElementById("onpot-toggle"),
+    onpot_edit = document.getElementById("onpot-edit"),
+    isplaying_toggle = document.getElementById("isplaying-toggle"),
+    isplaying_edit = document.getElementById("isplaying-edit"),
+    step_edit = document.getElementById("step-edit"),
+    scratch_edit = document.getElementById("scratch-edit"),
+    divisions_edit = document.getElementById("divisions-edit"),
+    event_id_edit = document.getElementById("event_id-edit"),
+    image_edit = document.getElementById("image-edit"),
+    image_show = document.getElementById("image-show"),
+    myTab = document.getElementById("myTab"),
+    myTabContent = document.getElementById("myTabContent"),
+    curd_table = document.querySelector("#curd-table"),
+    filter_table = document.querySelector("#filter-table"),
+    sort_table = document.querySelector("#sort-table"),
+    searchMemberForm = document.getElementById("searchMember"),
+    listTitle = document.getElementById("listTitle"),
+    filterTitle = document.getElementById("filterTitle"),
+    homeChart = document.getElementById("HomeChart");
 
-const scrollTop = function () {
-    // create HTML button element
-    const rootElement = document.documentElement;
-    const scrollBtn = document.createElement("button");
-    scrollBtn.innerHTML = "&uarr;";
-    scrollBtn.setAttribute("id", "scroll-btn");
-    document.body.appendChild(scrollBtn);
-    // hide/show button based on scroll distance
-    const scrollBtnDisplay = function () {
-        window.scrollY > window.innerHeight ? scrollBtn.classList.add("show") : scrollBtn.classList.remove("show");
-    };
-    if (scrollBtnDisplay) {
-        window.addEventListener("scroll", scrollBtnDisplay);
-    }
-    // scroll to top when button clicked
-    const scrollWindow = function () {
-        if (window.scrollY != 0) {
-            setTimeout(function () {
-                window.scrollTo(0, window.scrollY - 50);
-                scrollWindow();
-            }, 100);
-        }
-    };
+/****** EDIT INPUTS *******/
 
-    /*  const scrollToTop = function () {
-        rootElement.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
-    }; */
-    scrollBtn.addEventListener("click", scrollToTop);
-};
-scrollTop();
-
-function checkAvailStorage() {
-    var _lsTotal = 0,
-        _xLen,
-        _x;
-    for (_x in localStorage) {
-        if (!localStorage.hasOwnProperty(_x)) {
-            continue;
-        }
-        _xLen = (localStorage[_x].length + _x.length) * 2;
-        _lsTotal += _xLen;
-        // console.log(_x.substr(0, 50) + " = " + (_xLen / 1024).toFixed(2) + " KB");
-    }
-    // console.log("Total = " + (_lsTotal / 1024).toFixed(2) + " KB");
-    document.getElementById("storeageInfo").innerHTML = " Total = " + (_lsTotal / 1024).toFixed(2) + " KB";
-}
-
-checkAvailStorage();
 function validateForm() {
     // Get references to the form elements
     let nameInput = document.getElementById("name");
-    let scoreInput = document.getElementById("scorecard");
-    let divisionInput = document.getElementById("division");
+    let divisionsInput = document.getElementById("divisions");
+    let eventIDInput = document.getElementById("event_id");
+    //let scratchInput = document.getElementById("scratch");
+    let scoreCardInput = document.getElementById("scorecard");
     let image = document.getElementById("inputGroupFile01");
 
     // Get the values from the input fields and remove extra white spaces.
     let name = nameInput.value.trim();
-    let scorecard = scoreInput.value.trim();
+    let divisions = divisionsInput.value.trim();
+    // let scratch = scratchInput.value.trim();
+    let scorecard = scoreCardInput.value.trim();
 
     // Validate name input
     if (name === "") {
@@ -115,37 +83,37 @@ function validateForm() {
         document.getElementById("name-error-msg").innerHTML = "";
     }
 
-    // Validate scorecard input
-    if (scorecard === "") {
-        document.getElementById("scorecard-error-msg").innerHTML = " Please enter the scorecard";
+    // Validate price input
+    if (divisions === "") {
+        document.getElementById("divisions-error-msg").innerHTML = " Please enter the divisions";
         return false;
     } else {
-        document.getElementById("scorecard-error-msg").innerHTML = "";
+        document.getElementById("divisions-error-msg").innerHTML = "";
     }
 
     if (isNaN(scorecard) || scorecard.startsWith("0")) {
-        document.getElementById("scorecard-error-msg").innerHTML =
-            "Please enter a valid scorecard number that not start with zero";
-        return false;
+        document.getElementById("scorecard-error-msg").innerHTML = "Zero value entered";
+        return true;
     } else {
         document.getElementById("scorecard-error-msg").innerHTML = "";
     }
 
-    // Validate division input
-    if (divisionInput.value.length > 50) {
-        document.getElementById("disc-error-msg").innerHTML = " Description can be maximum 50 characters";
+    // Validate eventIDInput input
+    if (eventIDInput.value.length > 50) {
+        document.getElementById("event-error-msg").innerHTML = " Event ID can be maximum 50 characters";
         return false;
-    } else if (divisionInput.value == "") {
-        document.getElementById("disc-error-msg").innerHTML = " Please enter the Discription";
+    } else if (eventIDInput.value == "") {
+        document.getElementById("event-error-msg").innerHTML = " Please enter the EventID";
         return false;
     } else {
-        document.getElementById("disc-error-msg").innerHTML = "";
+        document.getElementById("event-error-msg").innerHTML = "";
     }
 
     // Validate image input
     if (image.files.length === 0) {
-        document.getElementById("image-error-msg").innerHTML = " Please attach an image";
-        return false;
+        document.getElementById("image-error-msg").innerHTML = "No image selected";
+        // return false; BYPASS required
+        return true;
     } else {
         document.getElementById("image-error-msg").innerHTML = "";
     }
@@ -172,117 +140,97 @@ function validateForm() {
     }
     return true;
 }
+
 /**
  * @function showData
  *
- * @division The function is retrieves the productList from localStorage,
+ * @description The function is retrieves the memberLists from localStorage,
  *              generates HTML code for each product card, and displays them
- *              on the webpage. It also handles empty productList and provides
+ *              on the webpage. It also handles empty memberLists and provides
  *              options to edit and delete each product.
  *
  * @param none
  */
 function showData() {
-    /* let initEventData;
-
-    if (localStorage.getItem("initEventData") == null) {
-        initEventData = [];
-        alert("Import Data");
+    let memberLists;
+    if (localStorage.getItem("memberLists") == null) {
+        memberLists = [];
     } else {
-        initEventData = JSON.parse(localStorage.getItem("initEventData"));
-        productList = initEventData;
-    } */
-
-    let productList;
-    if (localStorage.getItem("productList") == null) {
-        productList = [];
-    } else {
-        productList = JSON.parse(localStorage.getItem("productList"));
+        memberLists = JSON.parse(localStorage.getItem("memberLists"));
     }
     let html = "";
-    if (productList.length === 0) {
-        // Display an image if the productList array is empty
 
+    if (memberLists.length === 0) {
+        // Display an image if the memberLists array is empty
         html += `<div class="card-body">
         <div class="row gx-2">
           <div class="col">
             <div class="p-3">
-              <img src="img/no-data-found.jpg" class="img-fluid rounded mx-auto d-block" alt="No Products">
+              <img src="img/no-data-found.png" class="img-fluid rounded mx-auto d-block" alt="No Products">
             </div>
           </div>
         </div>
       </div>`;
     } else {
-        productList.forEach(function (element, index) {
-            /*   const str = element.name;
-            const newName = `${str[0].toUpperCase()}${str.slice(1)}`;
- */
-            function titleCase(str) {
-                var splitStr = str.toLowerCase().split(" ");
-                for (var i = 0; i < splitStr.length; i++) {
-                    // You do not need to check if i is larger than splitStr length, as your for does that for you
-                    // Assign it back to the array
-                    splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
-                }
-                // Directly return the joined string
-                return splitStr.join(" ");
-            }
-
+        memberLists.forEach(function (element, index) {
             let img = function () {
                 if (!element.image) {
                     return `<img src='./img/no-pic.jpg'
               class='rounded-circle img-thumbnail'
-              alt='profile-image'
+              alt='profile-image' style='height: 62px; width: 62px;'
               />`;
                 } else {
                     return `<img
               src='${element.image}'
               class='rounded-circle img-thumbnail'
-              alt='profile-image'
+              alt='profile-image' style='height: 62px; width: 62px;'
               />`;
                 }
             };
-
-            let scrTch = function () {
-                if (!element.scratch) {
-                    return `0`;
-                } else {
-                    return `${element.scratch}`;
-                }
-            };
-
-            html += `<li  data-key="${
+            html += `<li data-key="${
                 element.id
             }" class="py-8 list-group-item d-flex justify-content-between align-items-start">
-                    <div class="ms-2 thumb-md member-thumb" onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2'>
+                    <div class="ms-2 thumb-md member-thumb" onclick='editData("${
+                        element.id
+                    }")' type='button' data-bs-toggle='modal' data-bs-target='#registerModal'>
                         ${img()}
                     </div>
-                    <div class="ms-2 me-auto"  onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2'>
-                        <div class="fw-bold">${titleCase(element.name)}</div>
-                        ${scrTch()} points
+                    <div class="mt-auto mb-auto  ms-2 me-auto max-w-s">
+                        <div class="fw-bold" onclick='editData("${
+                            element.id
+                        }")' type='button' data-bs-toggle='modal' data-bs-target='#registerModal'>${element.name}</div>
+                      
                     </div>
-                            
-                    <div class="dropdown ms-auto">
+                   
+                        <div class="dropdown mt-auto mb-auto">
                                         <i class="fas fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
                                         <ul class="dropdown-menu" style="">
                                             <li>
-                                                <span class="dropdown-item" onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2'>
+                                                <span class="dropdown-item" onclick='editData(${
+                                                    element.id
+                                                })' type='button' data-bs-toggle='modal' data-bs-target='#registerModal'>
                                                     <i class="fas fa-pen mx-2"></i> Update
                                                 </span>
                                             </li>
                                             <li>
-                                                <span class="dropdown-item" onclick='deleteData("${index}")'>
+                                                <span class="dropdown-item" onclick='deleteData(${element.id})'>
                                                      <i class="fas mx-2 fa-solid fa-trash" style="color: #ff0000"></i> Delete
                                                 </span>
                                             </li>
                                         </ul>
                                     </div>
-                                    
+                    <span class="badge text-bg-primary rounded-pill hidden">14</span>
                 </li>`;
         });
     }
-    document.querySelector("#curd-table > .row").innerHTML = html;
-    // showTable()
+
+    // curd_table.innerHTML = html;
+    curd_table.classList.remove("d-none");
+    curd_table.classList.remove("d-flex");
+    filter_table.classList.add("d-none");
+    document.querySelector("#curd-table > ul").innerHTML = html;
+    /*  document.getElementById("filter-table").classList.add("d-none");
+    document.getElementById("sort-table").classList.add("d-none");*/
 }
 
 // Load all data when document or page load
@@ -291,111 +239,100 @@ showData();
 /**
  * @function AddData
  *
- * @division The function is adds a new product to the localStorage using
+ * @description The function is adds a new product to the localStorage using
  *              form data, generates a new ID, and reloads the page to display
  *              the updated data. It also clears the form and displays an alert message.
  *
  * @param none
  */
-
-function alertNotify(message, type) {
-    const alertItem = document.getElementById("alertNotification");
-    if (alertItem) {
-        alertItem.classList.add("show");
-        alertItem.classList.add(type);
-        // alertItem.closest("#alertMssage").innerHTML = message;
-        console.log(message, type);
-    }
-}
 function AddData() {
     if (validateForm() == true) {
         let name = document.getElementById("name").value;
-        let scorecard = document.getElementById("scorecard").value;
         let divisions = document.getElementById("divisions").value;
-        let grp1 = document.getElementById("grp1").value;
-        let grp2 = document.getElementById("grp2").value;
-        let senrs = document.getElementById("senrs").value;
+        let scorecard = document.getElementById("scorecard").value;
+        let event_id = document.getElementById("event_id").value;
         let image = document.getElementById("inputGroupFile01");
-
         let reader = new FileReader();
 
-        let productList;
-        if (localStorage.getItem("productList") == null) {
-            productList = [];
+        let memberLists;
+        if (localStorage.getItem("memberLists") == null) {
+            memberLists = [];
         } else {
-            productList = JSON.parse(localStorage.getItem("productList"));
+            memberLists = JSON.parse(localStorage.getItem("memberLists"));
         }
 
         // generate new ID by incrementing the highest existing ID
         let id = 1;
-        if (productList.length > 0) {
-            let ids = productList.map((product) => product.id);
+        if (memberLists.length > 0) {
+            let ids = memberLists.map((product) => product.id);
             id = Math.max(...ids) + 1;
         }
 
         /**
          * @function anonymous-Function (Arrow Function)
          *
-         * @division The function reads the data URL of an image file, and
-         *              adds product details to the productList and stores it
+         * @description The function reads the data URL of an image file, and
+         *              adds product details to the memberLists and stores it
          *              in localStorage.
          *
          * @param none
          */
-        reader.readAsDataURL(image.files[0]);
+        memberLists.push({
+            id: parseInt(id),
+            name: name,
+            event_id: event_id,
+            divisions: divisions,
+            scorecard: scorecard.trim(),
+            image: reader.result,
+        });
+        localStorage.setItem("memberLists", JSON.stringify(memberLists));
+        location.reload();
+        showData();
+
+        /*   reader.readAsDataURL(image.files[0]);
         reader.addEventListener("load", () => {
-            productList.push({
-                id: id,
+            memberLists.push({
+                 id: parseInt(id),
                 name: name,
-                divisions: divisions,
-                grp1: grp1,
-                grp2: grp2,
-                senrs: senrs,
-                step: step,
-                scorecard: scorecard,
+                description: description,
+                price: price,
                 image: reader.result,
             });
-            localStorage.setItem("productList", JSON.stringify(productList));
-            console.log(JSON.stringify(productList));
+            localStorage.setItem("memberLists", JSON.stringify(memberLists));
             location.reload();
             showData();
-        });
+        }); */
 
         document.getElementById("name").value = "";
+        document.getElementById("divisions").value = "";
         document.getElementById("scorecard").value = "";
-        document.getElementById("division").value = "";
-        document.getElementById("grp1").value = "";
-        document.getElementById("grp2").value = "";
-        document.getElementById("senrs").value = "";
+        document.getElementById("event_id").value = "";
         document.getElementById("inputGroupFile01").value = "";
-        document.getElementById("close-btn").click();
-        document.getElementById("alertNotification");
-        //  alert('Data Added Successfully')
-        alertNotify("Add Success", "alert-success");
+        //document.getElementById("close-btn").click();
+        document.querySelector(".btn-close").click();
+        alert("Data Added Successfully");
     }
 }
 
 /**
  * @function deleteData
  *
- * @division This function deletes an item from an array called 'productList'
+ * @description This function deletes an item from an array called 'memberLists'
  *              and updates local storage. It also displays a confirmation message
  *              to the user before deleting the item.
  *
  * @param index
  */
-function deleteData(index) {
-    let productList;
-    if (localStorage.getItem("productList") == null) {
-        productList = [];
+function deleteData(iD) {
+    let memberLists;
+    if (localStorage.getItem("memberLists") == null) {
+        memberLists = [];
     } else {
-        productList = JSON.parse(localStorage.getItem("productList"));
+        memberLists = JSON.parse(localStorage.getItem("memberLists"));
     }
-
-    // Display a confirmation message to the user
-    if (confirm("Are you sure you want to delete this item?")) {
-        productList.splice(index, 1);
-        localStorage.setItem("productList", JSON.stringify(productList));
+    if (confirm("Are you sure you want to delete item with ID = " + iD + "?")) {
+        memberLists = memberLists.filter((item) => item.id !== iD);
+        localStorage.setItem("memberLists", JSON.stringify(memberLists));
         showData();
         location.reload(); // Reload the current page
     }
@@ -404,7 +341,7 @@ function deleteData(index) {
 /**
  * @function editData
  *
- * @division -This function edits the details of a product at a specific index. It
+ * @description -This function edits the details of a product at a specific index. It
  *               reads the data from local storage and updates the HTML elements with
  *               the corresponding values. It also adds event handlers for an image and
  *               a button to update the data.
@@ -412,622 +349,575 @@ function deleteData(index) {
  * @param index
  */
 
-let divisions = ["div1", "div2", "div3", "div4", "div5", "div6", "div7", "div8", "div9", "div10"];
-
 function calcPercentage(x, y) {
     let stepCounts = ((x / y) * 100).toFixed();
     console.log("step ", stepCounts);
     return stepCounts;
 }
 
-function createDivInuts(index) {
-    let productList,
-        delimiter = ",";
-    if (localStorage.getItem("productList") == null) {
-        productList = [];
-    } else {
-        productList = JSON.parse(localStorage.getItem("productList"));
-    }
+var result = document.getElementById("scorecard-edit-error-msg");
 
-    let prodString = productList[index].scorecard.toString();
-    arrItems = prodString.split(delimiter);
-    arrayNums = arrItems.map((i) => Number(i));
-    console.log("current", arrayNums);
-    console.log("current length", arrayNums.length);
-
-    // myObject.hasOwnProperty("key1");
-    let filtered = [];
-
-    for (let j = 0; j < arrayNums.length; j++) {
-        if (("div1", arrayNums[j].hasOwnProperty("div1"))) {
-            console.log("div1", arrayNums[j].hasOwnProperty("div1"));
+function CheckNumeric(e) {
+    if (window.event) {
+        // IE
+        if ((e.keyCode < 48 || e.keyCode > 57) & (e.keyCode != 8) && e.keyCode != 44) {
+            //   result.innerHTML = number + " is a whole number.";
+            event.returnValue = false;
+            return false;
         }
-
-        /*   if (cards[i].helper) {
-            filtered.push(cards[i].title);
-        } */
+    } else {
+        // Fire Fox
+        if ((e.which < 48 || e.which > 57) & (e.which != 8) && e.which != 44) {
+            e.preventDefault();
+            //  result.innerHTML = number + " is a whole number.";
+            return false;
+        }
     }
-    console.log(filtered);
 }
-function editData(index) {
-    let productList,
+function editData(iD) {
+    let memberLists,
         scratch = 0,
         delimiter = ",";
-    if (localStorage.getItem("productList") == null) {
-        productList = [];
+    if (localStorage.getItem("memberLists") == null) {
+        memberLists = [];
     } else {
-        productList = JSON.parse(localStorage.getItem("productList"));
+        memberLists = JSON.parse(localStorage.getItem("memberLists"));
     }
 
-    createDivInuts(index);
-
-    let arrString = productList[index].scorecard.toString();
-    arrItems = arrString.split(delimiter);
-    arrayNums = arrItems.map((i) => Number(i));
-    console.log("current", arrayNums);
-    console.log("current length", arrayNums.length);
-    if (arrayNums.length > 0) {
-        buildScorObjs(productList[index], arrayNums);
-    }
-
-    // document.getElementById("update").disabled = true;
-    scratch = arrayNums.reduce((accumulator, currentValue) => {
-        return accumulator + currentValue;
-    }, 0);
-
-    let scrcard = document.getElementById("scorecard-edit");
-    let addscore = document.getElementById("addscore");
-    let arrCount = document.getElementById("arrCount");
-    let stepCountInput = document.getElementById("step-edit");
-    let scoreInputs = document.querySelectorAll(".score-inputs");
-    let arrCountString = arrayNums.length + "/" + numOfGames;
-
-    if (arrayNums.length === numOfGames) {
-        scrcard.disabled = true;
-        addscore.disabled = true;
-        for (i = 0; i < scoreInputs.length; i++) {
-            scoreInputs[i].disabled = true;
-        }
-    } else {
-        scrcard.disabled = false;
-        addscore.disabled = false;
-        for (i = 0; i < scoreInputs.length; i++) {
-            scoreInputs[i].disabled = false;
-        }
-    }
-
-    arrCount.innerHTML = arrCountString;
-    /*  function getScoreItem(pIndex) {
-        arrayNums;
-    } */
-
-    function addHndcp(div) {
-        if (div !== null || div !== NaN) {
-            return scratch + parseInt(div);
-        } else {
-            return null;
-        }
-    }
-
-    //console.log(scratch)
-
-    function titleCase(str) {
-        var splitStr = str.toLowerCase().split(" ");
-        for (var i = 0; i < splitStr.length; i++) {
-            // You do not need to check if i is larger than splitStr length, as your for does that for you
-            // Assign it back to the array
-            splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
-        }
-        // Directly return the joined string
-        return splitStr.join(" ");
-    }
-
-    function createDivDynamicInputs(index) {
-        delimiter = ",";
-        let mydivString = productList[index].divisions.toString();
-        let temp;
-        divItems = mydivString.split(delimiter);
-        console.log("divItems", divItems);
-        /***** division assigned handicap  */
-        for (var i = 0; i < divItems.length; i++) {
-            temp = document.createElement("div");
-            temp.classList.add("col");
-            let temp0 = document.createElement("div");
-            temp0.classList.add("form-floating", "mb-3");
-            let temp1 = document.createElement("label");
-            temp1.innerHTML = divItems[i].toUpperCase() + " <small>(handicap)</small>";
-            let temp2 = document.createElement("input");
-            temp2.setAttribute("id", divItems[i] + "-edit");
-            temp2.classList.add("form-control");
-            temp2.type = "number";
-
-            temp0.appendChild(temp2);
-            temp0.appendChild(temp1);
-            temp.appendChild(temp0);
-            document.getElementById("divisionsGrp").appendChild(temp);
-        }
-
-        /***** division scoring with handicap  */
-        for (var j = 0; j < divItems.length; j++) {
-            temp = document.createElement("div");
-            temp.classList.add("col");
-            let temp0 = document.createElement("div");
-            temp0.classList.add("form-floating", "mb-3");
-            let temp1 = document.createElement("label");
-            temp1.innerHTML = divItems[j].toUpperCase() + "+ <small>(handicap)</small>";
-            let temp2 = document.createElement("input");
-            temp2.setAttribute("id", divItems[j] + "-plus_hndcp");
-            temp2.classList.add("form-control");
-            temp2.type = "number";
-
-            temp0.appendChild(temp2);
-            temp0.appendChild(temp1);
-            temp.appendChild(temp0);
-            document.getElementById("divisionsScoreHndcap").appendChild(temp);
-        }
-    }
-
-    createDivDynamicInputs(index);
-    stepCountInput.value = arrayNums;
-    document.getElementById("id-edit").value = productList[index].id;
-    document.getElementById("name-edit").value = titleCase(productList[index].name);
-    document.getElementById("onPot-edit").value = productList[index].onPot;
-    document.getElementById("isPlaying-edit").value = productList[index].isPlaying;
-    document.getElementById("scorecard-edit").value = productList[index].scorecard;
-    if (productList[index].div1) {
-        document.getElementById("div1-edit").value = productList[index].div1;
-        productList[index].div1_plus_hndcp = addHndcp(productList[index].div1);
-        document.getElementById("div1-plus_hndcp").value = productList[index].div1_plus_hndcp;
-    }
-
-    if (productList[index].div2) {
-        document.getElementById("div2-edit").value = productList[index].div2;
-        productList[index].div2_plus_hndcp = addHndcp(productList[index].div2);
-        document.getElementById("div2-plus_hndcp").value = productList[index].div2_plus_hndcp;
-    }
-
-    if (productList[index].div3) {
-        document.getElementById("div3-edit").value = productList[index].div3;
-        productList[index].div3_plus_hndcp = addHndcp(productList[index].div3);
-        document.getElementById("div3-plus_hndcp").value = productList[index].div3_plus_hndcp;
-    }
-
-    if (productList[index].div4) {
-        document.getElementById("div4-edit").value = productList[index].div4;
-        productList[index].div4_plus_hndcp = addHndcp(productList[index].div4);
-        document.getElementById("div4-plus_hndcp").value = productList[index].div4_plus_hndcp;
-    }
-
-    if (productList[index].div5) {
-        document.getElementById("div5-edit").value = productList[index].div5;
-        productList[index].div5_plus_hndcp = addHndcp(productList[index].div5);
-        document.getElementById("div5-plus_hndcp").value = productList[index].div5_plus_hndcp;
-    }
-
-    if (productList[index].div6) {
-        document.getElementById("div6-edit").value = productList[index].div6;
-        productList[index].div6_plus_hndcp = addHndcp(productList[index].div6);
-        document.getElementById("div6-plus_hndcp").value = productList[index].div6_plus_hndcp;
-    }
-
-    if (productList[index].div7) {
-        document.getElementById("div7-edit").value = productList[index].div7;
-        productList[index].div7_plus_hndcp = addHndcp(productList[index].div7);
-        document.getElementById("div7-plus_hndcp").value = productList[index].div7_plus_hndcp;
-    }
-
-    if (productList[index].div8) {
-        document.getElementById("div8-edit").value = productList[index].div8;
-        productList[index].div8_plus_hndcp = addHndcp(productList[index].div8);
-        document.getElementById("div8-plus_hndcp").value = productList[index].div8_plus_hndcp;
-    }
-
-    if (productList[index].div9) {
-        document.getElementById("div9-edit").value = productList[index].div9;
-        productList[index].div9_plus_hndcp = addHndcp(productList[index].div9);
-        document.getElementById("div9-plus_hndcp").value = productList[index].div9_plus_hndcp;
-    }
-
-    if (productList[index].div10) {
-        document.getElementById("div10-edit").value = productList[index].div10;
-        productList[index].div10_plus_hndcp = addHndcp(productList[index].div10);
-        document.getElementById("div10-plus_hndcp").value = productList[index].div10_plus_hndcp;
-    }
-
-    /* document.getElementById("grp1-edit").value = productList[index].grp1;
-    document.getElementById("grp2-edit").value = productList[index].grp2;
-    document.getElementById("senrs-edit").value = productList[index].senrs; */
-
-    document.getElementById("scratch-edit").value = scratch;
-    /*  document.getElementById("hdcpGrp1-edit").value = addHndcp(productList[index].grp1);
-    document.getElementById("hdcpGrp2-edit").value = addHndcp(productList[index].grp2);
-    document.getElementById("hdcpSenr-edit").value = addHndcp(productList[index].senrs); */
-
-    document.getElementById("division-edit").value = productList[index].divisions;
-    document.getElementById("division-edit").setAttribute("value", productList[index].divisions);
-    let imagePreview = document.getElementById("image-div");
-    imagePreview.src = productList[index].image;
-
-    if (!imagePreview.src) {
-        imagePreview.src = "./img/no-pic.jpg";
-    } else {
-        imagePreview.src = productList[index].image;
-    }
-
-    imagePreview.innerHTML =
-        "<img src=" + imagePreview.src + " width='100%' height='100%' class='rounded-circle img-thumbnail'>";
-
-    /**
-     * @function anonymous-Function (Arrow Function)
-     *
-     * @division this function is used When the user selects an image file using the file dialog
-     *              input element, the function reads the contents of the selected file and updates
-     *              the image property of a iten object at a specific index in an array called productList.
-     *
-     * @param event
-     */
-    let imageEdit = document.getElementById("image-edit");
-    imageEdit.onchange = function (event) {
-        let file = event.target.files[0];
-        let reader = new FileReader();
-        reader.onload = function () {
-            productList[index].image = reader.result;
-            imagePreview.src = reader.result;
-        };
-        reader.readAsDataURL(file);
-    };
-
-    /**
-     * @function anonymous-Function (Arrow Function)
-     *
-     * @division The code defines an event handler function for the onclick event of an
-     *              HTML element with an id of "update". When the user clicks on this element,
-     *              the function performs a series of actions related to updating a item's details,
-     *              and store updated details into localstorage.
-     *
-     * @param none
-     */
-
-    document.querySelector("#update").onclick = function () {
-        upDateItem(index);
-    };
-
-    /*   function insertAfter(newNode, existingNode) {
-        existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
-    } */
-
-    document.querySelector("#addscore").onclick = function () {
-        document.querySelector("#addscore").classList.add("hidden");
-        document.querySelector("#update").disabled = true;
-        let productList;
-        if (localStorage.getItem("productList") == null) {
-            productList = [];
-        } else {
-            productList = JSON.parse(localStorage.getItem("productList"));
-        }
-        (scratchLive = 0), (delimiter = ",");
-        let scoreEdit = document.getElementById("scorecard-edit");
-        // let scrcard = document.getElementById("scorecard-edit");
-        let arrString = scoreEdit.value.toString();
-        arrItems = arrString.split(delimiter);
-        arrayNums = arrItems.map((i) => Number(i));
-        console.log("curr ", arrayNums);
-        let ajaxForm = document.getElementById("ajxForm");
-
-        ajaxForm.innerHTML = `<div class="input-group mb-3">
-                                            <input type="number" id="Glive" style="margin-top: 0px;" class="score-inputs form-control form-control-lg" placeholder="" aria-label="" aria-describedby="button-addon2">
-                                          
-                                            <button class="btn btn-outline-success" type="button" id="acceptScore"> <span class="material-icons"> check </span></button>
-                                           <div id="GliveFeedback" class="invalid-feedback">
-      Invalid score. Max value is 300.
-    </div>
-                                            </div>`;
-
-        document.getElementById("Glive").focus();
-
-        document.querySelector("#acceptScore").onclick = function () {
-            acCeptNewScore(index);
-            document.querySelector("#acceptScore").disabled = true;
-            document.getElementById("update").disabled = false;
-        };
-
-        let glive = document.getElementById("Glive");
-        glive.onchange = function (e) {
-            let title = e.target.title;
-            let value = e.target.value;
-            console.log("curr Arr ", arrayNums);
-            console.log("value ", value);
-            if (glive.value > 300) {
-                glive.classList.add("is-invalid");
-                document.querySelector("#acceptScore").disabled = true;
-                return false;
-            } else {
-                glive.classList.remove("is-invalid");
-                document.querySelector("#acceptScore").disabled = false;
+    let numOfGames = JSON.parse(localStorage.getItem("numOfGames"));
+    let registerMember = document.querySelector("#registerMember");
+    for (let i = 0; i < memberLists.length; i++) {
+        if (memberLists[i].id == iD) {
+            let arrString = memberLists[i].scorecard.toString();
+            arrItems = arrString.split(delimiter);
+            arrayNums = arrItems.map((i) => Number(i));
+            console.log("current", arrayNums);
+            console.log("current length", arrayNums.length);
+            step_edit.value = arrayNums.length;
+            if (arrayNums.length > 0) {
+                buildScorObjs(memberLists[i], arrayNums);
             }
 
-            document.querySelector("#acceptScore").classList.add("btn-success");
-            arrayNums.push(parseInt(value));
-            //alert(arrayNums);
-            scratchLive = arrayNums.reduce((accumulator, currentValue) => {
+            scratch = arrayNums.reduce((accumulator, currentValue) => {
                 return accumulator + currentValue;
             }, 0);
 
-            console.log("arrayNums ", arrayNums.filter(Number));
-            scoreEdit.value = arrayNums.filter(Number);
-
-            if (arrayNums.filter(Number).length >= 1) {
-                buildScorObjs(productList[index], arrayNums.filter(Number));
+            function addHndcp(div) {
+                if (div !== null || div !== NaN) {
+                    return scratch + parseInt(div);
+                } else {
+                    return null;
+                }
             }
 
-            document.getElementById("step-edit").value = arrayNums.length;
-            document.getElementById("scratch-edit").value = scratchLive;
-            /*  document.getElementById("hdcpGrp1-edit").value = addHndcp(productList[index].grp1);
-            document.getElementById("hdcpGrp2-edit").value = addHndcp(productList[index].grp2);
-            document.getElementById("hdcpSenr-edit").value = addHndcp(productList[index].senrs); */
-            console.log("arrayNums length ", arrayNums.length);
-        };
-    };
-
-    scrcard.onchange = function () {
-        let productList;
-        if (localStorage.getItem("productList") == null) {
-            productList = [];
-        } else {
-            productList = JSON.parse(localStorage.getItem("productList"));
-        }
-        (scratchLive = 0), (delimiter = ",");
-
-        let arrString = scrcard.value.toString();
-        arrItems = arrString.split(delimiter);
-        arrayNums = arrItems.map((i) => Number(i));
-
-        scratchLive = arrayNums.reduce((accumulator, currentValue) => {
-            return accumulator + currentValue;
-        }, 0);
-        let step = calcPercentage(arrayNums.length, numOfGames);
-        console.log("step ", step);
-        console.log("scratchLive ", scratchLive);
-
-        function addHndcp(div) {
-            if (div !== null || div !== NaN) {
-                return parseInt(scratchLive + div);
+            if (arrayNums.length == numOfGames) {
+                scorecard_edit.disabled = true;
             } else {
-                return null;
+                scorecard_edit.disabled = false;
             }
-        }
 
-        document.getElementById("scratch-edit").value = scratchLive;
-        document.getElementById("step-edit").value = arrayNums.length;
-        /*  document.getElementById("hdcpGrp1-edit").value = addHndcp(productList[index].grp1);
-        document.getElementById("hdcpGrp2-edit").value = addHndcp(productList[index].grp2);
-        document.getElementById("hdcpSenr-edit").value = addHndcp(productList[index].senrs); */
-    };
+            id_edit.value = memberLists[i].id;
+            name_show.textContent = memberLists[i].name;
+            image_show.src = memberLists[i].image;
+            name_edit.value = memberLists[i].name;
+            isplaying_edit.value = memberLists[i].isplaying;
+            divisions_edit.value = memberLists[i].divisions.replace(/\s/g, ",");
+            event_id_edit.value = memberLists[i].event_id;
+            scorecard_edit.value = memberLists[i].scorecard.replace(/\s/g, ",");
+            scratch_edit.value = scratch;
 
-    function buildScorObjs(curobj, arr) {
-        let scoreInputs = document.getElementById("scoreInputs");
-        arrayNums = arr.map((i) => Number(i));
-        console.log("arrayNums ", arrayNums);
-        let html = "";
-        let scrItems = [];
+            function showReg() {
+                if (!memberLists[i].isplaying) {
+                    myTab.classList.add("hidden");
+                    registerMember.classList.toggle("hidden");
+                } else {
+                    myTab.classList.remove("hidden");
+                    registerMember.classList.toggle("hidden");
+                }
+            }
+            showReg();
 
-        if (arrayNums.length > 0 && arrayNums[0] != 0) {
-            arrayNums.forEach((element, index) => {
-                //  console.log("Index: " + index + " Value: " + element);
-                html += `<div class='col-lg-4 col-md-3 col-sm-6' data-index='${index}'>
+            function handleSwitchInput(isplaying_edit) {
+                let toggleID = isplaying_edit.id;
+                console.log("toggleID", toggleID);
+                console.log("isplaying_edit.value ", JSON.parse(isplaying_edit.value));
+                if (JSON.parse(isplaying_edit.value) === true || isplaying_edit.value == "true") {
+                    //document.getElementById(toggleID).disabled = true;
+                    document.getElementById(toggleID).parentNode.classList.remove("off", "btn-secondary");
+                    document.getElementById(toggleID).parentNode.classList.add("btn-sucess");
+                } else {
+                    document.getElementById(toggleID).checked = false;
+                    document.getElementById(toggleID).parentNode.classList.add("off", "btn-secondary");
+                    document.getElementById(toggleID).parentNode.classList.remove("btn-sucess");
+                }
+                document.getElementById(toggleID).addEventListener("change", function (event) {
+                    if (event.target.checked) {
+                        console.log("Checkbox is checked..");
+                        event.target.value = true;
+                    } else {
+                        console.log("Checkbox is not checked..");
+                        event.target.value = false;
+                        // registerMember.classList.toggle("hidden");
+                    }
+                    registerMember.classList.remove("hidden");
+                });
+            }
+
+            //  handleSwitchInput(isplaying_toggle, isplaying_edit);
+            handleSwitchInput(isplaying_edit);
+
+            /*   function handleSwitchInput(isPlayingEditID) {
+                let toggleID = isPlayingEditID;
+                console.log("toggleID", isPlayingEditID);
+
+                let thisEl = document.getElementById("isplaying_edit");
+                console.log("thisEl", thisEl);
+                if (thisEl.value == "true") {
+                    thisEl.checked = true;
+                } else {
+                    thisEl.checked = false;
+                }
+                document.getElementById(toggleID).addEventListener("change", function (event) {
+                    if (event.target.checked) {
+                        console.log("Checkbox is checked..");
+                        event.target.value = true;
+                        registerMember.classList.toggle("hidden");
+                    } else {
+                        console.log("Checkbox is not checked..");
+                        event.target.value = false;
+                        registerMember.classList.toggle("hidden");
+                    }
+                });
+            }
+
+            //  handleSwitchInput(isplaying_toggle, isplaying_edit);
+            handleSwitchInput("isplaying_edit"); */
+
+            let img = function () {
+                if (!memberLists[i].image) {
+                    return `<img src='./img/no-pic.jpg'
+              class='rounded-circle img-thumbnail'
+              alt='profile-image' style='height: 100px; width: 100px;'
+              />`;
+                } else {
+                    return `<img data-id=" + memberLists[i].id + "
+              src='${memberLists[i].image}'
+              class='rounded-circle img-thumbnail'
+              alt='profile-image' style='height: 100px; width: 100px;'
+              />`;
+                }
+            };
+
+            let imagePreview = document.getElementById("image-div");
+            imagePreview.src = memberLists[i].image;
+            document.getElementById("image-div").innerHTML = img();
+
+            /**
+             * @function anonymous-Function (Arrow Function)
+             *
+             * @description this function is used When the user selects an image file using the file dialog
+             *              input element, the function reads the contents of the selected file and updates
+             *              the image property of a iten object at a specific index in an array called memberLists.
+             *
+             * @param event
+             */
+            let imageEdit = document.getElementById("image-edit");
+            imageEdit.onchange = function (event) {
+                let file = event.target.files[0];
+                let reader = new FileReader();
+                reader.onload = function () {
+                    memberLists[i].image = reader.result;
+                    imagePreview.src = reader.result;
+                    imagePreview.src = reader.result;
+                };
+                reader.readAsDataURL(file);
+            };
+            // let validScore = document.getElementById("validateScore");
+
+            /*  var result = document.getElementById("scorecard-edit-error-msg");
+            var inp = document.getElementById("scorecard-edit");
+            function check() {
+                var num = inp.value;
+                var number = Number(num);
+                if (number === Math.floor(number)) {
+                    result.innerHTML = number + " is a whole number.";
+                } else {
+                    result.innerHTML = number + " is a decimal number.";
+                }
+            } */
+
+            scorecard_edit.onchange = function (event) {
+                //  check();
+                //let valString = event.target.value.replace(/\s/g, ",");
+                let valString = event.target.value.replaceAll(/\s/g, ",").replaceAll(/\s/g, ",");
+                scorecard_edit.value = valString;
+                console.log("valString", valString.toString());
+                arrItems = valString.split(delimiter);
+                console.log("arrItems", arrItems);
+                arrayNums = arrItems.map((i) => Number(i));
+                console.log("arrayNums", arrayNums);
+                scratch = arrayNums.reduce((accumulator, currentValue) => {
+                    return accumulator + currentValue;
+                }, 0);
+                console.log(scratch);
+                scratch_edit.value = scratch;
+                step_edit.value = arrayNums.length;
+
+                //console.log(memberLists[i].div1);
+
+                if (memberLists[i].div1) {
+                    div1_edit.value = memberLists[i].div1;
+                    div1_plus_hcp.value = addHndcp(memberLists[i].div1);
+                    memberLists[i].div1_plus_hcp = addHndcp(memberLists[i].div1);
+                    div1_plus_hcp.value = memberLists[i].div1_plus_hcp;
+                    buildScorObjs(memberLists[i], arrayNums);
+                }
+                if (memberLists[i].div2) {
+                    div2_edit.value = memberLists[i].div2;
+                    div2_plus_hcp.value = addHndcp(memberLists[i].div2);
+                    memberLists[i].div2_plus_hcp = addHndcp(memberLists[i].div2);
+                    div2_plus_hcp.value = memberLists[i].div2_plus_hcp;
+                    buildScorObjs(memberLists[i], arrayNums);
+                }
+
+                if (memberLists[i].div3) {
+                    div3_edit.value = memberLists[i].div3;
+                    div3_plus_hcp.value = addHndcp(memberLists[i].div3);
+                    memberLists[i].div3_plus_hcp = addHndcp(memberLists[i].div3);
+                    div3_plus_hcp.value = memberLists[i].div3_plus_hcp;
+                    buildScorObjs(memberLists[i], arrayNums);
+                }
+
+                if (memberLists[i].div4) {
+                    div4_edit.value = memberLists[i].div4;
+                    div4_plus_hcp.value = addHndcp(memberLists[i].div4);
+                    memberLists[i].div4_plus_hcp = addHndcp(memberLists[i].div4);
+                    div4_plus_hcp.value = memberLists[i].div4_plus_hcp;
+                    buildScorObjs(memberLists[i], arrayNums);
+                }
+
+                if (memberLists[i].div5) {
+                    div5_edit.value = memberLists[i].div5;
+                    div5_plus_hcp.value = addHndcp(memberLists[i].div5);
+                    memberLists[i].div5_plus_hcp = addHndcp(memberLists[i].div5);
+                    div5_plus_hcp.value = memberLists[i].div5_plus_hcp;
+                    buildScorObjs(memberLists[i], arrayNums);
+                }
+
+                if (memberLists[i].div6) {
+                    div6_edit.value = memberLists[i].div6;
+                    div6_plus_hcp.value = addHndcp(memberLists[i].div6);
+                    memberLists[i].div6_plus_hcp = addHndcp(memberLists[i].div6);
+                    div6_plus_hcp.value = memberLists[i].div6_plus_hcp;
+                    buildScorObjs(memberLists[i], arrayNums);
+                }
+
+                if (memberLists[i].div7) {
+                    div7_edit.value = memberLists[i].div7;
+                    div7_plus_hcp.value = addHndcp(memberLists[i].div7);
+                    memberLists[i].div7_plus_hcp = addHndcp(memberLists[i].div7);
+                    div7_plus_hcp.value = memberLists[i].div7_plus_hcp;
+                    buildScorObjs(memberLists[i], arrayNums);
+                }
+
+                if (memberLists[i].div8) {
+                    div8_edit.value = memberLists[i].div8;
+                    div8_plus_hcp.value = addHndcp(memberLists[i].div8);
+                    memberLists[i].div8_plus_hcp = addHndcp(memberLists[i].div8);
+                    div8_plus_hcp.value = memberLists[i].div8_plus_hcp;
+                    buildScorObjs(memberLists[i], arrayNums);
+                }
+
+                if (memberLists[i].div9) {
+                    div9_edit.value = memberLists[i].div9;
+                    div9_plus_hcp.value = addHndcp(memberLists[i].div9);
+                    memberLists[i].div9_plus_hcp = addHndcp(memberLists[i].div9);
+                    div9_plus_hcp.value = memberLists[i].div9_plus_hcp;
+                    buildScorObjs(memberLists[i], arrayNums);
+                }
+
+                if (memberLists[i].div10) {
+                    div10_edit.value = memberLists[i].div10;
+                    div10_plus_hcp.value = addHndcp(memberLists[i].div10);
+                    memberLists[i].div10_plus_hcp = addHndcp(memberLists[i].div10);
+                    div10_plus_hcp.value = memberLists[i].div10_plus_hcp;
+                    buildScorObjs(memberLists[i], arrayNums);
+                }
+            };
+
+            function createDivDynamicInputs(i) {
+                delimiter = ",";
+                let mydivString = memberLists[i].divisions;
+                console.log("mydivString", mydivString);
+                let temp;
+                divItems = mydivString.split(delimiter);
+                console.log("divItems", divItems);
+                /***** division assigned handicap  */
+                let dvsionGrp = document.getElementById("divisionsGrp");
+                for (var i = 0; i < divItems.length; i++) {
+                    temp = document.createElement("div");
+                    temp.classList.add("col");
+                    let temp0 = document.createElement("div");
+                    temp0.classList.add("form-floating", "mb-3");
+                    let temp1 = document.createElement("label");
+                    temp1.innerHTML = divItems[i].toUpperCase() + " <small>(handicap)</small>";
+                    let temp2 = document.createElement("input");
+                    temp2.setAttribute("readonly", "readonly");
+                    temp2.setAttribute("id", divItems[i] + "_edit");
+                    temp2.classList.add("form-control");
+                    temp2.type = "number";
+
+                    temp0.appendChild(temp2);
+                    temp0.appendChild(temp1);
+                    temp.appendChild(temp0);
+
+                    dvsionGrp.appendChild(temp);
+                }
+
+                /***** division scoring with handicap  */
+                let divisionsScoreHndcap = document.getElementById("divisionsScoreHndcap");
+                for (var j = 0; j < divItems.length; j++) {
+                    temp = document.createElement("div");
+                    temp.classList.add("col");
+                    let temp0 = document.createElement("div");
+                    temp0.classList.add("form-floating", "mb-3");
+                    let temp1 = document.createElement("label");
+                    temp1.innerHTML = divItems[j].toUpperCase() + "+ <small>(handicap)</small>";
+                    let temp2 = document.createElement("input");
+                    temp2.setAttribute("readonly", "readonly");
+                    temp2.setAttribute("id", divItems[j] + "_plus_hcp");
+                    temp2.classList.add("form-control");
+                    temp2.type = "number";
+
+                    temp0.appendChild(temp2);
+                    temp0.appendChild(temp1);
+                    temp.appendChild(temp0);
+
+                    divisionsScoreHndcap.appendChild(temp);
+                }
+            }
+
+            createDivDynamicInputs(i);
+            /****** DYNAMIC EDIT INPUTS *******/
+            let div1_edit = document.getElementById("div1_edit"),
+                div2_edit = document.getElementById("div2_edit"),
+                div3_edit = document.getElementById("div3_edit"),
+                div4_edit = document.getElementById("div4_edit"),
+                div5_edit = document.getElementById("div5_edit"),
+                div6_edit = document.getElementById("div6_edit"),
+                div7_edit = document.getElementById("div7_edit"),
+                div8_edit = document.getElementById("div8_edit"),
+                div9_edit = document.getElementById("div9_edit"),
+                div10_edit = document.getElementById("div10_edit"),
+                div1_plus_hcp = document.getElementById("div1_plus_hcp"),
+                div2_plus_hcp = document.getElementById("div2_plus_hcp"),
+                div3_plus_hcp = document.getElementById("div3_plus_hcp"),
+                div4_plus_hcp = document.getElementById("div4_plus_hcp"),
+                div5_plus_hcp = document.getElementById("div5_plus_hcp"),
+                div6_plus_hcp = document.getElementById("div6_plus_hcp"),
+                div7_plus_hcp = document.getElementById("div7_plus_hcp"),
+                div8_plus_hcp = document.getElementById("div8_plus_hcp"),
+                div9_plus_hcp = document.getElementById("div9_plus_hcp"),
+                div10_plus_hcp = document.getElementById("div10_plus_hcp");
+            /****** DYNAMIC EDIT INPUTS *******/
+            if (memberLists[i].div1) {
+                div1_edit.value = memberLists[i].div1;
+                memberLists[i].div1_plus_hcp = addHndcp(memberLists[i].div1);
+                div1_plus_hcp.value = memberLists[i].div1_plus_hcp;
+            }
+
+            if (memberLists[i].div2) {
+                div2_edit.value = memberLists[i].div2;
+                memberLists[i].div2_plus_hcp = addHndcp(memberLists[i].div2);
+                console.log(addHndcp(memberLists[i].div2));
+                div2_plus_hcp.value = memberLists[i].div2_plus_hcp;
+            }
+
+            if (memberLists[i].div3) {
+                div3_edit.value = memberLists[i].div3;
+                memberLists[i].div3_plus_hcp = addHndcp(memberLists[i].div3);
+                div3_plus_hcp.value = memberLists[i].div3_plus_hcp;
+            }
+
+            if (memberLists[i].div4) {
+                div4_edit.value = memberLists[i].div4;
+                memberLists[i].div4_plus_hcp = addHndcp(memberLists[i].div4);
+                div4_plus_hcp.value = memberLists[i].div4_plus_hcp;
+            }
+
+            if (memberLists[i].div5) {
+                div5_edit.value = memberLists[i].div5;
+                memberLists[i].div5_plus_hcp = addHndcp(memberLists[i].div5);
+                div5_plus_hcp.value = memberLists[i].div5_plus_hcp;
+            }
+
+            if (memberLists[i].div6) {
+                div6_edit.value = memberLists[i].div6;
+                memberLists[i].div6_plus_hcp = addHndcp(memberLists[i].div6);
+                div6_plus_hcp.value = memberLists[i].div6_plus_hcp;
+            }
+
+            if (memberLists[i].div7) {
+                div7_edit.value = memberLists[i].div7;
+                memberLists[i].div7_plus_hcp = addHndcp(memberLists[i].div7);
+                div7_plus_hcp.value = memberLists[i].div7_plus_hcp;
+            }
+
+            if (memberLists[i].div8) {
+                div8_edit.value = memberLists[i].div8;
+                memberLists[i].div8_plus_hcp = addHndcp(memberLists[i].div8);
+                div8_plus_hcp.value = memberLists[i].div8_plus_hcp;
+            }
+
+            if (memberLists[i].div9) {
+                div9_edit.value = memberLists[i].div9;
+                memberLists[i].div9_plus_hcp = addHndcp(memberLists[i].div9);
+                div9_plus_hcp.value = memberLists[i].div9_plus_hcp;
+            }
+
+            if (memberLists[i].div10) {
+                div10_edit.value = memberLists[i].div10;
+                memberLists[i].div10_plus_hcp = addHndcp(memberLists[i].div10);
+                div10_plus_hcp.value = memberLists[i].div10_plus_hcp;
+            }
+
+            /**
+             * @function anonymous-Function (Arrow Function)
+             *
+             * @description The code defines an event handler function for the onclick event of an
+             *              HTML element with an id of "update". When the user clicks on this element,
+             *              the function performs a series of actions related to updating a item's details,
+             *              and store updated details into localstorage.
+             *
+             * @param none
+             */
+
+            document.querySelector("#registerMember").onclick = function () {
+                // memberLists[i].id = document.getElementById("id-edit").value;
+
+                memberLists[i].isplaying = isplaying_edit.value;
+
+                // this line is used to convert the array to a JSON string before it is saved to local storage.
+                localStorage.setItem("memberLists", JSON.stringify(memberLists));
+                // The is method, which refreshes the page with the updated data.
+                location.reload();
+
+                showData();
+
+                document.querySelector(".btn-close").click();
+                alert("Registered Successfully");
+            };
+
+            function buildScorObjs(curobj, arr) {
+                let scoreInputs = document.getElementById("scoreInputs");
+                arrayNums = arr.map((i) => Number(i));
+                console.log("arrayNums ", arrayNums);
+                let html = "";
+                let scrItems = [];
+
+                if (arrayNums.length > 0 && arrayNums[0] != 0) {
+                    arrayNums.forEach((element, index) => {
+                        html += `<div class='col-lg-2 col-md-4 col-sm-6' data-index='${index}'>
                         <div class='form-floating mb-3 mt-2'>
                           
                             <input disabled class="score-inputs form-control form-control-lg" type='number' key='${index}' title='${index}' value='${element}' id='g${
-                    index + 1
-                }-live' placeholder='' aria-label='Game scores' aria-describedby='inputGroup-sizing-default'>
+                            index + 1
+                        }-live' placeholder='' aria-label='Game scores' aria-describedby='inputGroup-sizing-default'>
                   <label for='exampleFormControlSelect1'>G-${index + 1}</label>
                         </div>
                     </div>`;
 
-                scrItems.push({["g" + [index + 1]]: element});
-            });
-            console.log("scrItems ", scrItems);
-            // Object.assign(curobj, scrItems);
-            console.log(curobj);
-            //  console.log(Object.assign({}, ...scrItems));
-            let newOb = Object.assign({}, ...scrItems);
-            Object.assign(curobj, newOb); /************* This updates the array with new scores */
-            console.log("New array ", Object.assign(curobj, newOb));
+                        scrItems.push({["g" + [index + 1]]: element});
+                    });
 
-            scoreInputs.innerHTML = html;
+                    let newOb = Object.assign({}, ...scrItems);
+                    Object.assign(curobj, newOb); /************* This updates the array with new scores */
+                    console.log("New array ", Object.assign(curobj, newOb));
 
-            let scoreInput = document.querySelectorAll(".score-inputs");
-            let scrcard = document.getElementById("scorecard-edit");
-
-            for (i = 0; i < scoreInput.length; i++) {
-                scoreInput[i].onchange = function (e) {
-                    let title = e.target.title;
-                    let value = e.target.value;
-                    console.log("curr " + arrayNums);
-                    console.log("scoreInput.length " + scoreInput.length);
-
-                    const arr = arrayNums;
-                    const index = parseInt(title);
-                    const updatedData = parseInt(value);
-                    arr.splice(index, index, updatedData);
-
-                    console.log(index + " " + parseInt(index + 1));
-
-                    console.log(arr);
-                    scrcard.value = arr;
-                    console.log(arr.splice(index, parseInt(index + 1), updatedData));
-
-                    let productList;
-                    if (localStorage.getItem("productList") == null) {
-                        productList = [];
-                    } else {
-                        productList = JSON.parse(localStorage.getItem("productList"));
-                    }
-                    (scratchLive = 0), (delimiter = ",");
-
-                    let arrString = scrcard.value.toString();
-                    arrItems = arrString.split(delimiter);
-                    arrayNums = arrItems.map((i) => Number(i));
-
-                    scratchLive = arrayNums.reduce((accumulator, currentValue) => {
-                        return accumulator + currentValue;
-                    }, 0);
-
-                    console.log("scratchLive ", scratchLive);
-                    document.getElementById("scratch-edit").value = scratchLive;
-                    /*    document.getElementById("hdcpGrp1-edit").value = addHndcp(productList[index].grp1);
-                    document.getElementById("hdcpGrp2-edit").value = addHndcp(productList[index].grp2);
-                    document.getElementById("hdcpSenr-edit").value = addHndcp(productList[index].senrs); */
-                };
+                    scoreInputs.innerHTML = html;
+                }
             }
+
+            document.querySelector("#update").onclick = function () {
+                // memberLists[i].id = document.getElementById("id-edit").value;
+                memberLists[i].name = name_edit.value;
+                memberLists[i].isplaying = isplaying_edit.value;
+                memberLists[i].divisions = divisions_edit.value;
+                memberLists[i].event_id = event_id_edit.value;
+                memberLists[i].scorecard = scorecard_edit.value;
+                memberLists[i].scratch = scratch_edit.value;
+                memberLists[i].step = step_edit.value;
+
+                // this line is used to convert the array to a JSON string before it is saved to local storage.
+                localStorage.setItem("memberLists", JSON.stringify(memberLists));
+                // The is method, which refreshes the page with the updated data.
+                location.reload();
+
+                showData();
+                id_edit.value = "";
+                scorecard_edit.value = "";
+                name_edit.value = "";
+                divisions_edit.value = "";
+                event_id_edit.value = "";
+                step_edit.value = "";
+                //  document.getElementById("close-btn").click();
+                document.querySelector(".btn-close").click();
+                alert("Data Updated Successfully");
+            };
         }
-    }
-
-    function acCeptNewScore(index) {
-        let productList,
-            delimiter = ",";
-        if (localStorage.getItem("productList") == null) {
-            productList = [];
-        } else {
-            productList = JSON.parse(localStorage.getItem("productList"));
-        }
-        let virtualAlert = `<div class="alert alert-success" role="alert">
-  Added score successfully! Click "UPDATE" to save.
-</div>`;
-        document.getElementById("ajxAlert").innerHTML = virtualAlert;
-        // document.getElementById("update").disabled = false;
-
-        let arrString = productList[index].scorecard.toString();
-        arrItems = arrString.split(delimiter);
-        arrayNums = arrItems.map((i) => Number(i));
-        console.log("current", arrayNums);
-        console.log("current length", arrayNums.length);
-        if (arrayNums.length >= 1) {
-            buildScorObjs(productList[index], arrayNums);
-            document.getElementById("step-edit").value = arrayNums.length;
-        }
-
-        productList[index].id = document.getElementById("id-edit").value;
-        productList[index].step = document.getElementById("step-edit").value;
-        productList[index].name = document.getElementById("name-edit").value;
-        productList[index].scorecard = document.getElementById("scorecard-edit").value;
-        productList[index].divisions = document.getElementById("division-edit").value;
-        productList[index].grp1 = document.getElementById("grp1-edit").value;
-        productList[index].grp2 = document.getElementById("grp2-edit").value;
-        productList[index].senrs = document.getElementById("senrs-edit").value;
-        productList[index].scratch = document.getElementById("scratch-edit").value;
-        productList[index].onPot = document.getElementById("onPot-edit").value;
-        productList[index].isPlaying = document.getElementById("isPlaying-edit").value;
-        // this line is used to convert the array to a JSON string before it is saved to local storage.
-
-        // document.getElementById("close-btn").click();
-        localStorage.setItem("productList", JSON.stringify(productList));
-
-        showTable();
-        showData();
-    }
-
-    function upDateItem(index) {
-        let productList,
-            delimiter = ",";
-        if (localStorage.getItem("productList") == null) {
-            productList = [];
-        } else {
-            productList = JSON.parse(localStorage.getItem("productList"));
-        }
-
-        let arrString = productList[index].scorecard.toString();
-        arrItems = arrString.split(delimiter);
-        arrayNums = arrItems.map((i) => Number(i));
-        console.log("current", arrayNums);
-        console.log("current length", arrayNums.length);
-        if (arrayNums.length >= 1) {
-            buildScorObjs(productList[index], arrayNums);
-        }
-        document.querySelector("#addscore").classList.remove("hidden");
-        productList[index].step = arrayNums.length;
-        productList[index].numOfGames = numOfGames;
-        productList[index].id = document.getElementById("id-edit").value;
-        productList[index].name = document.getElementById("name-edit").value;
-        productList[index].scorecard = document.getElementById("scorecard-edit").value;
-        productList[index].divisions = document.getElementById("division-edit").value;
-
-        /*  productList[index].grp1 = document.getElementById("grp1-edit").value;
-        productList[index].grp2 = document.getElementById("grp2-edit").value;
-        productList[index].senrs = document.getElementById("senrs-edit").value; */
-        productList[index].scratch = document.getElementById("scratch-edit").value;
-        productList[index].onPot = document.getElementById("onPot-edit").value;
-        productList[index].isPlaying = document.getElementById("isPlaying-edit").value;
-        // this line is used to convert the array to a JSON string before it is saved to local storage.
-
-        document.getElementById("id-edit").value = "";
-        //document.getElementById("id-edit").value = "";
-        document.getElementById("step-edit").value = "";
-        document.getElementById("name-edit").value = "";
-        document.getElementById("scorecard-edit").value = "";
-        document.getElementById("scratch-edit").value = "";
-        document.getElementById("grp1-edit").value = "";
-        document.getElementById("grp2-edit").value = "";
-        document.getElementById("senrs-edit").value = "";
-        document.getElementById("division-edit").value = "";
-        document.getElementById("onPot-edit").value = "";
-        document.getElementById("isPlaying-edit").value = "";
-        document.getElementById("close-btn").click();
-        localStorage.setItem("productList", JSON.stringify(productList));
-        // The is method, which refreshes the page with the updated data.
-        showTable();
-        showData();
-
-        location.reload();
     }
 }
 
 /**
  * @function searchBar
  *
- * @division This function is designed to search for products in a Arraylist
+ * @description This function is designed to search for products in a Arraylist
  *              based on user input. It first gets the search value from an input
- *              field with an id of "searchProductText". It then give an array of
- *              item from the local storage using the key "productList".
+ *              field with an id of "searchMemberText". It then give an array of
+ *              item from the local storage using the key "memberLists".
  *
  * @param none
  */
 function searchBar() {
     let searchvalue = document.querySelector("#serachProductText").value;
-    console.log(searchvalue);
+    console.log("searchvalue", searchvalue);
     let sortedItem = [];
-    let sortedProduct = JSON.parse(localStorage.getItem("productList")) ?? [];
+    let sortedMembers = JSON.parse(localStorage.getItem("memberLists")) ?? [];
     let regex = new RegExp(searchvalue, "i");
-    for (let element of sortedProduct) {
+    for (let element of sortedMembers) {
+        console.log("regex", regex);
         let item = element;
         if (regex.test(item.name)) {
             sortedItem.push(element);
         }
     }
-    console.log(sortedItem);
-    searchProduct(sortedItem);
+    console.log("sortedItem", sortedItem);
+    searchMember(sortedItem);
 }
 
 /**
- * @function searchProduct
+ * @function searchMember
  *
- * @division This function is generates HTML code to display search
+ * @description This function is generates HTML code to display search
  *              results for items. If there are no results, it displays an
  *              image and a error message. Otherwise, it generates a card
  *              for each product that matches the search query,
  *
  * @param sortedItem (a array format)
  */
-function searchProduct(sortedItem) {
+function searchMember(sortedItem) {
+    document.querySelector("#sort-table").classList.add("d-flex");
+
     let html = "";
-    console.log("searchProduct", sortedItem);
+    console.log("searchMember", sortedItem);
     if (sortedItem.length === 0) {
-        // Display an image if the productList array is empty
+        // Display an image if the memberLists array is empty
         html += `<div class="card-body">
         <div class="row gx-2">
           <div class="col">
             <div class="p-3">
-              <img src="img/no-data-found.jpg" class="img-fluid rounded mx-auto d-block" alt="No Products">
+              <img src="img/search-not-found.png" class="img-fluid rounded mx-auto d-block" alt="No Products" style="width: 18rem; height: 18rem;">
+              <p class="text-center">No Similar Items Found..!</p>
             </div>
           </div>
         </div>
@@ -1038,72 +928,75 @@ function searchProduct(sortedItem) {
                 if (!element.image) {
                     return `<img src='./img/no-pic.jpg'
               class='rounded-circle img-thumbnail'
-              alt='profile-image'
+              alt='profile-image' style='height: 100px; width: 100px;'
               />`;
                 } else {
                     return `<img
               src='${element.image}'
               class='rounded-circle img-thumbnail'
-              alt='profile-image'
+              alt='profile-image' style='height: 100px; width: 100px;'
               />`;
                 }
             };
-
-            let scrTch = function () {
-                if (!element.scratch) {
-                    return `0`;
-                } else {
-                    return `${element.scratch}`;
-                }
-            };
-            let stepPercent = function () {
-                let perc = calcPercentage(element.step, element.numOfGames);
-                if (!element.step) {
-                    return ``;
-                } else {
-                    return `<div class="m-widget4__progress ms-auto"><div class="m-widget4__progress-wrapper"> <span class="m-widget17__progress-number"> ${perc}% </span> <span class="m-widget17__progress-label"> Complete </span><div class="progress m-progress--sm"><div class="progress-bar bg-success" role="progressbar" style="width: 17%;" aria-valuenow="${element.step}" aria-valuemin="0" aria-valuemax="${element.numOfGames}"></div></div></div></div>`;
-                }
-            };
-            html += `<li  data-key="${
-                element.id
-            }" class="py-8 list-group-item d-flex justify-content-between align-items-start">
-                    <div class="ms-2 thumb-md member-thumb" onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2'>
-                        ${img()}
-                    </div>
-                    <div class="ms-2 me-auto"  onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2'>
-                        <div class="fw-bold">${element.name}</div>
-                        ${scrTch()} points
-                    </div>
-                   ${stepPercent()}
-                     <div class="dropdown ms-auto">
-                                        <i class="fas fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                                        <ul class="dropdown-menu" style="">
-                                            <li>
-                                                <span class="dropdown-item" onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2'>
-                                                    <i class="fas fa-pen mx-2"></i> Update
-                                                </span>
-                                            </li>
-                                            <li>
-                                                <span class="dropdown-item" onclick='deleteData("${index}")'>
-                                                     <i class="fas mx-2 fa-solid fa-trash" style="color: #ff0000"></i> Delete
-                                                </span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                    <span class="badge text-bg-primary rounded-pill hidden">14</span>
-                </li>`;
+            html += `<div>
+   <div class='row gx-2'>
+      <div class='col'>
+         <div class='p-3'>
+            <div class='card d-flex card-all' >
+               <div class='card-body'style="width: 100%;" onclick='editData("${
+                   element.id
+               }")' type='button' data-bs-toggle='modal' data-bs-target='#editMemberModal'>
+                  <h5 class='card-title text-center hidden'><strong>MID</strong> ${element.id} </h5>
+                  ${img()}
+               </div>
+               <ul class='list-group list-group-flush' onclick='editData("${
+                   element.id
+               }")' type='button' data-bs-toggle='modal' data-bs-target='#editMemberModal'>
+                  <li class='list-group-item'>
+                     <p class='text-center fs-5'><strong> ${element.name} </strong> </p>
+                  </li>
+                  <li class='list-group-item text-capitalize hidden'><strong>${element.divisions}</strong> </li>
+               </ul>
+               <div class='card-body'>
+                  <div class="dropdown ms-auto text-right">
+                     <i class="btn fas fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                     <ul class="dropdown-menu" style="">
+                        <li>
+                           <span class="dropdown-item" onclick='editData(${
+                               element.id
+                           })' type='button' data-bs-toggle='modal' data-bs-target='#editMemberModal'>
+                           <i class="fas fa-pen mx-2"></i> Update
+                           </span>
+                        </li>
+                        <li>
+                           <span class="dropdown-item" onclick='deleteData(${element.id})'>
+                           <i class="fas mx-2 fa-solid fa-trash" style="color: #ff0000"></i> Delete
+                           </span>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>`;
         });
     }
-    document.querySelector("#curd-table").classList.add("d-none");
-    document.querySelector("#sort-table .mt-5.row").innerHTML = html;
+    curd_table.classList.add("d-none");
+    filter_table.innerHTML = html;
+    /*  document.querySelector("#curd-table").classList.add("d-none");
+    document.querySelector("#filter-table").classList.remove("d-none");
+    document.querySelector("#filter-table").innerHTML = html;
+    document.querySelector("#sort-table").classList.remove("d-none"); */
 }
 
 /**
  * @function anonymous-Function (Arrow Function)
  *
- * @division When the user selects an option from the dropdown menu of
+ * @description When the user selects an option from the dropdown menu of
  *              sorting, the value of the selected option is stored in the sortBy variable.
- *              Then, the filterProduct function is called with sortBy as its
+ *              Then, the filterSort function is called with sortBy as its
  *              argument to perform the sorting action based on the selected value.
  *
  * @param change (it take any event as a parameter)
@@ -1111,98 +1004,138 @@ function searchProduct(sortedItem) {
 let selectElem = document.querySelector("#sort-select");
 selectElem.addEventListener("change", (event) => {
     let sortBy = event.target.value;
-    filterProduct(sortBy); // perform the sorting action based on the selected value
+    filterSort(sortBy); // perform the sorting action based on the selected value
     if (sortBy == "refresh-btn") {
-        localStorage.setItem("filterIsPlaying", JSON.stringify(""));
         location.reload(); // refresh the page
     }
 });
 
-let checkElem = document.querySelector("#filterIsPlaying");
-
-if (checkElem) {
-    let filterIsPlaying = "";
-    let flS = localStorage.getItem("filterIsPlaying");
-    if (flS === null) {
-        localStorage.setItem("filterIsPlaying", JSON.stringify(filterIsPlaying));
-    } else {
-        filterIsPlaying = JSON.parse(flS);
-        if (filterIsPlaying != "") {
-            checkElem.checked = true;
-            sortBy = "isPlaying";
-            filterProduct(sortBy);
-            console.log(checkElem.filterIsPlaying);
-        } else {
-            // alert("Unchecked");
-            scrollToTop();
-        }
-    }
-    checkElem.addEventListener("change", (event) => {
-        let sortBy;
-        if (event.currentTarget.checked) {
-            sortBy = "isPlaying";
-            localStorage.setItem("filterIsPlaying", JSON.stringify("checked"));
-        } else {
-            sortBy = "refresh-btn";
-            localStorage.setItem("filterIsPlaying", JSON.stringify(""));
-            location.reload();
-        }
-        filterProduct(sortBy);
-    });
-}
-
 /**
- * @function filterProduct
+ * @function filterSort
  *
- * @division Overall, this function seems to be designed to sort an array of
- *              products based on different criteria like (with name, id, scorecard)
+ * @description Overall, this function seems to be designed to sort an array of
+ *              products based on different criteria like (with name, id, price)
  *              and return the sorted data.
  *
  * @param sortvalue
  */
-function filterProduct(sortvalue) {
-    let sortedProduct = JSON.parse(localStorage.getItem("sortedProduct")) ?? [];
-    let productList = JSON.parse(localStorage.getItem("productList")) ?? [];
-    sortedProduct = productList;
-    localStorage.setItem("sortedProduct", JSON.stringify(sortedProduct));
 
+function filterSort(sortvalue) {
+    let memberLists = JSON.parse(localStorage.getItem("memberLists")) ?? [];
+    let filteredMembers = JSON.parse(localStorage.getItem("filteredMembers")) ?? [];
+    let sortedMembers = JSON.parse(localStorage.getItem("sortedMembers")) ?? [];
+
+    filteredMembers = memberLists;
+    sortedMembers = filteredMembers;
+    localStorage.setItem("sortedMembers", JSON.stringify(sortedMembers));
+    let divHcp = 0;
     /**
-     * @division This code block is a conditional statement that checks
+     * @description This code block is a conditional statement that checks
      *              the value of the sortvalue parameter to determine the
      *              sorting criteria to be used for the product list.
      */
 
-    if (sortvalue == "isPlaying") {
-        sortedProduct = sortedProduct.filter((sortedProduct) => sortedProduct.isPlaying == "1");
-        console.log("Playing", sortedProduct);
-        return filteredData(sortedProduct);
+    if (sortvalue == "isplaying") {
+        filteredMembers = filteredMembers.filter((filteredMember) => filteredMember.isplaying == "true");
+        localStorage.setItem("filteredMembers", JSON.stringify(filteredMembers));
+        console.log("Playing", filteredMembers);
+        return filteredData(filteredMembers, sortvalue);
     }
 
     if (sortvalue == "desc") {
         let desc = true;
-        sortedProduct = sortedProduct.sort((a, b) => (desc ? b.id - a.id : a.id - b.id));
+        sortedMembers = sortedMembers.sort((a, b) => (desc ? b.id - a.id : a.id - b.id));
         desc = !desc;
-        console.log("descending", sortedProduct);
-        scrollToTop();
-        return filteredData(sortedProduct);
+        console.log("descending", sortedMembers);
+        return filteredData(sortedMembers, sortvalue);
     } else if (sortvalue == "asc") {
         let desc = false;
-        sortedProduct = sortedProduct.sort((a, b) => (desc ? b.id - a.id : a.id - b.id));
-        console.log("Asc", sortedProduct);
-        scrollToTop();
-        return filteredData(sortedProduct);
-    } else if (sortvalue == "name") {
-        sortedProduct = sortedProduct = sortedProduct.sort((a, b) => a.name.localeCompare(b.name));
-        console.log("name", sortedProduct);
-        scrollToTop();
-        return filteredData(sortedProduct);
-    } else if (sortvalue == "scratch") {
-        sortedProduct = sortedProduct.sort((a, b) => b.scratch - a.scratch);
-        console.log("Scratch", sortedProduct);
-        scrollToTop();
-        return filteredData(sortedProduct);
+        sortedMembers = sortedMembers.sort((a, b) => (desc ? b.id - a.id : a.id - b.id));
+        console.log("Asc", sortedMembers);
+        return filteredData(sortedMembers, sortvalue);
+    } /* else if (sortvalue == "name") {
+        sortedMembers = sortedMembers = sortedMembers.sort((a, b) => a.name.localeCompare(b.name));
+        console.log("name", sortedMembers);
+        return filteredData(sortedMembers);
+    } else if (sortvalue == "price") {
+        sortedMembers = sortedMembers.sort((a, b) => b.price - a.price);
+        console.log("Price", sortedMembers);
+        return filteredData(sortedMembers);
+    } else if (sortvalue == "div1") {
+        //   sortedMembers = sortedMembers.sort((a, b) => b.div1 - a.div1);
+        sortedMembers = sortedMembers.filter((memberLists) => !!memberLists.div1).sort((a, b) => b.div1 - a.div1);
+        console.log(sortvalue, sortedMembers);
+        return filteredData(sortedMembers);
+    } else if (sortvalue == "div2") {
+        sortedMembers = memberLists.filter((memberLists) => !!memberLists.div2).sort((a, b) => b.div2 - a.div2);
+        console.log(sortvalue, sortedMembers);
+        return filteredData(sortedMembers);
+    } else if (sortvalue == "div3") {
+        sortedMembers = memberLists.filter((memberLists) => !!memberLists.div3).sort((a, b) => b.div3 - a.div3);
+        console.log(sortvalue, sortedMembers);
+        return filteredData(sortedMembers);
+    } */ else if (sortvalue == "div1_plus_hcp") {
+        /********* Filter by div plus hcp *********/
+        sortedMembers = memberLists
+        .filter((memberLists) => !!memberLists.div1_plus_hcp)
+        .sort((a, b) => b.div1_plus_hcp - a.div1_plus_hcp);
+        console.log(sortvalue, sortedMembers);
+        return filteredData(sortedMembers, sortvalue);
+    } else if (sortvalue == "div2_plus_hcp") {
+        sortedMembers = memberLists
+        .filter((memberLists) => !!memberLists.div2_plus_hcp)
+        .sort((a, b) => b.div2_plus_hcp - a.div2_plus_hcp);
+        console.log(sortvalue, sortedMembers);
+        return filteredData(sortedMembers, sortvalue);
+    } else if (sortvalue == "div3_plus_hcp") {
+        sortedMembers = memberLists
+        .filter((memberLists) => !!memberLists.div3_plus_hcp)
+        .sort((a, b) => b.div3_plus_hcp - a.div3_plus_hcp);
+        console.log(sortvalue, sortedMembers);
+        return filteredData(sortedMembers, sortvalue);
+    } else if (sortvalue == "div4_plus_hcp") {
+        sortedMembers = memberLists
+        .filter((memberLists) => !!memberLists.div4_plus_hcp)
+        .sort((a, b) => b.div4_plus_hcp - a.div4_plus_hcp);
+        console.log(sortvalue, sortedMembers);
+        return filteredData(sortedMembers, sortvalue);
+    } else if (sortvalue == "div5_plus_hcp") {
+        sortedMembers = memberLists
+        .filter((memberLists) => !!memberLists.div5_plus_hcp)
+        .sort((a, b) => b.div5_plus_hcp - a.div5_plus_hcp);
+        console.log(sortvalue, sortedMembers);
+        return filteredData(sortedMembers, sortvalue);
+    } else if (sortvalue == "div6_plus_hcp") {
+        sortedMembers = memberLists
+        .filter((memberLists) => !!memberLists.div6_plus_hcp)
+        .sort((a, b) => b.div6_plus_hcp - a.div6_plus_hcp);
+        console.log(sortvalue, sortedMembers);
+        return filteredData(sortedMembers, sortvalue);
+    } else if (sortvalue == "div7_plus_hcp") {
+        sortedMembers = memberLists
+        .filter((memberLists) => !!memberLists.div7_plus_hcp)
+        .sort((a, b) => b.div7_plus_hcp - a.div7_plus_hcp);
+        console.log(sortvalue, sortedMembers);
+        return filteredData(sortedMembers, sortvalue);
+    } else if (sortvalue == "div8_plus_hcp") {
+        sortedMembers = memberLists
+        .filter((memberLists) => !!memberLists.div8_plus_hcp)
+        .sort((a, b) => b.div8_plus_hcp - a.div8_plus_hcp);
+        console.log(sortvalue, sortedMembers);
+        return filteredData(sortedMembers, sortvalue);
+    } else if (sortvalue == "div9_plus_hcp") {
+        sortedMembers = memberLists
+        .filter((memberLists) => !!memberLists.div9_plus_hcp)
+        .sort((a, b) => b.div9_plus_hcp - a.div9_plus_hcp);
+        console.log(sortvalue, sortedMembers);
+        return filteredData(sortedMembers, sortvalue);
+    } else if (sortvalue == "div10_plus_hcp") {
+        sortedMembers = memberLists
+        .filter((memberLists) => !!memberLists.div10_plus_hcp)
+        .sort((a, b) => b.div10_plus_hcp - a.div10_plus_hcp);
+        console.log(sortvalue, sortedMembers);
+        return filteredData(sortedMembers, sortvalue);
     } else {
-        scrollToTop();
         return false;
     }
 }
@@ -1210,27 +1143,33 @@ function filterProduct(sortvalue) {
 /**
  * @function filteredData
  *
- * @division This is a function is takes array as a parameter. The function
+ * @description This is a function is takes array as a parameter. The function
  *              generates HTML code to display the sorted products in a card format.
  *
- * @param sortedProduct (as a Array format)
+ * @param sortedMembers (as a Array format)
  */
-function filteredData(sortedProduct) {
+function filteredData(sortedMembers, sortvalue) {
+    document.querySelector("#sort-table").classList.remove("d-flex");
     let html = "";
-    console.log("filterData", sortedProduct);
-    if (sortedProduct.length === 0) {
+    console.log("filterData", sortedMembers);
+    console.log("sortvalue", sortvalue);
+    let divHcp = sortvalue.replace("_plus_hcp", "");
+    console.log("divHcp", divHcp);
+    if (sortedMembers.length === 0) {
         // This Below HTML Code Display when product list's array is Empty.
         html += `<div class="card-body">
         <div class="row gx-2">
           <div class="col">
             <div class="p-3">
-              <img src="img/no-data-found.jpg" class="img-fluid rounded mx-auto d-block" alt="No Products">
+              <img src="img/no-data-found.jpg" class="img-fluid rounded mx-auto d-block" alt="No Items">
+              <p class="text-center">No items to display</p>
             </div>
           </div>
         </div>
       </div>`;
     } else {
-        sortedProduct.forEach(function (element, index) {
+        sortedMembers.forEach(function (element, index) {
+            // This Below HTML code is generate Card For Sorted Items.
             let img = function () {
                 if (!element.image) {
                     return `<img src='./img/no-pic.jpg'
@@ -1246,44 +1185,48 @@ function filteredData(sortedProduct) {
                 }
             };
 
+            let divHCP = "<strong>" + element[divHcp] + "</strong>" + " " + divHcp + " hcp";
+
             let scrTch = function () {
-                if (!element.scratch) {
+                // console.log("sortvalue", sortvalue);
+                if (!element[sortvalue]) {
                     return `0`;
                 } else {
-                    return `${element.scratch}`;
+                    return `${element[sortvalue]}`;
                 }
             };
 
             let stepPercent = function () {
-                let perc = calcPercentage(element.step, element.numOfGames);
+                let perc = calcPercentage(element.step, element.numofgames);
                 if (!element.step) {
                     return ``;
                 } else {
-                    return `<div class="m-widget4__progress ms-auto"><div class="m-widget4__progress-wrapper"> <span class="m-widget17__progress-number"> ${perc}% </span> <span class="m-widget17__progress-label"> Complete </span><div class="progress m-progress--sm"><div class="progress-bar bg-success" role="progressbar" style="width: ${perc}%;" aria-valuenow="${element.step}" aria-valuemin="0" aria-valuemax="${element.numOfGames}"></div></div></div></div>`;
+                    return `<div class="m-widget4__progress ms-auto"><div class="m-widget4__progress-wrapper"> <span class="m-widget17__progress-number"> ${perc}% </span> <span class="m-widget17__progress-label"> Complete </span><div class="progress m-progress--sm"><div class="progress-bar bg-success" role="progressbar" style="width: ${perc}%;" aria-valuenow="${element.step}" aria-valuemin="0" aria-valuemax="${element.numofgames}"></div></div></div></div>`;
                 }
             };
-
-            html += `<li  data-key="${
+            html += `<li data-key="${
                 element.id
             }" class="py-8 list-group-item d-flex justify-content-between align-items-start">
-                    <div class="ms-2 thumb-md member-thumb" onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2'>
+                    <div class="ms-2 thumb-md member-thumb">
                         ${img()}
                     </div>
-                    <div class="ms-2 me-auto max-w-s"  onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2'>
+                    <div class="ms-2 me-auto max-w-s mt-auto mb-auto">
                         <div class="fw-bold">${element.name}</div>
-                        ${scrTch()} points
+                        <span class="fw-bold">${scrTch()}</span> points | <span> ${divHCP}</span>
                     </div>
                     ${stepPercent()}
-                        <div class="dropdown ms-auto">
+                        <div class="dropdown ms-auto hidden">
                                         <i class="fas fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
                                         <ul class="dropdown-menu" style="">
                                             <li>
-                                                <span class="dropdown-item" onclick='editData("${index}")' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal-2'>
+                                                <span class="dropdown-item" onclick='editData(${
+                                                    element.id
+                                                })' type='button' data-bs-toggle='modal' data-bs-target='#editMemberModal'>
                                                     <i class="fas fa-pen mx-2"></i> Update
                                                 </span>
                                             </li>
                                             <li>
-                                                <span class="dropdown-item" onclick='deleteData("${index}")'>
+                                                <span class="dropdown-item" onclick='deleteData(${element.id})'>
                                                      <i class="fas mx-2 fa-solid fa-trash" style="color: #ff0000"></i> Delete
                                                 </span>
                                             </li>
@@ -1293,275 +1236,606 @@ function filteredData(sortedProduct) {
                 </li>`;
         });
     }
-    document.querySelector("#curd-table").classList.add("d-none");
-    document.querySelector("#sort-table .mt-5.row").innerHTML = html;
-    localStorage.setItem("sortedProduct", JSON.stringify(sortedProduct));
+    /*     document.querySelector("#curd-table").classList.add("d-none");
+    document.getElementById("filter-table").classList.add("d-none");
+    document.querySelector("#sort-table > ol").innerHTML = html; */
+    curd_table.classList.add("d-none");
+    filter_table.classList.add("d-none");
+    listTitle.innerText = divHcp.toUpperCase() + " Ranking";
+    sort_table.classList.remove("d-none");
+    document.querySelector("#sort-table > ol").innerHTML = html;
 }
 
-function loadData() {
-    /*    const productLists = [
-        {
-            id: 1,
-            name: "Dan Jukes",
-            grp2: 42,
-            onPot: "1",
-            image: "img/user.png",
-            isPlaying: "1",
-            division: ["grp2"],
-            scorecard: "",
-        },
-        {
-            id: 2,
-            name: "Jane Wilson",
-            grp1: 30,
-            senrs: 35,
-            onPot: "0",
-            image: "img/user.png",
-            isPlaying: "1",
-            division: ["grp1", "senrs"],
-            scorecard: "",
-        },
-        {
-            id: 3,
-            name: "Bernie Santos",
-            grp1: 15,
-            onPot: "1",
-            image: "img/user.png",
-            isPlaying: "1",
-            division: ["grp1"],
-            scorecard: "",
-        },
-        {
-            id: 4,
-            name: "Ed Santos",
-            grp1: 10,
-            onPot: "0",
-            image: "",
-            isPlaying: "0",
-            division: ["grp1"],
-            scorecard: "",
-        },
-    ]; */
+function checkAvailStorage() {
+    let limitLS = 5000;
 
-    let productLists = "";
+    const localStorageSpace = () => {
+        let allStrings = "";
+        for (const key of Object.keys(window.localStorage)) {
+            allStrings += window.localStorage[key];
+        }
+        // console.log("allStrings", allStrings.length * 16);
+        return allStrings ? (9 + (allStrings.length * 16) / (8 * 1024)).toFixed(2) : "Empty (0 KB)";
+    };
 
-    if (localStorage.getItem("initEventData") == null) {
-        initEventData = [];
+    if (limitLS - localStorageSpace() > 1000) {
+        document.getElementById("storeageInfo").innerHTML =
+            "<div class='bg-success'><small>" + localStorageSpace() + " KB </small></div>";
     } else {
-        initEventData = JSON.parse(localStorage.getItem("initEventData"));
-        productLists = initEventData;
+        document.getElementById("storeageInfo").innerHTML =
+            "<div class='bg-danger'><small>" + localStorageSpace() + " KB </small></div>";
     }
-
-    let playerList = "";
-    let lS = localStorage.getItem("productList");
-    //console.log('lS ', lS)
-    if (lS === null) {
-        localStorage.setItem("productList", JSON.stringify(productLists));
-        playerList = JSON.parse(lS);
-        // console.log(playerList)
-    }
-    showTable();
+    console.log("localStorageSpace", localStorageSpace());
 }
 
-let numOfGames = 0;
-let diVisions = 0;
-function showTable() {
-    let playerList = [];
-    let lS = localStorage.getItem("productList");
-    // console.log('lS ', lS)
-    playerAllLists = JSON.parse(lS);
-    playerList = playerAllLists.filter((playerAllList) => playerAllList.isPlaying == "1");
-    console.log(playerList);
+checkAvailStorage();
 
-    const eventLists = [
+function initData() {
+    let eventData = [
         {
             eventID: "AAA-001",
             eventName: "Super Hero Squad",
             eventVenue: "MCS",
             numOfGames: "6",
-            datetimeStart: "2018-06-12T02:30",
-            datetimeEnd: "2018-06-12T19:30",
-            divisions: "3",
-            division: [
-                {name: "Group 1", code: "grp1"},
-                {name: "Group 2", code: "grp2"},
-                {name: "Senior", code: "senr"},
+            datetimeStart: "2018-12-12T02:30",
+            datetimeEnd: "2018-12-12T19:30",
+            eventNumDivs: "3",
+            eventDivs: [
+                {
+                    name: "Div 1",
+                    value: "div1",
+                },
+                {
+                    name: "Div 2",
+                    value: "div2",
+                },
+                {
+                    name: "Div 3",
+                    value: "div3",
+                },
             ],
             companyID: "USBC",
             active: true,
-            members: playerList,
         },
-        //, {}
     ];
-    let text = "";
-    let eventList = eventLists.filter((eventList) => eventList.active == true);
 
-    //if (localStorage.getItem('eventData') === null) {
-    localStorage.setItem("eventData", JSON.stringify(eventList));
-    //}
-
-    /* let scoreKeys = ""; */
-    localStorage.setItem("scoreKeys", JSON.stringify(text));
-
-    const keys_0 = [
-        "eventID",
-        "eventName",
-        "eventVenue",
-        "datetimeStart",
-        "numOfGames",
-        "datetimeEnd",
-        "companyID",
-        "active",
+    let memberData = [
+        {
+            id: 1,
+            name: "Neil Sims",
+            event_id: "AAA-001",
+            price: "100",
+            image: "https://flowbite.com/application-ui/demo/images/users/neil-sims.png",
+            divisions: "div1,div3",
+            div1: "30",
+            div3: "35",
+            div1_plus_hcp: "",
+            div2_plus_hcp: "",
+            div3_plus_hcp: "",
+            scorecard: "",
+            numofgames: "6",
+            onpot: false,
+            isplaying: false,
+        },
+        {
+            id: 2,
+            name: "Roberta Casas",
+            event_id: "AAA-001",
+            price: "200",
+            image: "https://flowbite.com/application-ui/demo/images/users/roberta-casas.png",
+            divisions: "div1",
+            div1: "20",
+            div1_plus_hcp: "",
+            div2_plus_hcp: "",
+            div3_plus_hcp: "",
+            scorecard: "",
+            numofgames: "6",
+            onpot: false,
+            isplaying: false,
+        },
+        {
+            id: 3,
+            name: "Jesse Leos",
+            event_id: "AAA-001",
+            price: "180",
+            image: "https://flowbite.com/application-ui/demo/images/users/jese-leos.png",
+            divisions: "div2",
+            div2: "40",
+            div1_plus_hcp: "",
+            div2_plus_hcp: "",
+            div3_plus_hcp: "",
+            scorecard: "",
+            numofgames: "6",
+            onpot: false,
+            isplaying: false,
+        },
+        {
+            id: 4,
+            name: "Helene Engels",
+            event_id: "AAA-001",
+            price: "190",
+            image: "https://flowbite.com/application-ui/demo/images/users/helene-engels.png",
+            divisions: "div2,div3",
+            div2: "60",
+            div3: "65",
+            div1_plus_hcp: "",
+            div2_plus_hcp: "",
+            div3_plus_hcp: "",
+            scorecard: "",
+            numofgames: "6",
+            onpot: false,
+            isplaying: false,
+        },
     ];
-    //const keys_1 = ["name", "grp1", "grp2", "senrs", "scorecard"];
-    const keys_1 = ["name", "grp1", "grp2", "senrs", "step", "g1", "g2", "g3", "g4", "g5", "g6"];
 
-    const eventData = JSON.parse(localStorage.getItem("eventData"));
-    numOfGames = parseInt(eventData[0].numOfGames);
-    diVisions = parseInt(eventData[0].divisionss);
-
-    console.log(numOfGames);
-    console.log("diVisions ", diVisions);
-    let j = 0;
-
-    while (j < numOfGames) {
-        text += "G" + j++;
-        console.log(j++);
-        console.log(text);
+    memberLists = "";
+    if (localStorage.getItem("memberLists") == null) {
+        window.localStorage.clear();
+        localStorage.setItem("memberLists", JSON.stringify(memberData));
+    } else {
+        memberLists = JSON.parse(localStorage.getItem("memberLists"));
     }
-    /*  for (var i = 0; i < numOfGames.length; i++) {
-        console.log(numOfGames.length);
-        
-        keys_1.push(`g` + [i]);
-        console.log(keys_1);
-    } */
+    eventLists = "";
+    if (localStorage.getItem("eventLists") == null) {
+        localStorage.setItem("eventLists", JSON.stringify(eventData));
+        localStorage.setItem("numOfGames", JSON.stringify(eventData[0].numOfGames));
+        localStorage.setItem("eventNumDivs", JSON.stringify(eventData[0].eventNumDivs));
+        localStorage.setItem("eventDivs", JSON.stringify(eventData[0].eventDivs));
+        localStorage.setItem("companyID", JSON.stringify(eventData[0].companyID));
+    } else {
+        eventObj = JSON.parse(localStorage.getItem("eventLists"));
+        eventLists = eventObj.filter((item) => item.active == true);
+        numOfGames = JSON.parse(localStorage.getItem("numOfGames"));
+        eventNumDivs = JSON.parse(localStorage.getItem("eventNumDivs"));
+        companyID = JSON.parse(localStorage.getItem("companyID"));
 
-    /* const keys_1 = [
-    'name',
-    'grp1',
-    'grp2',
-    'senrs',
-    'scorecard',
-    'g2',
-    'g3',
-    'g4',
-    'g5',
-    'g6',
-    'scratch',
-    'hdcpGrp1',
-    'hdcpGrp2',
-    'hdcpSenr'
-  ]*/
-    //const keys_1 = ['name', 'scorecard']
-
-    eventList.forEach((herosGroup) => {
-        let scoreItems = [];
-        let tableModal = document.getElementById("TableDataExport");
-        let tabEl = document.createElement("table"),
-            tHead = tabEl.createTHead(),
-            tBody = tabEl.createTBody(),
-            newRow = tHead.insertRow();
-        tabEl.classList = "mytble top";
-        // document.body.appendChild(tabEl)
-        tableModal.appendChild(tabEl);
-        keys_0.forEach((prop) => (newRow.insertCell().textContent = prop));
-
-        newRow = tBody.insertRow();
-        keys_0.forEach((prop) => (newRow.insertCell().textContent = herosGroup[prop]));
-
-        // 'name', 'scorcard', 'division' trip...
-        tabEl = document.createElement("table");
-        tHead = tabEl.createTHead();
-        tBody = tabEl.createTBody();
-        tabEl.classList = "mytble bottom";
-        tabEl.setAttribute("id", "GameResults");
-        newRow = tHead.insertRow();
-        tableModal.appendChild(tabEl);
-
-        //  document.body.appendChild(tabEl)
-        keys_1.forEach((prop) => (newRow.insertCell().textContent = prop));
-        herosGroup.members.forEach((hero) => {
-            newRow = tBody.insertRow();
-            console.log("hero", hero);
-
-            keys_1.forEach((prop) => {
-                if (prop !== "scorecard") {
-                    newRow.insertCell().textContent = hero[prop];
-                } else if (prop == "scorecard") {
-                    scoreItems = hero[prop]
-                    .toString()
-                    .split(",")
-                    .map((i) => Number(i));
-                    console.log(scoreItems);
-                    for (var i = 0; i < scoreItems.length; i++) {
-                        console.log(scoreItems.length);
-                        newRow.insertCell().textContent = scoreItems[i];
-                    }
-                } else newRow.insertCell().innerHTML = hero[prop].join("<br>");
-            });
+        const arr = memberLists;
+        arr.forEach((element) => {
+            element.numofgames = numOfGames;
+            element.eventnumdivs = eventNumDivs;
+            element.company_id = companyID;
         });
-    }); // forEach(herosGroup=>
-
-    function myDivision(obj) {
-        let data = [];
-        for (var i = 0; i < obj.length; i++) {
-            data.push({
-                name: obj[i].name,
-                value: obj[i].code,
-            });
-        }
-        // console.log(data)
-        return data;
+        localStorage.setItem("memberLists", JSON.stringify(arr));
     }
 
-    var myParent = document.getElementById("mySelect");
-    //Create array of options to be added
-    var array = myDivision(eventList[0].divisions);
+    /************ Appends a filter option on the dropdown based on Event's eventDivs **************/
+    function createFiltertDivisions() {
+        let eventDivs = JSON.parse(localStorage.getItem("eventDivs"));
+        let json = eventDivs;
+        let dropdown = document.getElementById("sort-select");
+        for (let i = 0; i < json.length; i++) {
+            console.log(json.length);
+            var option = document.createElement("option");
+            option.text = json[i].name + " + hcp";
+            option.value = json[i].value + "_plus_hcp";
+            dropdown.add(option);
+        }
+    }
+    createFiltertDivisions();
+    /************ Appends a filter option on the dropdown based on Event's eventDivs **************/
+}
+initData();
 
-    //Create and append select list
-    var selectList = document.createElement("select");
-    selectList.id = "division";
-    selectList.classList = "form-select sort-btn ms-2";
-    /* selectList.setAttribute('data-role', 'tagsinput') */
-    myParent.appendChild(selectList);
+/********** Steps Filter  */
 
-    //Create and append the options
-    for (var i = 0; i < array.length; i++) {
-        var option = document.createElement("option");
-        option.value = array[i].value;
-        option.text = array[i].name;
-        selectList.appendChild(option);
+function filterStepsBy(listObjID) {
+    let memberLists = JSON.parse(localStorage.getItem("memberLists")) ?? [];
+    let filteredMembers = JSON.parse(localStorage.getItem("filteredMembers")) ?? [];
+
+    filteredMembers = memberLists;
+
+    localStorage.setItem("filteredMembers", JSON.stringify(filteredMembers));
+
+    if (listObjID == "isHome") {
+        filteredMembers = memberLists;
+        /* localStorage.setItem("filteredMembers", JSON.stringify(filteredMembers)); */
+        localStorage.setItem("memberLists", JSON.stringify(filteredMembers));
+        searchMemberForm.classList.add("d-none");
+        curd_table.classList.add("d-none");
+        filter_table.classList.add("d-none");
+        selectElem.classList.add("d-none");
+        console.log("unRegistered", filteredMembers);
+        //  return filtrdStepComp(filteredMembers, "#registerModal");
+    } else if (listObjID == "reGister") {
+        filteredMembers = memberLists.filter((memberLists) => memberLists.isplaying != "true");
+        localStorage.setItem("filteredMembers", JSON.stringify(filteredMembers));
+        selectElem.classList.add("d-none");
+        homeChart.classList.add("d-none");
+        filterTitle.innerText = "Registration";
+        searchMemberForm.classList.remove("d-none");
+        filter_table.classList.remove("d-none");
+        console.log("unRegistered", filteredMembers);
+        return filtrdStepComp(filteredMembers, "#registerModal");
+    } else if (listObjID == "isNowPlaying") {
+        filteredMembers = filteredMembers.filter((filteredMember) => filteredMember.isplaying == "true");
+        localStorage.setItem("filteredMembers", JSON.stringify(filteredMembers));
+        selectElem.classList.add("d-none");
+        filter_table.classList.remove("d-none");
+        homeChart.classList.add("d-none");
+        searchMemberForm.classList.remove("d-none");
+        filterTitle.innerText = "Now Playing";
+        console.log("Registered", filteredMembers);
+        return filtrdStepComp(filteredMembers, "#editMemberModal");
+    } else if (listObjID == "ranKing") {
+        filteredMembers = filteredMembers.filter(
+            (filteredMember) => filteredMember.isplaying == "true" && filteredMember.scorecard !== null
+        );
+        localStorage.setItem("filteredMembers", JSON.stringify(filteredMembers));
+        selectElem.classList.remove("d-none");
+        searchMemberForm.classList.add("d-none");
+        homeChart.classList.add("d-none");
+        filterTitle.innerText = "Ranking";
+        console.log("Registered", filteredMembers);
+        filter_table.classList.remove("d-none");
+        return filtrdStepComp(filteredMembers, "#editMemberModal");
+    } else {
+        return false;
     }
 }
 
-loadData();
+function filtrdStepComp(filtrdMembers, modalTarget) {
+    document.querySelector("#filter-table").classList.remove("d-flex");
+    let html = "";
+    console.log("filterData", filtrdMembers);
 
-let navItems = document.querySelector("#navItems");
-let isPlayingList = document.getElementById("isPlayingList");
+    if (filtrdMembers.length === 0) {
+        // This Below HTML Code Display when product list's array is Empty.
+        html += `<div class="card-body">
+        <div class="row gx-2">
+          <div class="col">
+            <div class="p-3">
+              <img src="img/no-data-found.jpg" class="img-fluid rounded mx-auto d-block" alt="No Items">
+              <p class="text-center">No items to display</p>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    } else {
+        filtrdMembers.forEach(function (element, index) {
+            // This Below HTML code is generate Card For Sorted Items.
+            let img = function () {
+                if (!element.image) {
+                    return `<img src='./img/no-pic.jpg'
+              class='rounded-circle img-thumbnail'
+              alt='profile-image'
+              />`;
+                } else {
+                    return `<img
+              src='${element.image}'
+              class='rounded-circle img-thumbnail'
+              alt='profile-image'
+              />`;
+                }
+            };
 
-const searchParams = new URLSearchParams(window.location.search);
-
-isPlayingList.onclick = function () {
-    console.log(this);
-    let param = searchParams.get("isPlaying");
-    localStorage.setItem("filterIsPlaying", JSON.stringify(param));
-};
-
-/* for (const param of searchParams) {
-    console.log(param);
-} */
-console.log(searchParams.has("isPlaying")); // true
-console.log(searchParams.get("isPlaying"));
-console.log(searchParams);
-
-function resetMockData() {
-    // Display a confirmation message to the user
-    if (confirm("This will reset your data. Proceed?")) {
-        localStorage.removeItem("eventData");
-        localStorage.removeItem("productList");
-        localStorage.removeItem("sortedProduct");
-        localStorage.removeItem("initEventData");
-
-        location.reload(); // Reload the current page
+            html += `<li data-key="${
+                element.id
+            }" class="py-8 list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 thumb-md member-thumb" onclick='editData("${
+                        element.id
+                    }")' type='button' data-bs-toggle='modal' data-bs-target='${modalTarget}'>
+                        ${img()}
+                    </div>
+                    <div class="ms-2 me-auto max-w-s mt-auto mb-auto">
+                        <div class="fw-bold" onclick='editData("${
+                            element.id
+                        }")' type='button' data-bs-toggle='modal' data-bs-target='${modalTarget}'>${element.name}</div>
+                      
+                    </div>
+                   
+                        <div class="dropdown ms-auto mt-auto mb-auto">
+                                        <i class="fas fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                        <ul class="dropdown-menu" style="">
+                                            <li>
+                                                <span class="dropdown-item" onclick='editData(${
+                                                    element.id
+                                                })' type='button' data-bs-toggle='modal' data-bs-target='#editMemberModal'>
+                                                    <i class="fas fa-pen mx-2"></i> Update
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="dropdown-item" onclick='deleteData(${element.id})'>
+                                                     <i class="fas mx-2 fa-solid fa-trash" style="color: #ff0000"></i> Delete
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                    <span class="badge text-bg-primary rounded-pill hidden">14</span>
+                </li>`;
+        });
     }
+
+    document.querySelector("#curd-table").classList.add("d-none");
+    document.querySelector("#sort-table").classList.add("d-none");
+    document.querySelector("#filter-table > ul").innerHTML = html;
+}
+
+let overlayType_radio = document.querySelectorAll('input[type=radio][name="fiLSteps"]');
+
+function filterStepsSetup() {
+    let stpID;
+    if (localStorage.getItem("stpID") == null) {
+        stpID = "";
+        localStorage.setItem("stpID", "isHome");
+    } else {
+        stpID = localStorage.getItem("stpID");
+    }
+
+    var checked = stpID;
+    console.log(checked);
+    overlayType_radio.forEach((el) => {
+        if (el.id == checked) {
+            document.getElementById(el.id).checked = checked;
+            filterStepsBy(el.id);
+        }
+    });
+}
+
+filterStepsSetup();
+
+function ResetStepFilter() {
+    localStorage.removeItem("stpID");
+    location.reload();
+    console.log("reloaded");
+}
+
+// console.log('overlayType_radio', overlayType_radio);
+
+var prev = null;
+for (var i = 0; i < overlayType_radio.length; i++) {
+    overlayType_radio[i].addEventListener("change", function () {
+        location.reload();
+        console.log("reloaded");
+        prev ? console.log("radio prev value", prev.value) : null;
+        if (this !== prev) {
+            prev = this;
+        }
+        console.log("radio now value ", this.value);
+        localStorage.setItem("stpID", this.value);
+        filterStepsBy(this.value);
+    });
+}
+
+/* } */
+
+/********** Steps Filter  */
+
+/********** Setting modal to persistent  */
+const myModal = new bootstrap.Modal("#editMemberModal", {
+    keyboard: false,
+    backdrop: "static",
+});
+
+const myModal2 = new bootstrap.Modal("#registerModal", {
+    keyboard: false,
+    backdrop: "static",
+});
+
+function showChart() {
+    let html = `<div class='container'>
+        <div class='row my-3'>
+            <div class='col'>
+                <h4>Bootstrap 5 Chart.js</h4>
+            </div>
+        </div>
+        <div class='row my-2'>
+            <div class='col-md-6 py-1'>
+                <div class='card'>
+                    <div class='card-body'>
+                        <canvas id='chLine'></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-6 py-1'>
+                <div class='card'>
+                    <div class='card-body'>
+                        <canvas id='chBar'></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='row py-2'>
+            <div class='col-md-4 py-1'>
+                <div class='card'>
+                    <div class='card-body'>
+                        <canvas id='chDonut1'></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-4 py-1'>
+                <div class='card'>
+                    <div class='card-body'>
+                        <canvas id='chDonut2'></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-4 py-1'>
+                <div class='card'>
+                    <div class='card-body'>
+                        <canvas id='chDonut3'></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>`;
+
+    homeChart.innerHTML = html;
+}
+
+function searchBarConditional() {
+    let filteredMembers = JSON.parse(localStorage.getItem("filteredMembers")) ?? [];
+    let memberLists = JSON.parse(localStorage.getItem("memberLists")) ?? [];
+    let stpID = localStorage.getItem("stpID");
+    let searchvalue = document.querySelector("#serachProductText").value;
+    console.log("searchvalue", searchvalue);
+    let sortedItem = [];
+    let sortedMembers = "";
+    let modalID = "";
+    if (stpID == "reGister") {
+        sortedMembers = memberLists;
+        modalID = "#registerModal";
+    } else {
+        sortedMembers = filteredMembers;
+        modalID = "#editMemberModal";
+    }
+    let regex = new RegExp(searchvalue, "i");
+    for (let element of sortedMembers) {
+        console.log("regex", regex);
+        let item = element;
+        if (regex.test(item.name)) {
+            sortedItem.push(element);
+        }
+    }
+    console.log("sortedItem", sortedItem);
+    searchMemberByStep(sortedItem, modalID);
+}
+
+function searchMemberByStep(sortedItem, modalID) {
+    document.querySelector("#sort-table").classList.add("d-flex");
+
+    let html = "";
+    console.log("searchMember", sortedItem);
+
+    if (sortedItem.length === 0) {
+        // This Below HTML Code Display when product list's array is Empty.
+        html += `<div class="card-body">
+        <div class="row gx-2">
+          <div class="col">
+            <div class="p-3">
+              <img src="img/no-data-found.jpg" class="img-fluid rounded mx-auto d-block" alt="No Items">
+              <p class="text-center">No items to display</p>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    } else {
+        sortedItem.forEach(function (element, index) {
+            // This Below HTML code is generate Card For Sorted Items.
+            let img = function () {
+                if (!element.image) {
+                    return `<img src='./img/no-pic.jpg'
+              class='rounded-circle img-thumbnail'
+              alt='profile-image'
+              />`;
+                } else {
+                    return `<img
+              src='${element.image}'
+              class='rounded-circle img-thumbnail'
+              alt='profile-image'
+              />`;
+                }
+            };
+
+            html += `<li data-key="${
+                element.id
+            }" class="py-8 list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 thumb-md member-thumb" onclick='editData("${
+                        element.id
+                    }")' type='button' data-bs-toggle='modal' data-bs-target='${modalID}'>
+                        ${img()}
+                    </div>
+                    <div class="ms-2 me-auto max-w-s pt-2">
+                        <div class="fw-bold" onclick='editData("${
+                            element.id
+                        }")' type='button' data-bs-toggle='modal' data-bs-target='${modalID}'>${element.name}</div>
+                      
+                    </div>
+                   
+                        <div class="dropdown ms-auto">
+                                        <i class="fas fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                                        <ul class="dropdown-menu" style="">
+                                            <li>
+                                                <span class="dropdown-item" onclick='editData(${
+                                                    element.id
+                                                })' type='button' data-bs-toggle='modal' data-bs-target='#editMemberModal'>
+                                                    <i class="fas fa-pen mx-2"></i> Update
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="dropdown-item" onclick='deleteData(${element.id})'>
+                                                     <i class="fas mx-2 fa-solid fa-trash" style="color: #ff0000"></i> Delete
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                    <span class="badge text-bg-primary rounded-pill hidden">14</span>
+                </li>`;
+        });
+    }
+
+    /* 
+    if (sortedItem.length === 0) {
+        html += `<div class="card-body">
+        <div class="row gx-2">
+          <div class="col">
+            <div class="p-3">
+              <img src="img/search-not-found.png" class="img-fluid rounded mx-auto d-block" alt="No Products" style="width: 18rem; height: 18rem;">
+              <p class="text-center">No Similar Items Found..!</p>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    } else {
+        sortedItem.forEach(function (element, index) {
+            let img = function () {
+                if (!element.image) {
+                    return `<img src='./img/no-pic.jpg'
+              class='rounded-circle img-thumbnail'
+              alt='profile-image' style='height: 100px; width: 100px;'
+              />`;
+                } else {
+                    return `<img
+              src='${element.image}'
+              class='rounded-circle img-thumbnail'
+              alt='profile-image' style='height: 100px; width: 100px;'
+              />`;
+                }
+            };
+            html += `<div>
+   <div class='row gx-2'>
+      <div class='col'>
+         <div class='p-3'>
+            <div class='card d-flex card-all' >
+               <div class='card-body'style="width: 100%;" onclick='editData("${
+                   element.id
+               }")' type='button' data-bs-toggle='modal' data-bs-target=${modalID}>
+                  <h5 class='card-title text-center hidden'><strong>MID</strong> ${element.id} </h5>
+                  ${img()}
+               </div>
+               <ul class='list-group list-group-flush' onclick='editData("${
+                   element.id
+               }")' type='button' data-bs-toggle='modal'  data-bs-target=${modalID}>
+                  <li class='list-group-item'>
+                     <p class='text-center fs-5'><strong> ${element.name} </strong> </p>
+                  </li>
+                  <li class='list-group-item text-capitalize hidden'><strong>${element.divisions}</strong> </li>
+               </ul>
+               <div class='card-body'>
+                  <div class="dropdown ms-auto text-right">
+                     <i class="btn fas fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                     <ul class="dropdown-menu" style="">
+                        <li>
+                           <span class="dropdown-item" onclick='editData(${
+                               element.id
+                           })' type='button' data-bs-toggle='modal'  data-bs-target=${modalID}>
+                           <i class="fas fa-pen mx-2"></i> Update
+                           </span>
+                        </li>
+                        <li>
+                           <span class="dropdown-item" onclick='deleteData(${element.id})'>
+                           <i class="fas mx-2 fa-solid fa-trash" style="color: #ff0000"></i> Delete
+                           </span>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>`;
+        });
+    } */
+    curd_table.classList.add("d-none");
+    filter_table.innerHTML = html;
 }
