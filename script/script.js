@@ -166,7 +166,7 @@ function showData() {
         <div class="row gx-2">
           <div class="col">
             <div class="p-3">
-              <img src="img/no-data-found.png" class="img-fluid rounded mx-auto d-block" alt="No Products">
+              <img src="img/no-data-found.jpg" class="img-fluid rounded mx-auto d-block" alt="No Products">
             </div>
           </div>
         </div>

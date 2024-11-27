@@ -60,9 +60,12 @@ body {
     border-radius: 20rem;
 }
 .toggle.ios .toggle-handle {
-    border-radius: 20rem;
+    /* border-radius: 20rem; */
+    border-radius: 0;
 }
-
+.toggle > .toggle-group > .toggle-handle {
+    border-width: 0;
+}
 .hidden {
     display: none !important;
     opacity: 0 !important;
@@ -92,13 +95,37 @@ input.search-bar {
 .card-body {
     text-align: center;
 }
+
+.toggle.btn,
+.toggle:focus > .toggle-group > .toggle-handle,
+.toggle:hover > .toggle-group > .toggle-handle {
+    background-color: green;
+    /*  opacity: 0.2; */
+}
+
+.toggle > .toggle-group > .toggle-handle {
+    position: relative;
+    margin: 0 auto;
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 100%;
+    width: 0;
+    border-width: 0;
+    background-color: transparent;
+    border-color: transparent;
+}
+.toggle > .toggle-group > .toggle-off.btn {
+    padding-left: 0;
+    text-align: center;
+}
+
 @media (max-width: 1024px) {
     .card-container {
         justify-content: center;
     }
-    .card {
+    /*  .card {
         width: 16rem;
-    }
+    } */
 }
 @media (max-width: 734px) {
     .search-bar {
