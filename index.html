@@ -21,14 +21,14 @@
     <div id="storeageInfo"></div>
     <!-- navbar start -->
     <!--   <h4 class="m-2 ms-3 text-center">CRUD OPERATIONS IN LOCALSTORAGE</h4> -->
-    <nav class="navbar nav-bar  bg-body-tertiaryx  sticky-top">
+    <nav class="navbar nav-barx  bg-body-tertiaryx  sticky-top">
         <div class="container">
-            <a class="btn btn-custom-nofill" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
-                aria-controls="offcanvasExample">
+            <a class="btn btn-custom-nofill offcanvas-toggler" data-bs-toggle="offcanvas" href="#offcanvasExample"
+                role="button" aria-controls="offcanvasExample">
                 <i class="fa-solid fa-bars"></i>
             </a>
-            <form id="searchMember" class="navbar-form d-flex" role="search">
-                <div class="input-group">
+            <!--  <form id="searchMember" class="navbar-form d-flex search" role="search">
+                <div class="input-group search__wrapper">
                     <input class="form-control" type="search" name="search" aria-describedby="search-addon"
                         oninput="searchBarConditional()" id="serachProductText" />
                     <span class="input-group-btn">
@@ -36,6 +36,13 @@
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </span>
+                </div>
+            </form> -->
+            <form id="searchMember" class="search ">
+                <div class="search__wrapper">
+                    <input type="text" name="" placeholder="Search for..." class="search__field shadow"
+                        oninput="searchBarConditional()" id="serachProductText">
+                    <button type="submit" class="fa fa-search search__icon"></button>
                 </div>
             </form>
             <!-- <a class="navbar-brand">Navbar</a> -->
@@ -134,7 +141,11 @@
             </div>
         </div>
         <div class="mt-3 card-container d-flex flex-wrap" id="filter-table">
-            <h4 id="filterTitle">Title</h4>
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h4 id="filterTitle">Title</h4>
+                <div id="gameChecker"></div>
+            </div>
+
             <ul class="pl-0">
             </ul>
         </div>
@@ -202,8 +213,9 @@
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
 
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
-                                type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">
+                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane"
+                                aria-selected="true">
                                 SCORING
                             </button>
                         </li>
@@ -230,7 +242,7 @@
                                 aria-labelledby="home-tab" tabindex="0">
                                 <div class="container mt-4">
                                     <div class="row mb-2">
-                                        <div class="col col-md-4">
+                                        <div class="col col-md-4 col-sm-3">
                                             <div id="image-div"></div>
                                         </div>
                                         <div class="col hidden">
@@ -241,7 +253,7 @@
                                                 <label for="id-edit">MID:</label>
                                             </div>
                                         </div>
-                                        <div class="col col-md-8">
+                                        <div class="col col-md-8 col-sm-9">
                                             <div class="form-floating mb-3">
                                                 <input type="text" readonly id="name-edit" style="margin-top: 0px;"
                                                     class="form-control form-control-lg" placeholder="Name"
@@ -256,23 +268,25 @@
                                         <div class="col">
                                         </div>
                                     </div>
+                                    <div class="row align-items-center">
+                                        <div class="col col-md-3 align-self-center">
+                                            <div class="form-group">
+                                                <label for="exampleFormControlSelect1">&nbsp;</label>
+                                                <button type="button" id="addscore"
+                                                    class="btn btn-lg btn-success btn-outline-successx rounded-xl w-100">
+                                                    <i class="fa-solid fa-plus" style="color: #ffffff;"></i>&nbsp;ADD
+                                                    SCORE
+                                                </button>
 
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-floating mb-3">
-                                                <input autocomplete="off" type="text" onkeypress="CheckNumeric(event);"
-                                                    id="scorecard-edit" style="margin-top: 0px;"
-                                                    class="score-inputs form-control form-control-lg"
-                                                    placeholder="200,200,200,200,200,200" aria-label=""
-                                                    aria-describedby="scorecard-edit">
-                                                <label for="scorecard-edit">Score Card</label>
-                                                <small id="scorecard-edit-error-msg" style="color: red"></small>
-                                                <!-- <button class="btn btn-success" onclick="changeText()" style="width:80px"
-                                    type="button" id="validateScore"> <i class="fa-solid fa-check"></i></button>
-                                    -->
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div id="ajxForm" class="col-sm-12 col-md-6 col-lg-4"></div>
+                                        <div id="ajxAlert" class="col-sm-12 col-md-8 col-lg-6"></div>
+                                    </div>
+
+
 
                                 </div>
                             </div>
@@ -280,7 +294,7 @@
                             <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel"
                                 aria-labelledby="profile-tab" tabindex="0">
                                 <div class="container">
-                                    <div class="row">
+                                    <div class="row mt-4">
                                         <div class="col">
                                             <div class="form-floating mb-3">
                                                 <input type="text" readonly id="divisions-edit" style="margin-top: 0px;"
@@ -310,6 +324,24 @@
                             <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel"
                                 aria-labelledby="contact-tab" tabindex="0">
                                 <div class="container">
+                                    <div class="row mt-4">
+                                        <div class="col">
+                                            <div class="form-floating mb-3">
+                                                <input autocomplete="off" type="text" onkeypress="CheckNumeric(event);"
+                                                    id="scorecard-edit" style="margin-top: 0px;"
+                                                    class="score-inputs form-control form-control-lg"
+                                                    placeholder="200,200,200,200,200,200" aria-label=""
+                                                    aria-describedby="scorecard-edit">
+                                                <label for="scorecard-edit">Scores</label>
+                                                <small id="scorecard-edit-error-msg" style="color: red"></small>
+                                                <small style="color: #555555">Input score per game separated by comma
+                                                    ",".
+                                                    Ex:
+                                                    <strong>200,201,202</strong></small>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-floating mb-3">
@@ -376,7 +408,7 @@
                         <div class="col d-flex justify-content-center">
                             <div class="form-group mt-2 mb-3">
                                 <input type="checkbox" id="isplaying-edit" data-toggle="toggle" data-onstyle="success"
-                                    data-width="150" data-height="50" data-on="JOINED" data-off="JOIN" data-style="ios">
+                                    data-width="150" data-height="50" data-on="Joined" data-off="Join" data-style="ios">
                                 <!--  <input class="form-control" type="number" id="isplaying-edit" /> -->
                             </div>
 
@@ -456,8 +488,6 @@
                     id="bySteps">
                     <!-- <span class="fa-lg mb-5">Steps</span> -->
                     <div class="os-l-2" data-mdb-filter="bySteps">
-
-
                         <div class="custom-form-check mt-3 ">
                             <input class="btn-check form-check-input filter-step" type="radio" name="fiLSteps"
                                 id="isHome" value="isHome" data-bs-dismiss="offcanvas" />
@@ -476,8 +506,8 @@
                         <div class="custom-form-check">
                             <input class="btn-check form-check-input filter-step" type="radio" name="fiLSteps"
                                 id="isNowPlaying" value="isNowPlaying" data-bs-dismiss="offcanvas" />
-                            <label class="btn btn-outline-primary form-check-label  w-100" for="isNowPlaying">Play
-                                Now</label>
+                            <label class="btn btn-outline-primary form-check-label  w-100" for="isNowPlaying">Get
+                                Scores</label>
                         </div>
 
                         <div class="custom-form-check">
@@ -508,6 +538,7 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.6/js/bootstrap5-toggle.ecmas.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="script/script.js"></script>
     <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js'></script>

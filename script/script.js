@@ -56,7 +56,12 @@ let scorecard_edit = document.getElementById("scorecard-edit"),
     searchMemberForm = document.getElementById("searchMember"),
     listTitle = document.getElementById("listTitle"),
     filterTitle = document.getElementById("filterTitle"),
-    homeChart = document.getElementById("HomeChart");
+    updateBtn = document.getElementById("update"),
+    homeChart = document.getElementById("HomeChart"),
+    reGister = document.getElementById("reGister"),
+    filterMsg = document.getElementById("filterMsg"),
+    addScore = document.getElementById("addscore"),
+    gameChecker = document.getElementById("gameChecker");
 
 /****** EDIT INPUTS *******/
 
@@ -195,14 +200,14 @@ function showData() {
                     }")' type='button' data-bs-toggle='modal' data-bs-target='#registerModal'>
                         ${img()}
                     </div>
-                    <div class="mt-auto mb-auto  ms-2 me-auto max-w-s">
+                    <div class="ms-2 me-auto max-w-s mt-auto mb-auto">
                         <div class="fw-bold" onclick='editData("${
                             element.id
                         }")' type='button' data-bs-toggle='modal' data-bs-target='#registerModal'>${element.name}</div>
                       
                     </div>
                    
-                        <div class="dropdown mt-auto mb-auto">
+                        <div class="dropdown ms-auto mt-auto mb-auto">
                                         <i class="fas fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
                                         <ul class="dropdown-menu" style="">
                                             <li>
@@ -426,6 +431,12 @@ function editData(iD) {
             scorecard_edit.value = memberLists[i].scorecard.replace(/\s/g, ",");
             scratch_edit.value = scratch;
 
+            function removeLastComma(strng) {
+                var n = strng.lastIndexOf(",");
+                var a = strng.substring(0, n);
+                return a;
+            }
+
             function showReg() {
                 if (!memberLists[i].isplaying) {
                     myTab.classList.add("hidden");
@@ -465,33 +476,6 @@ function editData(iD) {
 
             //  handleSwitchInput(isplaying_toggle, isplaying_edit);
             handleSwitchInput(isplaying_edit);
-
-            /*   function handleSwitchInput(isPlayingEditID) {
-                let toggleID = isPlayingEditID;
-                console.log("toggleID", isPlayingEditID);
-
-                let thisEl = document.getElementById("isplaying_edit");
-                console.log("thisEl", thisEl);
-                if (thisEl.value == "true") {
-                    thisEl.checked = true;
-                } else {
-                    thisEl.checked = false;
-                }
-                document.getElementById(toggleID).addEventListener("change", function (event) {
-                    if (event.target.checked) {
-                        console.log("Checkbox is checked..");
-                        event.target.value = true;
-                        registerMember.classList.toggle("hidden");
-                    } else {
-                        console.log("Checkbox is not checked..");
-                        event.target.value = false;
-                        registerMember.classList.toggle("hidden");
-                    }
-                });
-            }
-
-            //  handleSwitchInput(isplaying_toggle, isplaying_edit);
-            handleSwitchInput("isplaying_edit"); */
 
             let img = function () {
                 if (!memberLists[i].image) {
@@ -546,10 +530,77 @@ function editData(iD) {
                 }
             } */
 
+            addScore.onclick = function () {
+                let ajaxForm = document.getElementById("ajxForm");
+
+                ajaxForm.innerHTML = `<div class="input-group input-group-lg mb-3">
+                                                        <input type="number" id="Glive" style="margin-top: 0px;" class="score-inputs form-control form-control-lg" placeholder="" aria-label="" aria-describedby="button-addon2">
+                                                      
+                                                        <button class="btn btn-outline-success" type="button" id="acceptScore"> <i class="fa-solid fa-check"></i></button>
+                                                       <div id="GliveFeedback" class="invalid-feedback">
+                                        Invalid score. Max value is 300.
+                                        </div>
+                                                        </div>`;
+                let gLive = document.getElementById("Glive");
+                addScore.classList.add("hidden");
+                gLive.focus();
+                updateBtn.disabled = true;
+                console.log("arrayNums", arrayNums);
+                let scoreArray = arrayNums;
+                document.querySelector("#acceptScore").onclick = function () {
+                    var score = gLive.value;
+
+                    if (gLive.value > 300) {
+                        gLive.classList.add("is-invalid");
+                        addScore.disabled = true;
+                        updateBtn.disabled = true;
+                        return false;
+                    } else {
+                        gLive.classList.remove("is-invalid");
+                        addScore.disabled = false;
+                        updateBtn.disabled = false;
+                        updateBtn.disabled = false;
+                        updateBtn.classList.add("btn-success");
+                        gLive.disabled = true;
+                        // document.querySelector("#acceptScore").classList.remove("btn-outline-success");
+                        //  alert(name);
+                        scoreArray.push(score);
+                        scorecard_edit.value = scoreArray.filter((cV) => cV != "0").join(",");
+                        let valString = scoreArray.filter((cV) => cV != "0").join(",");
+                        console.log("valString", valString.toString());
+                        arrItems = valString.split(delimiter);
+                        console.log("arrItems", arrItems);
+                        arrayNums = arrItems.map((i) => Number(i));
+                        console.log("arrayNums", arrayNums);
+                        scratch = arrayNums.reduce((accumulator, currentValue) => {
+                            return accumulator + currentValue;
+                        }, 0);
+                        console.log(scratch);
+                        scratch_edit.value = scratch;
+                        step_edit.value = arrayNums.length;
+                        updateScores();
+                    }
+                };
+
+                /*  gLive.onchange = function (e) {
+                    let value = e.target.value;
+                    console.log("curr Arr ", arrayNums);
+                    console.log("value ", value);
+                    if (gLive.value > 300) {
+                        gLive.classList.add("is-invalid");
+                        addScore.disabled = true;
+                        updateBtn.disabled = true;
+                        //return false;
+                    } else {
+                        gLive.classList.remove("is-invalid");
+                        addScore.disabled = false;
+                        updateBtn.disabled = false;
+                    }
+                }; */
+            };
+
             scorecard_edit.onchange = function (event) {
-                //  check();
-                //let valString = event.target.value.replace(/\s/g, ",");
-                let valString = event.target.value.replaceAll(/\s/g, ",").replaceAll(/\s/g, ",");
+                let valString = event.target.value.replaceAll(/\s/g, ",").replaceAll(/\s/g, ",").replace(/,\s*$/, "");
                 scorecard_edit.value = valString;
                 console.log("valString", valString.toString());
                 arrItems = valString.split(delimiter);
@@ -562,9 +613,10 @@ function editData(iD) {
                 console.log(scratch);
                 scratch_edit.value = scratch;
                 step_edit.value = arrayNums.length;
+                updateScores();
+            };
 
-                //console.log(memberLists[i].div1);
-
+            function updateScores() {
                 if (memberLists[i].div1) {
                     div1_edit.value = memberLists[i].div1;
                     div1_plus_hcp.value = addHndcp(memberLists[i].div1);
@@ -643,8 +695,7 @@ function editData(iD) {
                     div10_plus_hcp.value = memberLists[i].div10_plus_hcp;
                     buildScorObjs(memberLists[i], arrayNums);
                 }
-            };
-
+            }
             function createDivDynamicInputs(i) {
                 delimiter = ",";
                 let mydivString = memberLists[i].divisions;
@@ -862,7 +913,7 @@ function editData(iD) {
                 step_edit.value = "";
                 //  document.getElementById("close-btn").click();
                 document.querySelector(".btn-close").click();
-                alert("Data Updated Successfully");
+                //     alert("Data Updated Successfully");
             };
         }
     }
@@ -1185,7 +1236,8 @@ function filteredData(sortedMembers, sortvalue) {
                 }
             };
 
-            let divHCP = "<strong>" + element[divHcp] + "</strong>" + " " + divHcp + " hcp";
+            //  let divHCP = "<strong>" + element[divHcp] + "</strong>" + " " + divHcp + " hcp";
+            let divHCP = "<span style='color: #7b7e8a;'><strong>" + element[divHcp] + "</strong>" + " hcp</span>";
 
             let scrTch = function () {
                 // console.log("sortvalue", sortvalue);
@@ -1413,6 +1465,7 @@ function initData() {
     }
     createFiltertDivisions();
     /************ Appends a filter option on the dropdown based on Event's eventDivs **************/
+    // isEmptyFiltered();
 }
 initData();
 
@@ -1442,6 +1495,7 @@ function filterStepsBy(listObjID) {
         selectElem.classList.add("d-none");
         homeChart.classList.add("d-none");
         filterTitle.innerText = "Registration";
+        //   filterMsg.innerText = "Congratulations!";
         searchMemberForm.classList.remove("d-none");
         filter_table.classList.remove("d-none");
         console.log("unRegistered", filteredMembers);
@@ -1472,6 +1526,15 @@ function filterStepsBy(listObjID) {
         return false;
     }
 }
+function isEmptyFiltered() {
+    let obj = JSON.parse(localStorage.getItem("filteredMembers")) ?? [];
+    for (var prop in obj) {
+        if (obj.hasOwnProperty(prop)) return false;
+    }
+    //alert("Empty");
+    reGister.parentNode.classList.add("hidden");
+    return true;
+}
 
 function filtrdStepComp(filtrdMembers, modalTarget) {
     document.querySelector("#filter-table").classList.remove("d-flex");
@@ -1485,7 +1548,7 @@ function filtrdStepComp(filtrdMembers, modalTarget) {
           <div class="col">
             <div class="p-3">
               <img src="img/no-data-found.jpg" class="img-fluid rounded mx-auto d-block" alt="No Items">
-              <p class="text-center">No items to display</p>
+              <p id="filterMsg" class="text-center">Yey!</p>
             </div>
           </div>
         </div>
@@ -1493,6 +1556,25 @@ function filtrdStepComp(filtrdMembers, modalTarget) {
     } else {
         filtrdMembers.forEach(function (element, index) {
             // This Below HTML code is generate Card For Sorted Items.
+            let gameCheckerString = function () {
+                let filtMemLength = filtrdMembers.length;
+                return `<strong>G1 </strong><span>2/${filtMemLength}</span>`;
+            };
+            gameChecker.innerHTML = gameCheckerString();
+
+            let gameStepper = function () {
+                let numofgames = element.numofgames;
+                let step = function () {
+                    if (!element.step) {
+                        return 0;
+                    } else {
+                        return parseInt(element.step);
+                    }
+                };
+                return `<div style="width:100%; text-align:right; color: #7b7e8a;"><strong>${step()}</strong>/${numofgames} <small> games</small></div>`;
+            };
+            //            gameChecker.innerHTML = gameCheckerString();
+
             let img = function () {
                 if (!element.image) {
                     return `<img src='./img/no-pic.jpg'
@@ -1522,8 +1604,9 @@ function filtrdStepComp(filtrdMembers, modalTarget) {
                         }")' type='button' data-bs-toggle='modal' data-bs-target='${modalTarget}'>${element.name}</div>
                       
                     </div>
-                   
-                        <div class="dropdown ms-auto mt-auto mb-auto">
+                     <div class="mt-auto mb-auto m-widget4__ext">${gameStepper()}</div>
+
+                        <div class="dropdown ms-5 mt-auto mb-auto">
                                         <i class="fas fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
                                         <ul class="dropdown-menu" style="">
                                             <li>
@@ -1703,7 +1786,7 @@ function searchMemberByStep(sortedItem, modalID) {
           <div class="col">
             <div class="p-3">
               <img src="img/no-data-found.jpg" class="img-fluid rounded mx-auto d-block" alt="No Items">
-              <p class="text-center">No items to display</p>
+             <p class="text-center">No items to display</p>
             </div>
           </div>
         </div>
@@ -1734,14 +1817,14 @@ function searchMemberByStep(sortedItem, modalID) {
                     }")' type='button' data-bs-toggle='modal' data-bs-target='${modalID}'>
                         ${img()}
                     </div>
-                    <div class="ms-2 me-auto max-w-s pt-2">
+                    <div class="ms-2 me-auto max-w-s mt-auto mb-auto">
                         <div class="fw-bold" onclick='editData("${
                             element.id
                         }")' type='button' data-bs-toggle='modal' data-bs-target='${modalID}'>${element.name}</div>
                       
                     </div>
                    
-                        <div class="dropdown ms-auto">
+                        <div class="dropdown ms-auto mt-auto mb-auto">
                                         <i class="fas fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
                                         <ul class="dropdown-menu" style="">
                                             <li>
@@ -1763,79 +1846,6 @@ function searchMemberByStep(sortedItem, modalID) {
         });
     }
 
-    /* 
-    if (sortedItem.length === 0) {
-        html += `<div class="card-body">
-        <div class="row gx-2">
-          <div class="col">
-            <div class="p-3">
-              <img src="img/search-not-found.png" class="img-fluid rounded mx-auto d-block" alt="No Products" style="width: 18rem; height: 18rem;">
-              <p class="text-center">No Similar Items Found..!</p>
-            </div>
-          </div>
-        </div>
-      </div>`;
-    } else {
-        sortedItem.forEach(function (element, index) {
-            let img = function () {
-                if (!element.image) {
-                    return `<img src='./img/no-pic.jpg'
-              class='rounded-circle img-thumbnail'
-              alt='profile-image' style='height: 100px; width: 100px;'
-              />`;
-                } else {
-                    return `<img
-              src='${element.image}'
-              class='rounded-circle img-thumbnail'
-              alt='profile-image' style='height: 100px; width: 100px;'
-              />`;
-                }
-            };
-            html += `<div>
-   <div class='row gx-2'>
-      <div class='col'>
-         <div class='p-3'>
-            <div class='card d-flex card-all' >
-               <div class='card-body'style="width: 100%;" onclick='editData("${
-                   element.id
-               }")' type='button' data-bs-toggle='modal' data-bs-target=${modalID}>
-                  <h5 class='card-title text-center hidden'><strong>MID</strong> ${element.id} </h5>
-                  ${img()}
-               </div>
-               <ul class='list-group list-group-flush' onclick='editData("${
-                   element.id
-               }")' type='button' data-bs-toggle='modal'  data-bs-target=${modalID}>
-                  <li class='list-group-item'>
-                     <p class='text-center fs-5'><strong> ${element.name} </strong> </p>
-                  </li>
-                  <li class='list-group-item text-capitalize hidden'><strong>${element.divisions}</strong> </li>
-               </ul>
-               <div class='card-body'>
-                  <div class="dropdown ms-auto text-right">
-                     <i class="btn fas fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                     <ul class="dropdown-menu" style="">
-                        <li>
-                           <span class="dropdown-item" onclick='editData(${
-                               element.id
-                           })' type='button' data-bs-toggle='modal'  data-bs-target=${modalID}>
-                           <i class="fas fa-pen mx-2"></i> Update
-                           </span>
-                        </li>
-                        <li>
-                           <span class="dropdown-item" onclick='deleteData(${element.id})'>
-                           <i class="fas mx-2 fa-solid fa-trash" style="color: #ff0000"></i> Delete
-                           </span>
-                        </li>
-                     </ul>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-</div>`;
-        });
-    } */
     curd_table.classList.add("d-none");
     filter_table.innerHTML = html;
 }
