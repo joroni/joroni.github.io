@@ -541,18 +541,19 @@ function editData(iD) {
                                         Invalid score. Max value is 300.
                                         </div>
                                                         </div>`;
-                let gLive = document.getElementById("Glive");
+                let gLive = document.getElementById("Glive"),
+                    acceptScore = document.querySelector("#acceptScore");
                 addScore.classList.add("hidden");
                 gLive.focus();
                 updateBtn.disabled = true;
                 console.log("arrayNums", arrayNums);
                 let scoreArray = arrayNums;
-                document.querySelector("#acceptScore").onclick = function () {
+                acceptScore.onclick = function () {
                     var score = gLive.value;
-
                     if (gLive.value > 300) {
                         gLive.classList.add("is-invalid");
                         addScore.disabled = true;
+                        acceptScore.disabled = true;
                         updateBtn.disabled = true;
                         return false;
                     } else {
@@ -560,6 +561,7 @@ function editData(iD) {
                         addScore.disabled = false;
                         updateBtn.disabled = false;
                         updateBtn.disabled = false;
+                        acceptScore.disabled = true;
                         updateBtn.classList.add("btn-success");
                         gLive.disabled = true;
                         // document.querySelector("#acceptScore").classList.remove("btn-outline-success");
@@ -582,21 +584,15 @@ function editData(iD) {
                     }
                 };
 
-                /*  gLive.onchange = function (e) {
-                    let value = e.target.value;
-                    console.log("curr Arr ", arrayNums);
-                    console.log("value ", value);
-                    if (gLive.value > 300) {
-                        gLive.classList.add("is-invalid");
-                        addScore.disabled = true;
-                        updateBtn.disabled = true;
-                        //return false;
-                    } else {
+                gLive.onchange = function (e) {
+                    if (e.target.value <= 300) {
                         gLive.classList.remove("is-invalid");
-                        addScore.disabled = false;
-                        updateBtn.disabled = false;
+                        acceptScore.disabled = false;
+                    } else {
+                        gLive.classList.add("is-invalid");
+                        acceptScore.disabled = true;
                     }
-                }; */
+                };
             };
 
             scorecard_edit.onchange = function (event) {
@@ -1495,6 +1491,7 @@ function filterStepsBy(listObjID) {
         selectElem.classList.add("d-none");
         homeChart.classList.add("d-none");
         filterTitle.innerText = "Registration";
+        localStorage.setItem("toRegister", JSON.stringify(filteredMembers.length));
         //   filterMsg.innerText = "Congratulations!";
         searchMemberForm.classList.remove("d-none");
         filter_table.classList.remove("d-none");
@@ -1508,17 +1505,19 @@ function filterStepsBy(listObjID) {
         homeChart.classList.add("d-none");
         searchMemberForm.classList.remove("d-none");
         filterTitle.innerText = "Now Playing";
+        localStorage.setItem("joIned", JSON.stringify(filteredMembers.length));
         console.log("Registered", filteredMembers);
         return filtrdStepComp(filteredMembers, "#editMemberModal");
     } else if (listObjID == "ranKing") {
         filteredMembers = filteredMembers.filter(
-            (filteredMember) => filteredMember.isplaying == "true" && filteredMember.scorecard !== null
+            (filteredMember) => filteredMember.isplaying == "true" && filteredMember.scorecard !== ""
         );
         localStorage.setItem("filteredMembers", JSON.stringify(filteredMembers));
         selectElem.classList.remove("d-none");
         searchMemberForm.classList.add("d-none");
         homeChart.classList.add("d-none");
         filterTitle.innerText = "Ranking";
+        localStorage.setItem("canRank", JSON.stringify(filteredMembers.length));
         console.log("Registered", filteredMembers);
         filter_table.classList.remove("d-none");
         return filtrdStepComp(filteredMembers, "#editMemberModal");
