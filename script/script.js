@@ -1655,9 +1655,9 @@ function filterStepsSetup() {
             filterStepsBy(el.id);
         }
     });
-    if (toRegister == 0 || !toRegister) {
+    /*   if (toRegister == 0 || !toRegister) {
         reGister.parentNode.classList.add("hidden");
-    }
+    } */
 }
 
 filterStepsSetup();
