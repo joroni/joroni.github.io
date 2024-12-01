@@ -1464,7 +1464,7 @@ function initData() {
     }
     createFiltertDivisions();
     /************ Appends a filter option on the dropdown based on Event's eventDivs **************/
-    // isEmptyFiltered();
+    //  isEmptyFiltered();
 }
 initData();
 
@@ -1636,6 +1636,7 @@ function filtrdStepComp(filtrdMembers, modalTarget) {
 }
 
 let overlayType_radio = document.querySelectorAll('input[type=radio][name="fiLSteps"]');
+let toRegister = localStorage.getItem("toRegister");
 
 function filterStepsSetup() {
     let stpID;
@@ -1654,6 +1655,9 @@ function filterStepsSetup() {
             filterStepsBy(el.id);
         }
     });
+    if (toRegister == 0 || !toRegister) {
+        reGister.parentNode.classList.add("hidden");
+    }
 }
 
 filterStepsSetup();
