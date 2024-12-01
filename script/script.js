@@ -59,7 +59,6 @@ let scorecard_edit = document.getElementById("scorecard-edit"),
     filterTitle = document.getElementById("filterTitle"),
     updateBtn = document.getElementById("update"),
     homeChart = document.getElementById("HomeChart"),
-    reGister = document.getElementById("reGister"),
     filterMsg = document.getElementById("filterMsg"),
     addScore = document.getElementById("addscore"),
     gameChecker = document.getElementById("gameChecker");
@@ -1493,7 +1492,8 @@ function filterStepsBy(listObjID) {
         localStorage.setItem("filteredMembers", JSON.stringify(filteredMembers));
         selectElem.classList.add("d-none");
         homeChart.classList.add("d-none");
-        filterTitle.innerText = "Registration";
+        filterTitle.innerText = "Register Now";
+        document.body.classList.add("reGister");
         localStorage.setItem("toRegister", JSON.stringify(filteredMembers.length));
         //   filterMsg.innerText = "Congratulations!";
         searchMemberForm.classList.remove("d-none");
@@ -1606,7 +1606,7 @@ function filtrdStepComp(filtrdMembers, modalTarget) {
                         }")' type='button' data-bs-toggle='modal' data-bs-target='${modalTarget}'>${element.name}</div>
                       
                     </div>
-                     <div class="mt-auto mb-auto m-widget4__ext">${gameStepper()}</div>
+                     <div class="mt-auto mb-auto m-widget4__ext game-stepper">${gameStepper()}</div>
 
                         <div class="dropdown ms-5 mt-auto mb-auto">
                                         <i class="fas fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
@@ -1636,8 +1636,8 @@ function filtrdStepComp(filtrdMembers, modalTarget) {
 }
 
 let overlayType_radio = document.querySelectorAll('input[type=radio][name="fiLSteps"]');
-let toRegister = localStorage.getItem("toRegister");
-
+//let toRegister = localStorage.getItem("toRegister");
+//let reGisterRad = document.getElementById("reGister");
 function filterStepsSetup() {
     let stpID;
     if (localStorage.getItem("stpID") == null) {
@@ -1655,8 +1655,9 @@ function filterStepsSetup() {
             filterStepsBy(el.id);
         }
     });
-    /*   if (toRegister == 0 || !toRegister) {
-        reGister.parentNode.classList.add("hidden");
+    //alert(JSON.parse(toRegister));
+    /* if (JSON.parse(toRegister).length == 0) {
+        reGisterEl.parentNode.classList.add("hidden");
     } */
 }
 

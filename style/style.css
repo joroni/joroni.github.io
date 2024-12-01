@@ -1,7 +1,14 @@
+:root {
+    --green-color: #198754;
+}
+
 body {
     background-color: #eeeeee;
 }
 
+body.reGister .game-stepper {
+    display: none;
+}
 .progress-bar {
     height: 18px;
 }
@@ -17,6 +24,21 @@ body {
     padding: 1rem 1rem;
     border-top: 1px solid #dee2e6;
 }
+
+.search__field-toggler {
+    width: 50px;
+    height: 50px;
+    display: inline-flex;
+    align-items: center;
+    pointer-events: none;
+    justify-content: center;
+    background: green;
+    margin-left: calc(-50% - 5px);
+    border-radius: 40px;
+    z-index: 9;
+    border: none;
+}
+
 .search__field {
     width: 40px;
     height: 40px;
@@ -294,6 +316,18 @@ i.fas.fa-ellipsis-vertical:hover {
     border-radius: 3px;
 }
 
+.btn-success-no-outline:hover {
+    font-weight: 500;
+    color: var(--green-color);
+    transition: 0.3s;
+}
+.btn-success-no-outline {
+    border: none;
+    background: none;
+    transition: 0.3s;
+    color: var(--green-color);
+}
+
 #sort-select {
     font-size: 1rem;
 }
@@ -487,9 +521,8 @@ i.fas.fa-ellipsis-vertical:hover {
     position: absolute;
     top: 0;
     right: 0;
-    /* background-color: #e9f1f4; */
+    padding: 0;
     background-color: #39b44a;
-    /* background-color: #dcdcdc; */
     width: 50px;
     color: #eeeeee;
     height: 50px;
