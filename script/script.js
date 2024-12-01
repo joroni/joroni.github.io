@@ -563,7 +563,7 @@ function editData(iD) {
                         updateBtn.disabled = false;
                         updateBtn.disabled = false;
                         acceptScore.disabled = true;
-                        updateBtn.classList.add("btn-success");
+                        //  updateBtn.classList.add("btn-success");
                         gLive.disabled = true;
                         ajaxForm.innerHTML = "";
                         // document.querySelector("#acceptScore").classList.remove("btn-outline-success");
