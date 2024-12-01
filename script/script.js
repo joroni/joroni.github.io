@@ -33,10 +33,11 @@ if (btnCls) {
     }
 }
 
-/****** EDIT INPUTS *******/
+/****** EDIT INPUTS / CONTAINERS *******/
 let scorecard_edit = document.getElementById("scorecard-edit"),
     name_show = document.getElementById("name-show"),
     name_edit = document.getElementById("name-edit"),
+    name_edit_text = document.getElementById("name-edit-text"),
     id_edit = document.getElementById("id-edit"),
     onpot_toggle = document.getElementById("onpot-toggle"),
     onpot_edit = document.getElementById("onpot-edit"),
@@ -425,6 +426,7 @@ function editData(iD) {
             name_show.textContent = memberLists[i].name;
             image_show.src = memberLists[i].image;
             name_edit.value = memberLists[i].name;
+            name_edit_text.innerText = memberLists[i].name;
             isplaying_edit.value = memberLists[i].isplaying;
             divisions_edit.value = memberLists[i].divisions.replace(/\s/g, ",");
             event_id_edit.value = memberLists[i].event_id;
@@ -481,13 +483,13 @@ function editData(iD) {
                 if (!memberLists[i].image) {
                     return `<img src='./img/no-pic.jpg'
               class='rounded-circle img-thumbnail'
-              alt='profile-image' style='height: 100px; width: 100px;'
+              alt='profile-image' style='height: 100%; width: 100%;'
               />`;
                 } else {
                     return `<img data-id=" + memberLists[i].id + "
               src='${memberLists[i].image}'
               class='rounded-circle img-thumbnail'
-              alt='profile-image' style='height: 100px; width: 100px;'
+              alt='profile-image' style='height: 100%; width: 100%;'
               />`;
                 }
             };
@@ -564,6 +566,7 @@ function editData(iD) {
                         acceptScore.disabled = true;
                         updateBtn.classList.add("btn-success");
                         gLive.disabled = true;
+                        ajaxForm.innerHTML = "";
                         // document.querySelector("#acceptScore").classList.remove("btn-outline-success");
                         //  alert(name);
                         scoreArray.push(score);
@@ -852,7 +855,7 @@ function editData(iD) {
                 showData();
 
                 document.querySelector(".btn-close").click();
-                alert("Registered Successfully");
+                // alert("Registered Successfully");
             };
 
             function buildScorObjs(curobj, arr) {
@@ -1308,10 +1311,10 @@ function checkAvailStorage() {
 
     if (limitLS - localStorageSpace() > 1000) {
         document.getElementById("storeageInfo").innerHTML =
-            "<div class='bg-success'><small>" + localStorageSpace() + " KB </small></div>";
+            "<div class='bg-success rounded-pill'><small>" + localStorageSpace() + " KB </small></div>";
     } else {
         document.getElementById("storeageInfo").innerHTML =
-            "<div class='bg-danger'><small>" + localStorageSpace() + " KB </small></div>";
+            "<div class='bg-danger rounded-pill'><small>" + localStorageSpace() + " KB </small></div>";
     }
     console.log("localStorageSpace", localStorageSpace());
 }
@@ -1559,12 +1562,12 @@ function filtrdStepComp(filtrdMembers, modalTarget) {
                 let filtMemLength = filtrdMembers.length;
                 return `<strong>G1 </strong><span>2/${filtMemLength}</span>`;
             };
-            gameChecker.innerHTML = gameCheckerString();
+            // gameChecker.innerHTML = gameCheckerString();
 
             let gameStepper = function () {
                 let numofgames = element.numofgames;
                 let step = function () {
-                    if (!element.step) {
+                    if (!element.step || element.scorecard.length === 0) {
                         return 0;
                     } else {
                         return parseInt(element.step);
@@ -1655,12 +1658,12 @@ function filterStepsSetup() {
 
 filterStepsSetup();
 
-function ResetStepFilter() {
+/* function ResetStepFilter() {
     localStorage.removeItem("stpID");
     location.reload();
     console.log("reloaded");
 }
-
+ */
 // console.log('overlayType_radio', overlayType_radio);
 
 var prev = null;

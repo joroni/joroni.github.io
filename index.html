@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Maple</title>
-    <link href="bootstrap5/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+    <link href="bootstrap5.2/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
     <link rel="stylesheet" href="style/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.1.1/css/bootstrap5-toggle.min.css" rel="stylesheet" /> -->
@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <div id="storeageInfo"></div>
+    <!-- <div id="storeageInfo"></div> -->
     <!-- navbar start -->
     <!--   <h4 class="m-2 ms-3 text-center">CRUD OPERATIONS IN LOCALSTORAGE</h4> -->
     <nav class="navbar nav-barx  bg-body-tertiaryx  sticky-top">
@@ -89,7 +89,7 @@
  -->
     <div class="container card-body-all">
         <div class="mt-3 card-container d-flex flex-wrap" id="curd-table">
-            <ul class="pl-0">
+            <ul class="pl-0 list-group">
             </ul>
         </div>
         <div class="mt-3  card-container flex-wrap" id="sort-table">
@@ -146,7 +146,7 @@
                 <div id="gameChecker"></div>
             </div>
 
-            <ul class="pl-0">
+            <ul class="pl-0 list-group">
             </ul>
         </div>
     </div>
@@ -242,9 +242,12 @@
                                 aria-labelledby="home-tab" tabindex="0">
                                 <div class="container mt-4">
                                     <div class="row mb-2">
-                                        <div class="col col-md-4 col-sm-3">
+                                        <div class="col" style="max-width: 100px; margin: 0 auto;">
                                             <div id="image-div"></div>
+
                                         </div>
+
+
                                         <div class="col hidden">
                                             <div class="form-floating mb-3">
                                                 <input type="text" id="id-edit" style="margin-top: 0px;"
@@ -253,23 +256,21 @@
                                                 <label for="id-edit">MID:</label>
                                             </div>
                                         </div>
-                                        <div class="col col-md-8 col-sm-9">
-                                            <div class="form-floating mb-3">
-                                                <input type="text" readonly id="name-edit" style="margin-top: 0px;"
-                                                    class="form-control form-control-lg" placeholder="Name"
-                                                    aria-label="" aria-describedby="name-edit">
-                                                <label for="name-edit">Name:</label>
-                                            </div>
+
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col" style="margin: 0 auto; text-align: center;">
+                                            <h4 id="name-edit-text"></h4>
+
                                         </div>
                                     </div>
-
 
                                     <div class="row" id="scoreInputs">
                                         <div class="col">
                                         </div>
                                     </div>
                                     <div class="row align-items-center">
-                                        <div class="col col-md-3 align-self-center">
+                                        <div class="col col-md-3 align-self-center" style="margin: 0 auto;">
                                             <div class="form-group">
                                                 <label for="exampleFormControlSelect1">&nbsp;</label>
                                                 <button type="button" id="addscore"
@@ -282,8 +283,9 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div id="ajxForm" class="col-sm-12 col-md-6 col-lg-4"></div>
-                                        <div id="ajxAlert" class="col-sm-12 col-md-8 col-lg-6"></div>
+                                        <div id="ajxForm" class="col-sm-12 col-md-6 col-lg-4"
+                                            style="text-align: center;margin: 0 auto;"></div>
+                                        <!--   <div id="ajxAlert" class="col-sm-12 col-md-8 col-lg-6"></div> -->
                                     </div>
 
 
@@ -345,6 +347,17 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-floating mb-3">
+                                                <input type="text" readonly id="name-edit" style="margin-top: 0px;"
+                                                    class="form-control form-control-lg" placeholder="Name"
+                                                    aria-label="" aria-describedby="name-edit">
+                                                <label for="name-edit">Name:</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col">
+                                            <div class="form-floating mb-3">
                                                 <input readonly type="text" id="scratch-edit"
                                                     class="score-inputs form-control form-control-md" readonly
                                                     placeholder="Scratch" aria-label=""
@@ -362,7 +375,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group mt-2">
+                                    <div class="form-group mt-2 hidden">
                                         <label for="exampleFormControlSelect1">Member Photo:</label>
                                         <input type="file" class="form-control" id="image-edit" />
                                     </div>
@@ -532,9 +545,12 @@
 
 
         </div>
+        <div class="offcanvas-footer">
+            <div id="storeageInfo"></div>
+        </div>
     </div>
     <!-- offcanvas button -->
-    <script src="bootstrap5/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="bootstrap5.2/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@4.3.6/js/bootstrap5-toggle.ecmas.min.js"></script>

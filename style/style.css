@@ -13,6 +13,19 @@ body {
     font-size: 1.25rem;
     padding: 9px 20px;
 }
+.offcanvas-footer {
+    padding: 1rem 1rem;
+    border-top: 1px solid #dee2e6;
+}
+.search__field {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 40px;
+}
 
 #acceptScore > i {
     color: #198754;
