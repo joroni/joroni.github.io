@@ -1974,7 +1974,7 @@ function showCurrTable() {
         "div2_plus_hcp",
         "div3_plus_hcp",
     ]; */
-    console.log("sortBysortBy", sortBy);
+    // console.log("sortBysortBy", sortBy);
     const keys_1 = ["name", "step"];
     let game_keys = nodeInc("g", numOfGames);
     let currSort = sortBy.replace("div", "");
@@ -2000,7 +2000,7 @@ function showCurrTable() {
         console.log("newRow", newRow);
         tableModal.appendChild(tabEl);
         // showTitle.textContent = filsort.replace(/_/g, " ").toUpperCase();
-        //showTitle.textContent = sortBy.replace(/_/g, " ").toUpperCase();
+        showTitle.textContent = sortBy.replace(/_/g, " ").toUpperCase();
 
         //  document.body.appendChild(tabEl)
         keys_1.forEach((prop) => (newRow.insertCell().textContent = prop));
