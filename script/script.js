@@ -1988,6 +1988,7 @@ function showCurrTable() {
     keys_1.push(...curr_div_keys);
     keys_1.push(...curr_divhcp_keys);
     console.log("curr", keys_1);
+    showTitle.textContent = sortBy.replace(/_/g, " ").toUpperCase();
     mergedEventData.forEach((herosGroup) => {
         let tableModal = document.getElementById("TableDataExport");
 
@@ -2000,7 +2001,6 @@ function showCurrTable() {
         console.log("newRow", newRow);
         tableModal.appendChild(tabEl);
         // showTitle.textContent = filsort.replace(/_/g, " ").toUpperCase();
-        showTitle.textContent = sortBy.replace(/_/g, " ").toUpperCase();
 
         //  document.body.appendChild(tabEl)
         keys_1.forEach((prop) => (newRow.insertCell().textContent = prop));
