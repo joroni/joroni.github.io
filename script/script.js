@@ -1566,6 +1566,7 @@ function filterStepsBy(listObjID) {
         filteredMembers = filteredMembers.filter(
             (filteredMember) => filteredMember.isplaying == "true" && filteredMember.scorecard !== ""
         );
+
         localStorage.setItem("filteredMembers", JSON.stringify(filteredMembers));
         selectElem.classList.remove("d-none");
         //  searchMemberForm.classList.add("d-none");
@@ -2251,12 +2252,12 @@ if (localStorage.getItem("toRegister") == null) {
     toRegister = JSON.parse(localStorage.getItem("toRegister"));
 }
 
-let canRank,
+let playEd,
     ranKing = document.getElementById("ranKing");
-if (localStorage.getItem("canRank") == null) {
-    canRank = 0;
+if (localStorage.getItem("playEd") == null) {
+    playEd = 0;
 } else {
-    canRank = JSON.parse(localStorage.getItem("canRank"));
+    playEd = JSON.parse(localStorage.getItem("playEd"));
 }
 
 let toPlay,
@@ -2282,7 +2283,7 @@ if (parseInt(toRegister) === 0) {
     localStorage.setItem("stpID", "isNowPlaying");
 }
 
-if (parseInt(canRank) === 0) {
+if (parseInt(playEd) === 0) {
     ranKing.parentNode.classList.add("hidden");
     // localStorage.getItem("stpID", "isNowPlaying");
 }
