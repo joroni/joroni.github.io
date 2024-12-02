@@ -1348,7 +1348,7 @@ function checkAvailStorage() {
             "<div class='bg-success rounded-pill'><small>" + localStorageSpace() + " KB </small></div>";
     } else {
         document.getElementById("storeageInfo").innerHTML =
-            "<div class='bg-danger rounded-pill'><small>" + localStorageSpace() + " KB </small></div>";
+            "<div class='bg-danger rounded-pill'><small>" + localStorageSpace() + "</small></div>";
     }
     console.log("localStorageSpace", localStorageSpace());
 }
