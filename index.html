@@ -641,7 +641,17 @@
 
         </div>
         <div class="offcanvas-footer">
-            <div id="storeageInfo"></div>
+            <div class="container">
+                <div class="row">
+
+                    <button class="col btn">
+                        <div id="storeageInfo"></div>
+                    </button>
+                    <button class="col btn"><i class="fa fa-gear"></i></button>
+                    <button class="col btn"><i class="fa fa-bars"></i></button>
+
+                </div>
+            </div>
         </div>
     </div>
     <footer>
@@ -651,20 +661,20 @@
                     <!-- <button type="button" class="btn btn-primary btn-lg">Scores</button> -->
                     <input class="btn-check form-check-input filter-step" type="radio" name="fiLSteps" id="isNowPlaying"
                         value="isNowPlaying" data-bs-dismiss="offcanvas" />
-                    <label class="btn btn-outline-primary form-check-label  w-100" for="isNowPlaying">Get
+                    <label class="btn btn-success-no-outline form-check-label  w-100" for="isNowPlaying">Get
                         Scores</label>
 
                 </div>
                 <div class="col" id="footerRanking">
                     <input class="btn-check form-check-input filter-step" type="radio" name="fiLSteps" id="ranKing"
                         value="ranKing" data-bs-dismiss="offcanvas" />
-                    <label class="btn btn-outline-primary form-check-label  w-100" for="ranKing">Ranking</label>
+                    <label class="btn btn-success-no-outline form-check-label  w-100" for="ranKing">Ranking</label>
 
 
                 </div>
 
                 <div class="col hidden" id="footerExport">
-                    <button type="button" class="btn btn-outline-primary w-100" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-success-no-outline w-100" data-bs-toggle="modal"
                         data-bs-target="#showTableModal">Export</button>
 
                 </div>
