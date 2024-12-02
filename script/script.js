@@ -1521,6 +1521,8 @@ function filterStepsBy(listObjID) {
         curd_table.classList.add("d-none");
         filter_table.classList.add("d-none");
         selectElem.classList.add("d-none");
+        document.body.classList.add("isHome");
+        document.querySelector("footer").classList.add("hidden");
         console.log("unRegistered", filteredMembers);
         //  return filtrdStepComp(filteredMembers, "#registerModal");
     } else if (listObjID == "reGister") {
@@ -1537,7 +1539,11 @@ function filterStepsBy(listObjID) {
         localStorage.setItem("toRegister", JSON.stringify(filteredMembers.length));
         //   filterMsg.innerText = "Congratulations!";
         // searchMemberForm.classList.remove("d-none");
+        let toRegister = localStorage.getItem("toRegister");
         filter_table.classList.remove("d-none");
+        if (toRegister.length == 0) {
+            document.querySelector("footer").classList.remove("hidden");
+        }
         console.log("unRegistered", filteredMembers);
         return filtrdStepComp(filteredMembers, "#registerModal");
     } else if (listObjID == "isNowPlaying") {
@@ -1566,14 +1572,18 @@ function filterStepsBy(listObjID) {
         filteredMembers = filteredMembers.filter(
             (filteredMember) => filteredMember.isplaying == "true" && filteredMember.scorecard !== ""
         );
+        playedMembers = filteredMembers.filter(
+            (filteredMember) => filteredMember.isplaying == "true" && filteredMember.scorecard != ""
+        );
 
         localStorage.setItem("filteredMembers", JSON.stringify(filteredMembers));
+        localStorage.setItem("playEd", JSON.stringify(playedMembers.length));
         selectElem.classList.remove("d-none");
         //  searchMemberForm.classList.add("d-none");
         homeChart.classList.add("d-none");
         filterTitle.innerText = "Ranking";
         document.body.classList.add("ranKing");
-        localStorage.setItem("canRank", JSON.stringify(filteredMembers.length));
+        //   localStorage.setItem("canRank", JSON.stringify(filteredMembers.length));
         console.log("Registered", filteredMembers);
         filter_table.classList.remove("d-none");
         return filtrdStepComp(filteredMembers, "#editMemberModal");
@@ -1915,7 +1925,6 @@ function showCurrTable() {
     let numOfGames = 0;
     let diVisions = 0;
     let showTitle = document.getElementById("showTitle");
-    let filsort = localStorage.getItem("sortBy");
 
     let sortBy;
     if (localStorage.getItem("sortBy") == null) {
@@ -1965,7 +1974,7 @@ function showCurrTable() {
         "div2_plus_hcp",
         "div3_plus_hcp",
     ]; */
-
+    console.log("sortBysortBy", sortBy);
     const keys_1 = ["name", "step"];
     let game_keys = nodeInc("g", numOfGames);
     let currSort = sortBy.replace("div", "");
@@ -1990,7 +1999,8 @@ function showCurrTable() {
         newRow = tHead.insertRow();
         console.log("newRow", newRow);
         tableModal.appendChild(tabEl);
-        showTitle.textContent = filsort.replace(/_/g, " ").toUpperCase();
+        // showTitle.textContent = filsort.replace(/_/g, " ").toUpperCase();
+        //showTitle.textContent = sortBy.replace(/_/g, " ").toUpperCase();
 
         //  document.body.appendChild(tabEl)
         keys_1.forEach((prop) => (newRow.insertCell().textContent = prop));
