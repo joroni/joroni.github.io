@@ -1234,7 +1234,8 @@ function filteredData(sortedMembers, sortvalue) {
     eventAllData[0].members = filteredMembers;
     localStorage.setItem("mergedAllEventData", JSON.stringify(eventAllData));
     console.log("EVENT ALL", eventAllData);
-
+    showCurrTable(sortvalue);
+    showAllTable();
     // console.log("currentFilterSort", currentFilterSort);
     if (sortedMembers.length === 0) {
         document.getElementById("footerExport").classList.add("hidden");
@@ -1328,8 +1329,6 @@ function filteredData(sortedMembers, sortvalue) {
     listTitle.innerText = divHcp.toUpperCase() + " Ranking";
     sort_table.classList.remove("d-none");
     document.querySelector("#sort-table > ol").innerHTML = html;
-    showCurrTable();
-    showAllTable();
 }
 
 function checkAvailStorage() {
@@ -1919,19 +1918,15 @@ function searchMemberByStep(sortedItem, modalID) {
     curd_table.classList.add("d-none");
     document.querySelector("#filter-table > ul").innerHTML = html;
 }
-
+let keys_1 = [];
+/* document.getElementById("close-btn-export").onclick = function () {
+    keys_1 = [];
+}; */
 /************ JSON - TABLE TO CSV */
-function showCurrTable() {
+function showCurrTable(sortvalue) {
     let numOfGames = 0;
     let diVisions = 0;
     let showTitle = document.getElementById("showTitle");
-
-    let sortBy;
-    if (localStorage.getItem("sortBy") == null) {
-        sortBy = "";
-    } else {
-        sortBy = localStorage.getItem("sortBy");
-    }
 
     let mergedEventData = JSON.parse(localStorage.getItem("mergedEventData"));
     numOfGames = JSON.parse(localStorage.getItem("numOfGames"));
@@ -1943,7 +1938,7 @@ function showCurrTable() {
         const myArray = [];
         for (let i = 0; i < parseInt(num); i++) {
             myArray.push(label + [i + 1]);
-            console.log(myArray);
+            console.log("nodeInc", myArray);
         }
         return myArray;
     }
@@ -1952,11 +1947,11 @@ function showCurrTable() {
         const myArray = [];
         for (let i = 0; i < parseInt(num); i++) {
             myArray.push(label0 + [i + 1] + label);
-            console.log(myArray);
+            console.log("incNode", myArray);
         }
         return myArray;
     }
-
+    /*  let keys_1 = []; */
     /*  const keys_1 = [
         "name",
         "step",
@@ -1975,23 +1970,32 @@ function showCurrTable() {
         "div3_plus_hcp",
     ]; */
     // console.log("sortBysortBy", sortBy);
-    const keys_1 = ["name", "step"];
+    keys_1 = ["name", "step"];
     let game_keys = nodeInc("g", numOfGames);
-    let currSort = sortBy.replace("div", "");
-    currSort.replace("_plus_hcp", "");
+    let currSort = sortvalue.replace("div", "");
+    let currSort2 = currSort.replace("_plus_hcp", "");
+    console.log("currSort2", currSort2);
     let scrtch_key = ["scratch"];
-    let curr_div_keys = nodeInc("div", currSort);
-    let curr_divhcp_keys = incNode("div", currSort, "_plus_hcp");
-
+    /* let curr_div_keys = nodeInc("div", currSort2);
+    let curr_divhcp_keys = incNode("div", currSort2, "_plus_hcp");
+ */
     keys_1.push(...game_keys);
     keys_1.push(...scrtch_key);
-    keys_1.push(...curr_div_keys);
-    keys_1.push(...curr_divhcp_keys);
-    console.log("curr", keys_1);
-    showTitle.textContent = sortBy.replace(/_/g, " ").toUpperCase();
+    let stringKeys = JSON.stringify(keys_1);
+    console.log("stringKeys", stringKeys);
+    let stringKeys2 = "[" + '"' + "div" + currSort2 + '"' + "," + '"' + "div" + currSort2 + "_plus_hcp" + '"' + "]";
+    let newArrayKeys = keys_1.concat(JSON.parse(stringKeys2));
+
+    /*   keys_1.push(curr_div_keys);
+    keys_1.push(curr_divhcp_keys); */
+    /* let newKeys_1 = Object.assign(keys_1, curr_div_keys);
+    let newKeys_2 = Object.assign(newKeys_1, curr_divhcp_keys); */
+    // keys_1.push(...curr_div_keys);
+    //keys_1.push(...curr_divhcp_keys);
+    console.log(keys_1);
+    showTitle.textContent = sortvalue.replace(/_/g, " ").toUpperCase();
     mergedEventData.forEach((herosGroup) => {
         let tableModal = document.getElementById("TableDataExport");
-
         tabEl = document.createElement("table");
         tHead = tabEl.createTHead();
         tBody = tabEl.createTBody();
@@ -2000,19 +2004,21 @@ function showCurrTable() {
         newRow = tHead.insertRow();
         console.log("newRow", newRow);
         tableModal.appendChild(tabEl);
+        console.log("tabEl", tabEl);
         // showTitle.textContent = filsort.replace(/_/g, " ").toUpperCase();
 
         //  document.body.appendChild(tabEl)
-        keys_1.forEach((prop) => (newRow.insertCell().textContent = prop));
+        newArrayKeys.forEach((prop) => (newRow.insertCell().textContent = prop));
         herosGroup.members.forEach((hero) => {
             newRow = tBody.insertRow();
             console.log("hero", hero);
-            keys_1.forEach((prop) => {
+            newArrayKeys.forEach((prop) => {
                 if (prop !== "scorecard") {
                     newRow.insertCell().textContent = hero[prop];
                 } else {
                     newRow.insertCell().innerHTML = hero[prop].join("<br>");
                 }
+                console.log("newArrayKeys", newArrayKeys);
             });
         });
     });
@@ -2068,7 +2074,7 @@ function showAllTable() {
         "div3_plus_hcp",
     ]; */
     showTitle.textContent = filsort.toUpperCase();
-    const keys_1 = ["name", "step"];
+    keys_1 = ["name", "step"];
     let game_keys = nodeInc("g", numOfGames);
     let scrtch_key = ["scratch"];
     let div_keys = nodeInc("div", diVisions);
@@ -2102,6 +2108,7 @@ function showAllTable() {
                     newRow.insertCell().innerHTML = hero[prop].join("<br>");
                 }
             });
+            console.log("curr", keys_1);
         });
     });
 }
@@ -2290,7 +2297,7 @@ if (parseInt(toRegister) === 0) {
 
 if (parseInt(toRegister) === 0) {
     reGister.parentNode.classList.add("hidden");
-    localStorage.setItem("stpID", "isNowPlaying");
+    //localStorage.setItem("stpID", "isNowPlaying");
 }
 
 if (parseInt(playEd) === 0) {
