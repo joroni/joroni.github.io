@@ -1542,13 +1542,21 @@ function filterStepsBy(listObjID) {
         return filtrdStepComp(filteredMembers, "#registerModal");
     } else if (listObjID == "isNowPlaying") {
         filteredMembers = filteredMembers.filter((filteredMember) => filteredMember.isplaying == "true");
+        playedMembers = filteredMembers.filter(
+            (filteredMember) => filteredMember.isplaying == "true" && filteredMember.scorecard != ""
+        );
         localStorage.setItem("filteredMembers", JSON.stringify(filteredMembers));
         localStorage.setItem("toPlay", JSON.stringify(filteredMembers.length));
+        localStorage.setItem("playEd", JSON.stringify(playedMembers.length));
+
         selectElem.classList.add("d-none");
         handleSearchForm("searchHolder");
         filter_table.classList.remove("d-none");
         homeChart.classList.add("d-none");
         document.body.classList.add("isNowPlaying");
+        if (playedMembers.length == 0) {
+            document.querySelector("footer").classList.add("hidden");
+        }
         //  searchMemberForm.classList.remove("d-none");
         filterTitle.innerText = "Now Playing";
         localStorage.setItem("joIned", JSON.stringify(filteredMembers.length));
@@ -2238,7 +2246,7 @@ function debounce(fn, delay) {
 let toRegister,
     reGister = document.getElementById("reGister");
 if (localStorage.getItem("toRegister") == null) {
-    toRegister = 0;
+    toRegister = [];
 } else {
     toRegister = JSON.parse(localStorage.getItem("toRegister"));
 }
@@ -2258,6 +2266,16 @@ if (localStorage.getItem("toPlay") == null) {
 } else {
     toPlay = JSON.parse(localStorage.getItem("toPlay"));
 }
+/* 
+if (parseInt(toRegister) === 0) {
+    reGister.parentNode.classList.add("hidden");
+    localStorage.setItem("stpID", "isNowPlaying");
+} else if (!toRegister) {
+    reGister.parentNode.classList.remove("hidden");
+} else {
+    reGister.parentNode.classList.remove("hidden");
+}
+ */
 
 if (parseInt(toRegister) === 0) {
     reGister.parentNode.classList.add("hidden");
