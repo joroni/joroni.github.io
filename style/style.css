@@ -2,6 +2,18 @@
     --green-color: #198754;
 }
 
+#GameResults thead tr td {
+    font-weight: bold;
+}
+
+footer {
+    position: fixed;
+    height: 70px;
+    bottom: 0;
+    width: 100%;
+    background: #ffffff;
+}
+
 body {
     background-color: #eeeeee;
 }
@@ -9,6 +21,29 @@ body {
 body.reGister .game-stepper {
     display: none;
 }
+body.ranKing #filter-table ul li > div.member-thumb,
+body.ranKing #filter-table ul li > div .fw-bold {
+    pointer-events: none;
+}
+
+body.ranKing #filter-table ul li > div.dropdown {
+    opacity: 0;
+    pointer-events: none;
+}
+
+body.ranKing #footerRanking {
+    display: none;
+}
+
+body.isNowPlaying #footerScoring {
+    display: none;
+}
+
+body.reGister #footerRanking,
+body.reGister #footerScoring {
+    display: none;
+}
+
 .progress-bar {
     height: 18px;
 }
@@ -463,6 +498,19 @@ i.fas.fa-ellipsis-vertical:hover {
 
 .list-group-numbered > li::before {
     margin-top: 20px;
+}
+
+body.reGister .search {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    margin-top: 5px;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+
+body.isNowPlaying #registerBox {
+    display: none !important;
 }
 
 .search {

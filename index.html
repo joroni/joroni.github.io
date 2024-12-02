@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="style/style.css" />
     <link rel="stylesheet" href="style/userList.css" />
     <link rel="icon" href="favicon.png" />
-
     <link rel="manifest" href="manifest.json" />
     <!-- ios support -->
     <link rel="apple-touch-icon" href="favicon-72x72.png" />
@@ -51,15 +50,13 @@
                     </span>
                 </div>
             </form> -->
-            <form id="searchMember" class="search ">
+            <!--  <form id="searchMember" class="search ">
                 <div class="search__wrapper">
                     <input type="text" name="" placeholder="Search for..." class="search__field shadow"
                         oninput="searchBarConditional()" id="serachProductText">
-                    <!--   <button type="submit" class="search__field-toggler"><i class="fa-solid fa-magnifying-glass"
-                            style="color: #ffffff;"></i></button> -->
                     <button type="submit" class="fa fa-search search__icon"></button>
                 </div>
-            </form>
+            </form> -->
             <!-- <a class="navbar-brand">Navbar</a> -->
             <select style="width:300px; margin-left: 10px;"
                 class="d-none navbar-brand form-select form-select-lg sort-btn" id="sort-select"
@@ -155,6 +152,15 @@
                 </div>
             </div>
         </div>
+
+        <div class="mt-3 card-container d-flex flex-wrap" id="registerBox">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+
+            </div>
+
+
+        </div>
+
         <div class="mt-3 card-container d-flex flex-wrap" id="filter-table">
             <div class="d-flex align-items-center justify-content-between mb-4">
                 <h4 id="filterTitle">Title</h4>
@@ -407,6 +413,7 @@
             </div>
         </div>
     </div>
+
     <!-- Register Module Start -->
     <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModal" aria-hidden="true">
         <div class="modal-dialog modal-md modal-dialog-centered">
@@ -455,8 +462,31 @@
     </div>
     <!-- Edit Module End -->
     <!-- Add Module End -->
+    <!-- Show Table Start -->
+    <div class="modal fade" id="showTableModal" tabindex="-1" aria-labelledby="showTableModal" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content" id="form">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="showTableModal">Preview</h1>
+                    <button type="button" id="close-btn" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body overflow-scroll">
+                    <div class="row col">
+                        <div class="form-group" id="TableDataExport"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success-no-outline w-100x btn-lg submitButtonx" id="submitData"
+                        onclick="tableToCSV()">
+                        Export
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <div class="sticky-bottomx fixed-bottom">
+    <div class="sticky-bottomx fixed-bottom hidden">
         <div class="maple fab-container">
             <div class="fab shadow">
                 <div class="fab-content">
@@ -565,6 +595,34 @@
             <div id="storeageInfo"></div>
         </div>
     </div>
+    <footer>
+        <div class="container text-center pt-2 pb-2">
+            <div class="row">
+                <div class="col" id="footerScoring">
+                    <!-- <button type="button" class="btn btn-primary btn-lg">Scores</button> -->
+                    <input class="btn-check form-check-input filter-step" type="radio" name="fiLSteps" id="isNowPlaying"
+                        value="isNowPlaying" data-bs-dismiss="offcanvas" />
+                    <label class="btn btn-outline-primary form-check-label  w-100" for="isNowPlaying">Get
+                        Scores</label>
+
+                </div>
+                <div class="col" id="footerRanking">
+                    <input class="btn-check form-check-input filter-step" type="radio" name="fiLSteps" id="ranKing"
+                        value="ranKing" data-bs-dismiss="offcanvas" />
+                    <label class="btn btn-outline-primary form-check-label  w-100" for="ranKing">Ranking</label>
+
+
+                </div>
+
+                <div class="col hidden" id="footerExport">
+                    <button type="button" class="btn btn-outline-primary w-100" data-bs-toggle="modal"
+                        data-bs-target="#showTableModal">Export</button>
+
+                </div>
+
+            </div>
+        </div>
+    </footer>
     <!-- offcanvas button -->
     <script src="bootstrap5.2/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
