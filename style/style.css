@@ -2,13 +2,27 @@
     --green-color: #198754;
 }
 
-#GameResults thead tr td {
+#GameResults thead tr td,
+#GameAllResults thead tr td {
     font-weight: bold;
+}
+
+body footer {
+    transform: translateY(130%);
+    transition-timing-function: ease-in;
+    transition: 0.2s;
+}
+
+body.footer-is-shown footer {
+    transition: 0.25s;
+    transition-timing-function: ease-out;
+    transform: translateY(0);
+    opacity: 1;
 }
 
 footer {
     position: fixed;
-    height: 70px;
+    height: 100px;
     bottom: 0;
     width: 100%;
     background: #ffffff;

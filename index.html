@@ -29,7 +29,7 @@
     <meta name="theme-color" content="#198754" />
 </head>
 
-<body>
+<body class="footer-is-shown">
     <!-- <div id="storeageInfo"></div> -->
     <!-- navbar start -->
     <!--   <h4 class="m-2 ms-3 text-center">CRUD OPERATIONS IN LOCALSTORAGE</h4> -->
@@ -39,6 +39,7 @@
                 role="button" aria-controls="offcanvasExample">
                 <i class="fa-solid fa-bars"></i>
             </a>
+            <div id="searchHolder"></div>
             <!--  <form id="searchMember" class="navbar-form d-flex search" role="search">
                 <div class="input-group search__wrapper">
                     <input class="form-control" type="search" name="search" aria-describedby="search-addon"
@@ -465,22 +466,70 @@
     <!-- Show Table Start -->
     <div class="modal fade" id="showTableModal" tabindex="-1" aria-labelledby="showTableModal" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
-            <div class="modal-content" id="form">
+            <div class="modal-content" id="formModal">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="showTableModal">Preview</h1>
-                    <button type="button" id="close-btn" class="btn-close" data-bs-dismiss="modal"
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="current-tab" data-bs-toggle="tab"
+                                data-bs-target="#current-tab-pane" type="button" role="tab"
+                                aria-controls="current-tab-pane" aria-selected="true">
+                                CURRENT
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="all-tab" data-bs-toggle="tab" data-bs-target="#all-tab-pane"
+                                type="button" role="tab" aria-controls="all-tab-pane" aria-selected="false">
+                                ALL
+                            </button>
+                        </li>
+
+                    </ul>
+
+
+                    <button type="button" id="close-btn-export" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
                 <div class="modal-body overflow-scroll">
-                    <div class="row col">
-                        <div class="form-group" id="TableDataExport"></div>
+                    <div class="tab-content" id="myTabContent2">
+                        <div class="tab-pane fade show active" id="current-tab-pane" role="tabpanel"
+                            aria-labelledby="current-tab" tabindex="0">
+
+                            <div class="row ">
+
+                                <h1 class="col modal-title fs-5" id="showTitle">Preview</h1>
+                                <button type="button"
+                                    class="col current-tab-pane btn btn-success-no-outline w-100x btn-lg submitButtonx"
+                                    id="dlCurrCSVData">
+                                    Export
+                                </button>
+                            </div>
+                            <div class="row col">
+                                <div class="form-group" id="TableDataExport"></div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="all-tab-pane" role="tabpanel" aria-labelledby="all-tab"
+                            tabindex="0">
+
+                            <div class="row ">
+
+                                <h1 class="col modal-title fs-5" id="showTitleTab2">Preview</h1>
+                                <button type="button"
+                                    class="col current-tab-pane btn btn-success-no-outline w-100x btn-lg submitButtonx"
+                                    id="dlAllCSVData">
+                                    Export
+                                </button>
+                            </div>
+                            <div class="row col">
+                                <div class="form-group" id="TableAllDataExport"></div>
+                            </div>
+                        </div>
                     </div>
+
+
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success-no-outline w-100x btn-lg submitButtonx" id="submitData"
-                        onclick="tableToCSV()">
-                        Export
-                    </button>
+
                 </div>
             </div>
         </div>

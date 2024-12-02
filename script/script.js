@@ -55,7 +55,6 @@ let scorecard_edit = document.getElementById("scorecard-edit"),
     filter_table = document.querySelector("#filter-table"),
     sort_table = document.querySelector("#sort-table"),
     searchMemberForm = document.getElementById("searchMember"),
-    registerBox = document.getElementById("registerBox"),
     listTitle = document.getElementById("listTitle"),
     filterTitle = document.getElementById("filterTitle"),
     updateBtn = document.getElementById("update"),
@@ -157,17 +156,6 @@ function validateForm() {
  *
  * @param none
  */
-let searchForm = `<form id='searchMember' class='search '>
-    <div class='search__wrapper'>
-        <input type='text' name='' placeholder='Search for...' class='search__field shadow'
-            oninput='searchBarConditional()' id='serachProductText'>
-        <button type='submit' class='fa fa-search search__icon'></button>
-    </div>`;
-
-function handleSearchForm() {
-    let registerBox = document.getElementById("registerBox");
-    registerBox.innerHTML = searchForm;
-}
 function showData() {
     let memberLists;
     if (localStorage.getItem("memberLists") == null) {
@@ -1213,22 +1201,10 @@ function filteredData(sortedMembers, sortvalue) {
     document.querySelector("#sort-table").classList.remove("d-flex");
     let html = "";
     console.log("filterData", sortedMembers);
-    //localStorage.setItem("currentFilterSort", JSON.stringify(sortvalue) + ":" + JSON.stringify(sortedMembers));
-    localStorage.setItem("currentFilterSort", JSON.stringify(sortedMembers));
     console.log("sortvalue", sortvalue);
     let divHcp = sortvalue.replace("_plus_hcp", "");
-    let currentFilterSort = JSON.parse(localStorage.getItem("currentFilterSort"));
-
-    let eventData = JSON.parse(localStorage.getItem("eventLists"));
-    eventData[0].members = currentFilterSort;
-    console.log("EVENT", eventData);
-
     console.log("divHcp", divHcp);
-    localStorage.setItem("mergedEventData", JSON.stringify(eventData));
-
-    // console.log("currentFilterSort", currentFilterSort);
     if (sortedMembers.length === 0) {
-        document.getElementById("footerExport").classList.add("hidden");
         // This Below HTML Code Display when product list's array is Empty.
         html += `<div class="card-body">
         <div class="row gx-2">
@@ -1241,7 +1217,6 @@ function filteredData(sortedMembers, sortvalue) {
         </div>
       </div>`;
     } else {
-        document.getElementById("footerExport").classList.remove("hidden");
         sortedMembers.forEach(function (element, index) {
             // This Below HTML code is generate Card For Sorted Items.
             let img = function () {
@@ -1319,7 +1294,6 @@ function filteredData(sortedMembers, sortvalue) {
     listTitle.innerText = divHcp.toUpperCase() + " Ranking";
     sort_table.classList.remove("d-none");
     document.querySelector("#sort-table > ol").innerHTML = html;
-    showCurrTable();
 }
 
 function checkAvailStorage() {
@@ -1507,7 +1481,7 @@ function filterStepsBy(listObjID) {
         filteredMembers = memberLists;
         /* localStorage.setItem("filteredMembers", JSON.stringify(filteredMembers)); */
         localStorage.setItem("memberLists", JSON.stringify(filteredMembers));
-        //  searchMemberForm.classList.add("d-none");
+        searchMemberForm.classList.add("d-none");
         curd_table.classList.add("d-none");
         filter_table.classList.add("d-none");
         selectElem.classList.add("d-none");
@@ -1517,30 +1491,22 @@ function filterStepsBy(listObjID) {
         filteredMembers = memberLists.filter((memberLists) => memberLists.isplaying != "true");
         localStorage.setItem("filteredMembers", JSON.stringify(filteredMembers));
         selectElem.classList.add("d-none");
-
-        toPlayMembers = memberLists.filter((memberLists) => memberLists.isplaying == "true");
-        localStorage.setItem("toPlay", JSON.stringify(toPlayMembers.length));
-
         homeChart.classList.add("d-none");
-        filterTitle.innerText = "";
-        handleSearchForm();
+        filterTitle.innerText = "Register Now";
         document.body.classList.add("reGister");
-        document.querySelector("footer").classList.add("hidden");
         localStorage.setItem("toRegister", JSON.stringify(filteredMembers.length));
         //   filterMsg.innerText = "Congratulations!";
-        // searchMemberForm.classList.remove("d-none");
+        searchMemberForm.classList.remove("d-none");
         filter_table.classList.remove("d-none");
         console.log("unRegistered", filteredMembers);
         return filtrdStepComp(filteredMembers, "#registerModal");
     } else if (listObjID == "isNowPlaying") {
         filteredMembers = filteredMembers.filter((filteredMember) => filteredMember.isplaying == "true");
         localStorage.setItem("filteredMembers", JSON.stringify(filteredMembers));
-        localStorage.setItem("toPlay", JSON.stringify(filteredMembers.length));
         selectElem.classList.add("d-none");
         filter_table.classList.remove("d-none");
         homeChart.classList.add("d-none");
-        document.body.classList.add("isNowPlaying");
-        //  searchMemberForm.classList.remove("d-none");
+        searchMemberForm.classList.remove("d-none");
         filterTitle.innerText = "Now Playing";
         localStorage.setItem("joIned", JSON.stringify(filteredMembers.length));
         console.log("Registered", filteredMembers);
@@ -1551,10 +1517,9 @@ function filterStepsBy(listObjID) {
         );
         localStorage.setItem("filteredMembers", JSON.stringify(filteredMembers));
         selectElem.classList.remove("d-none");
-        //  searchMemberForm.classList.add("d-none");
+        searchMemberForm.classList.add("d-none");
         homeChart.classList.add("d-none");
         filterTitle.innerText = "Ranking";
-        document.body.classList.add("ranKing");
         localStorage.setItem("canRank", JSON.stringify(filteredMembers.length));
         console.log("Registered", filteredMembers);
         filter_table.classList.remove("d-none");
@@ -1889,194 +1854,5 @@ function searchMemberByStep(sortedItem, modalID) {
     }
 
     curd_table.classList.add("d-none");
-    document.querySelector("#filter-table > ul").innerHTML = html;
-}
-
-/************ JSON - TABLE TO CSV */
-function showCurrTable() {
-    let numOfGames = 0;
-    let diVisions = 0;
-
-    let mergedEventData = JSON.parse(localStorage.getItem("mergedEventData"));
-    numOfGames = JSON.parse(localStorage.getItem("numOfGames"));
-    diVisions = JSON.parse(localStorage.getItem("eventNumDivs"));
-    console.log("numOfGames", parseInt(numOfGames));
-    console.log("diVisions ", parseInt(diVisions));
-
-    function nodeInc(label, num) {
-        const myArray = [];
-        for (let i = 0; i < parseInt(num); i++) {
-            myArray.push(label + [i + 1]);
-            console.log(myArray);
-        }
-        return myArray;
-    }
-
-    function incNode(label0, num, label) {
-        const myArray = [];
-        for (let i = 0; i < parseInt(num); i++) {
-            myArray.push(label0 + [i + 1] + label);
-            console.log(myArray);
-        }
-        return myArray;
-    }
-
-    /*  const keys_1 = [
-        "name",
-        "step",
-        "g1",
-        "g2",
-        "g3",
-        "g4",
-        "g5",
-        "g6",
-        "scratch",
-        "div1",
-        "div2",
-        "div3",
-        "div1_plus_hcp",
-        "div2_plus_hcp",
-        "div3_plus_hcp",
-    ]; */
-
-    const keys_1 = ["name", "step"];
-    let game_keys = nodeInc("g", numOfGames);
-    let scrtch_key = ["scratch"];
-    let div_keys = nodeInc("div", diVisions);
-    let divhcp_keys = incNode("div", diVisions, "_plus_hcp");
-
-    keys_1.push(...game_keys);
-    keys_1.push(...scrtch_key);
-    keys_1.push(...div_keys);
-    keys_1.push(...divhcp_keys);
-
-    mergedEventData.forEach((herosGroup) => {
-        let tableModal = document.getElementById("TableDataExport");
-
-        tabEl = document.createElement("table");
-        tHead = tabEl.createTHead();
-        tBody = tabEl.createTBody();
-        tabEl.classList.add("table", "table-striped", "bottom");
-        tabEl.setAttribute("id", "GameResults");
-        newRow = tHead.insertRow();
-        console.log("newRow", newRow);
-        tableModal.appendChild(tabEl);
-
-        //  document.body.appendChild(tabEl)
-        keys_1.forEach((prop) => (newRow.insertCell().textContent = prop));
-        herosGroup.members.forEach((hero) => {
-            newRow = tBody.insertRow();
-            console.log("hero", hero);
-            keys_1.forEach((prop) => {
-                if (prop !== "scorecard") {
-                    newRow.insertCell().textContent = hero[prop];
-                } else {
-                    newRow.insertCell().innerHTML = hero[prop].join("<br>");
-                }
-            });
-        });
-    });
-}
-
-function downloadCSVFile(csv_data) {
-    // Create CSV file object and feed
-    // our csv_data into it
-    CSVFile = new Blob([csv_data], {
-        type: "text/csv",
-    });
-
-    // Create to temporary link to initiate
-    // download process
-    let temp_link = document.createElement("a");
-
-    // Download csv file
-    temp_link.download = "GfG.csv";
-    let url = window.URL.createObjectURL(CSVFile);
-    temp_link.href = url;
-
-    // This link should not be displayed
-    temp_link.style.display = "none";
-    document.body.appendChild(temp_link);
-
-    // Automatically click the link to
-    // trigger download
-    temp_link.click();
-    document.body.removeChild(temp_link);
-}
-
-function tableToCSV() {
-    // Variable to store the final csv data
-    let csv_data = [];
-
-    // Get each row data
-    let rows = document.getElementsByTagName("tr");
-    for (let i = 0; i < rows.length; i++) {
-        // Get each column data
-        let cols = rows[i].querySelectorAll("td,th");
-
-        // Stores each csv row data
-        let csvrow = [];
-        for (let j = 0; j < cols.length; j++) {
-            // Get the text data of each cell
-            // of a row and push it to csvrow
-            csvrow.push(cols[j].innerHTML);
-        }
-
-        // Combine each column value with comma
-        csv_data.push(csvrow.join(","));
-    }
-
-    // Combine each row data with new line character
-    csv_data = csv_data.join("\n");
-
-    // Call this function to download csv file
-    downloadCSVFile(csv_data);
-}
-
-/*********GET SCROLL POSITION FOR FOOTER */
-const getWindowScrollPosition = () => ({
-    x: window.scrollX,
-    y: window.scrollY,
-});
-
-getWindowScrollPosition(); // {x: 0, y: 200}
-
-/********* HIDE REGISTRATION AND RANKING IF EMPTY */
-
-let toRegister,
-    reGister = document.getElementById("reGister");
-if (localStorage.getItem("toRegister") == null) {
-    toRegister = [];
-} else {
-    toRegister = JSON.parse(localStorage.getItem("toRegister"));
-}
-
-let canRank,
-    ranKing = document.getElementById("ranKing");
-if (localStorage.getItem("canRank") == null) {
-    canRank = 0;
-} else {
-    canRank = JSON.parse(localStorage.getItem("canRank"));
-}
-
-let toPlay,
-    isNowPlaying = document.getElementById("isNowPlaying");
-if (localStorage.getItem("toPlay") == null) {
-    toPlay = 0;
-} else {
-    toPlay = JSON.parse(localStorage.getItem("toPlay"));
-}
-
-if (parseInt(toRegister) === 0) {
-    reGister.parentNode.classList.add("hidden");
-    localStorage.getItem("stpID", "isNowPlaying");
-}
-
-if (parseInt(canRank) === 0) {
-    ranKing.parentNode.classList.add("hidden");
-    // localStorage.getItem("stpID", "isNowPlaying");
-}
-
-if (parseInt(toPlay) === 0) {
-    isNowPlaying.parentNode.classList.add("hidden");
+    filter_table.innerHTML = html;
 }
