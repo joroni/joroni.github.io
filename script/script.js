@@ -1996,6 +1996,7 @@ function showCurrTable(sortvalue) {
     showTitle.textContent = sortvalue.replace(/_/g, " ").toUpperCase();
     mergedEventData.forEach((herosGroup) => {
         let tableModal = document.getElementById("TableDataExport");
+        tableModal.innerHTML = "";
         tabEl = document.createElement("table");
         tHead = tabEl.createTHead();
         tBody = tabEl.createTBody();
@@ -2087,6 +2088,7 @@ function showAllTable() {
 
     mergedAllEventData.forEach((herosGroup) => {
         let tableModal = document.getElementById("TableAllDataExport");
+        tableModal.innerHTML = "";
         tabEl = document.createElement("table");
         tHead = tabEl.createTHead();
         tBody = tabEl.createTBody();
