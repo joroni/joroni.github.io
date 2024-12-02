@@ -2272,3 +2272,11 @@ if (parseInt(canRank) === 0) {
 if (parseInt(toPlay) === 0) {
     isNowPlaying.parentNode.classList.add("hidden");
 }
+
+function clearStorage() {
+    if (confirm("Are you sure you want to clear data")) {
+        localStorage.clear();
+        showData();
+        location.reload(); // Reload the current page
+    }
+}
