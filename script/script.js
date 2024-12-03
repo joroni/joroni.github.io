@@ -888,10 +888,19 @@ function editData(iD) {
                   <label for='exampleFormControlSelect1'>G-${index + 1}</label>
                         </div>
                     </div>`;
-
                         scrItems.push({["g" + [index + 1]]: element});
                     });
 
+                    /*  let arrString = memberLists[i].scorecard.toString();
+                    arrItems = arrString.split(delimiter);
+                    arrayNums = arrItems.map((i) => Number(i));
+                    console.log("scrItems current", arrayNums);
+                    console.log("scrItems ecurrent length", arrayNums.length); */
+                    /* if (arrayNums.length >= 1) {
+                        buildScorObjs(productList[index], arrayNums);
+                        document.getElementById("step-edit").value = arrayNums.length;
+                    } */
+                    console.log("scrItems ", scrItems);
                     let newOb = Object.assign({}, ...scrItems);
                     Object.assign(curobj, newOb); /************* This updates the array with new scores */
                     console.log("New array ", Object.assign(curobj, newOb));
@@ -1499,6 +1508,7 @@ function initData() {
     createFiltertDivisions();
     /************ Appends a filter option on the dropdown based on Event's eventDivs **************/
     //  isEmptyFiltered();
+    // document.body.classList.add("isHome");
 }
 initData();
 
@@ -1515,7 +1525,8 @@ function filterStepsBy(listObjID) {
     if (listObjID == "isHome") {
         filteredMembers = memberLists;
         /* localStorage.setItem("filteredMembers", JSON.stringify(filteredMembers)); */
-        localStorage.setItem("memberLists", JSON.stringify(filteredMembers));
+        // localStorage.setItem("memberLists", JSON.stringify(filteredMembers));
+        localStorage.setItem("memberLists", JSON.stringify(memberLists));
         //  searchMemberForm.classList.add("d-none");
         curd_table.classList.add("d-none");
         filter_table.classList.add("d-none");
@@ -1534,6 +1545,7 @@ function filterStepsBy(listObjID) {
         filterTitle.innerText = "";
         handleSearchForm("registerBox");
         document.body.classList.add("reGister");
+        document.body.classList.remove("isHome");
         document.querySelector("footer").classList.add("hidden");
         localStorage.setItem("toRegister", JSON.stringify(filteredMembers.length));
         //   filterMsg.innerText = "Congratulations!";
@@ -1579,6 +1591,7 @@ function filterStepsBy(listObjID) {
         localStorage.setItem("playEd", JSON.stringify(playedMembers.length));
         selectElem.classList.remove("d-none");
         //  searchMemberForm.classList.add("d-none");
+        document.body.classList.remove("isHome");
         homeChart.classList.add("d-none");
         filterTitle.innerText = "Ranking";
         document.body.classList.add("ranKing");
@@ -1985,13 +1998,6 @@ function showCurrTable(sortvalue) {
     console.log("stringKeys", stringKeys);
     let stringKeys2 = "[" + '"' + "div" + currSort2 + '"' + "," + '"' + "div" + currSort2 + "_plus_hcp" + '"' + "]";
     let newArrayKeys = keys_1.concat(JSON.parse(stringKeys2));
-
-    /*   keys_1.push(curr_div_keys);
-    keys_1.push(curr_divhcp_keys); */
-    /* let newKeys_1 = Object.assign(keys_1, curr_div_keys);
-    let newKeys_2 = Object.assign(newKeys_1, curr_divhcp_keys); */
-    // keys_1.push(...curr_div_keys);
-    //keys_1.push(...curr_divhcp_keys);
     console.log(keys_1);
     showTitle.textContent = sortvalue.replace(/_/g, " ").toUpperCase();
     mergedEventData.forEach((herosGroup) => {
@@ -2234,6 +2240,7 @@ dlAllCSVData.onclick = function () {
     // Call this function to download csv file
     downloadCSVFile(csv_data, filsort);
 };
+/************ JSON - TABLE TO CSV */
 
 /*********GET SCROLL POSITION FOR FOOTER */
 let firstHandlerScroll = debounce(handleScroll, 200);
@@ -2316,5 +2323,12 @@ function clearStorage() {
         localStorage.clear();
         showData();
         location.reload(); // Reload the current page
+    }
+}
+
+function modalFS() {
+    let modalDialog = document.querySelectorAll(".fs-enabled .modal-dialog");
+    for (i = 0; i < modalDialog.length; i++) {
+        modalDialog[i].classList.toggle("modal-fullscreen");
     }
 }
