@@ -472,8 +472,8 @@
                     <div class="ml-auto">
                         <button type="button" id="btn-minmax" onclick="modalFS()" class="btn-sml-icon btn-minmax-custom"
                             aria-label="Min/Max"></button>
-                        <button type="button" id="close-btn-export" class="btn-sml-icon btn-close-custom"
-                            data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" id="close-btn-export" onclick="modalFSClose()"
+                            class="btn-sml-icon btn-close-custom" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
 
@@ -581,7 +581,8 @@
 
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel"></h5>
+            <h5 class="offcanvas-title" id="companyLogo"><img src="img/maple-logo-512x512.svg"
+                    alt="triangle with all three sides equal" height="50" width="50" /></h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">

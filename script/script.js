@@ -1487,15 +1487,15 @@ function initData() {
         localStorage.setItem("numOfGames", JSON.stringify(eventData[0].numOfGames));
         localStorage.setItem("eventNumDivs", JSON.stringify(eventData[0].eventNumDivs));
         localStorage.setItem("eventDivs", JSON.stringify(eventData[0].eventDivs));
-        localStorage.setItem("companyID", JSON.stringify(eventData[0].companyID));
-        localStorage.setItem("eventID", JSON.stringify(eventData[0].eventID));
+        localStorage.setItem("companyID", eventData[0].companyID);
+        localStorage.setItem("eventID", eventData[0].eventID);
     } else {
         eventObj = JSON.parse(localStorage.getItem("eventLists"));
         eventLists = eventObj.filter((item) => item.active == true);
         numOfGames = JSON.parse(localStorage.getItem("numOfGames"));
         eventNumDivs = JSON.parse(localStorage.getItem("eventNumDivs"));
-        companyID = JSON.parse(localStorage.getItem("companyID"));
-        eventID = JSON.parse(localStorage.getItem("eventID"));
+        companyID = localStorage.getItem("companyID");
+        eventID = localStorage.getItem("eventID");
 
         const arr = memberLists;
         arr.forEach((element) => {
@@ -2348,5 +2348,12 @@ function modalFS() {
     let modalDialog = document.querySelectorAll(".fs-enabled .modal-dialog");
     for (i = 0; i < modalDialog.length; i++) {
         modalDialog[i].classList.toggle("modal-fullscreen");
+    }
+}
+
+function modalFSClose() {
+    let modalDialog = document.querySelectorAll(".fs-enabled .modal-dialog");
+    for (i = 0; i < modalDialog.length; i++) {
+        modalDialog[i].classList.remove("modal-fullscreen");
     }
 }
