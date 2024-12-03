@@ -464,10 +464,21 @@
     <!-- Edit Module End -->
     <!-- Add Module End -->
     <!-- Show Table Start -->
-    <div class="modal fade" id="showTableModal" tabindex="-1" aria-labelledby="showTableModal" aria-hidden="true">
+    <div class="modal fade fs-enabled" id="showTableModal" tabindex="-1" aria-labelledby="showTableModal"
+        aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content" id="formModal">
                 <div class="modal-header">
+                    <div class="ml-auto">
+                        <button type="button" id="btn-minmax" onclick="modalFS()" class="btn-sml-icon btn-minmax-custom"
+                            aria-label="Min/Max"></button>
+                        <button type="button" id="close-btn-export" class="btn-sml-icon btn-close-custom"
+                            data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+
+                </div>
+                <div class="modal-body">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="current-tab" data-bs-toggle="tab"
@@ -485,18 +496,13 @@
 
                     </ul>
 
-
-                    <button type="button" id="close-btn-export" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                </div>
-                <div class="modal-body overflow-scroll">
                     <div class="tab-content" id="myTabContent2">
                         <div class="tab-pane fade show active" id="current-tab-pane" role="tabpanel"
                             aria-labelledby="current-tab" tabindex="0">
 
                             <div class="row ">
 
-                                <h1 class="col modal-title fs-5" id="showTitle">Preview</h1>
+                                <h1 class="col modal-title mt-2 fs-5" id="showTitle">Preview</h1>
                                 <button type="button"
                                     class="col current-tab-pane btn btn-success-no-outline w-100x btn-lg submitButtonx"
                                     id="dlCurrCSVData">
@@ -504,8 +510,11 @@
                                 </button>
                             </div>
                             <div class="row col">
-                                <div class="form-group" id="TableDataExport"></div>
+                                <div class="overflow-scroll">
+                                    <div class="form-group" id="TableDataExport"></div>
+                                </div>
                             </div>
+
                         </div>
 
                         <div class="tab-pane fade" id="all-tab-pane" role="tabpanel" aria-labelledby="all-tab"
@@ -513,7 +522,7 @@
 
                             <div class="row ">
 
-                                <h1 class="col modal-title fs-5" id="showTitleTab2">Preview</h1>
+                                <h1 class="col modal-title mt-2 fs-5" id="showTitleTab2">Preview</h1>
                                 <button type="button"
                                     class="col current-tab-pane btn btn-success-no-outline w-100x btn-lg submitButtonx"
                                     id="dlAllCSVData">
@@ -521,18 +530,20 @@
                                 </button>
                             </div>
                             <div class="row col">
-                                <div class="form-group" id="TableAllDataExport"></div>
+                                <div class="overflow-scroll">
+                                    <div class="form-group" id="TableAllDataExport"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-                <div class="modal-footer">
 
-                </div>
+            </div>
+            <div class="modal-footer">
+
             </div>
         </div>
+    </div>
     </div>
 
     <div class="sticky-bottomx fixed-bottom hidden">
