@@ -406,8 +406,10 @@ function editData(iD) {
     let registerMember = document.querySelector("#registerMember");
     for (let i = 0; i < memberLists.length; i++) {
         if (memberLists[i].id == iD) {
+            let stepVal = memberLists[i].step;
             let arrString = memberLists[i].scorecard.toString();
             arrItems = arrString.split(delimiter);
+            // alert(stepVal);
             arrayNums = arrItems.map((i) => Number(i));
             console.log("current", arrayNums);
             console.log("current length", arrayNums.length);
@@ -420,13 +422,22 @@ function editData(iD) {
                 return accumulator + currentValue;
             }, 0);
 
-            function addHndcp(div) {
-                if (div !== null || div !== NaN) {
-                    return scratch + parseInt(div);
+            function addHndcp(div, mltplier) {
+                if (div !== null || (div !== NaN && mltplier !== null) || mltplier !== NaN || mltplier != undefined) {
+                    console.log(mltplier);
+                    return scratch + parseInt(div) * parseInt(mltplier);
                 } else {
                     return null;
                 }
             }
+
+            /*  function addHndcp(div) {
+                    if (div !== null || div !== NaN) {
+                        return scratch + (parseInt(div));
+                    } else {
+                        return null;
+                    }
+                } */
 
             if (arrayNums.length == numOfGames) {
                 scorecard_edit.disabled = true;
@@ -595,7 +606,7 @@ function editData(iD) {
                         console.log(scratch);
                         scratch_edit.value = scratch;
                         step_edit.value = arrayNums.length;
-                        updateScores();
+                        updateScores(arrayNums.length);
                     }
                 };
 
@@ -624,85 +635,86 @@ function editData(iD) {
                 console.log(scratch);
                 scratch_edit.value = scratch;
                 step_edit.value = arrayNums.length;
-                updateScores();
+                updateScores(arrayNums.length);
             };
 
-            function updateScores() {
+            function updateScores(multiplier) {
+                // alert(multiplier);
                 if (memberLists[i].div1) {
                     div1_edit.value = memberLists[i].div1;
-                    div1_plus_hcp.value = addHndcp(memberLists[i].div1);
-                    memberLists[i].div1_plus_hcp = addHndcp(memberLists[i].div1);
+                    div1_plus_hcp.value = addHndcp(memberLists[i].div1, multiplier);
+                    memberLists[i].div1_plus_hcp = addHndcp(memberLists[i].div1, multiplier);
                     div1_plus_hcp.value = memberLists[i].div1_plus_hcp;
                     buildScorObjs(memberLists[i], arrayNums);
                 }
                 if (memberLists[i].div2) {
                     div2_edit.value = memberLists[i].div2;
-                    div2_plus_hcp.value = addHndcp(memberLists[i].div2);
-                    memberLists[i].div2_plus_hcp = addHndcp(memberLists[i].div2);
+                    div2_plus_hcp.value = addHndcp(memberLists[i].div2, multiplier);
+                    memberLists[i].div2_plus_hcp = addHndcp(memberLists[i].div2, multiplier);
                     div2_plus_hcp.value = memberLists[i].div2_plus_hcp;
                     buildScorObjs(memberLists[i], arrayNums);
                 }
 
                 if (memberLists[i].div3) {
                     div3_edit.value = memberLists[i].div3;
-                    div3_plus_hcp.value = addHndcp(memberLists[i].div3);
-                    memberLists[i].div3_plus_hcp = addHndcp(memberLists[i].div3);
+                    div3_plus_hcp.value = addHndcp(memberLists[i].div3, multiplier);
+                    memberLists[i].div3_plus_hcp = addHndcp(memberLists[i].div3, multiplier);
                     div3_plus_hcp.value = memberLists[i].div3_plus_hcp;
                     buildScorObjs(memberLists[i], arrayNums);
                 }
 
                 if (memberLists[i].div4) {
                     div4_edit.value = memberLists[i].div4;
-                    div4_plus_hcp.value = addHndcp(memberLists[i].div4);
-                    memberLists[i].div4_plus_hcp = addHndcp(memberLists[i].div4);
+                    div4_plus_hcp.value = addHndcp(memberLists[i].div4, multiplier);
+                    memberLists[i].div4_plus_hcp = addHndcp(memberLists[i].div4, multiplier);
                     div4_plus_hcp.value = memberLists[i].div4_plus_hcp;
                     buildScorObjs(memberLists[i], arrayNums);
                 }
 
                 if (memberLists[i].div5) {
                     div5_edit.value = memberLists[i].div5;
-                    div5_plus_hcp.value = addHndcp(memberLists[i].div5);
-                    memberLists[i].div5_plus_hcp = addHndcp(memberLists[i].div5);
+                    div5_plus_hcp.value = addHndcp(memberLists[i].div5, multiplier);
+                    memberLists[i].div5_plus_hcp = addHndcp(memberLists[i].div5, multiplier);
                     div5_plus_hcp.value = memberLists[i].div5_plus_hcp;
                     buildScorObjs(memberLists[i], arrayNums);
                 }
 
                 if (memberLists[i].div6) {
                     div6_edit.value = memberLists[i].div6;
-                    div6_plus_hcp.value = addHndcp(memberLists[i].div6);
-                    memberLists[i].div6_plus_hcp = addHndcp(memberLists[i].div6);
+                    div6_plus_hcp.value = addHndcp(memberLists[i].div6, multiplier);
+                    memberLists[i].div6_plus_hcp = addHndcp(memberLists[i].div6, multiplier);
                     div6_plus_hcp.value = memberLists[i].div6_plus_hcp;
                     buildScorObjs(memberLists[i], arrayNums);
                 }
 
                 if (memberLists[i].div7) {
                     div7_edit.value = memberLists[i].div7;
-                    div7_plus_hcp.value = addHndcp(memberLists[i].div7);
-                    memberLists[i].div7_plus_hcp = addHndcp(memberLists[i].div7);
+                    div7_plus_hcp.value = addHndcp(memberLists[i].div7, multiplier);
+                    memberLists[i].div7_plus_hcp = addHndcp(memberLists[i].div7, multiplier);
                     div7_plus_hcp.value = memberLists[i].div7_plus_hcp;
                     buildScorObjs(memberLists[i], arrayNums);
                 }
 
                 if (memberLists[i].div8) {
                     div8_edit.value = memberLists[i].div8;
-                    div8_plus_hcp.value = addHndcp(memberLists[i].div8);
-                    memberLists[i].div8_plus_hcp = addHndcp(memberLists[i].div8);
+                    div8_plus_hcp.value = addHndcp(memberLists[i].div8, multiplier);
+                    memberLists[i].div8_plus_hcp = addHndcp(memberLists[i].div8, multiplier);
                     div8_plus_hcp.value = memberLists[i].div8_plus_hcp;
                     buildScorObjs(memberLists[i], arrayNums);
                 }
 
                 if (memberLists[i].div9) {
                     div9_edit.value = memberLists[i].div9;
-                    div9_plus_hcp.value = addHndcp(memberLists[i].div9);
-                    memberLists[i].div9_plus_hcp = addHndcp(memberLists[i].div9);
+                    div9_plus_hcp.value = addHndcp(memberLists[i].div9, multiplier);
+                    memberLists[i].div9_plus_hcp = addHndcp(memberLists[i].div9, multiplier);
                     div9_plus_hcp.value = memberLists[i].div9_plus_hcp;
                     buildScorObjs(memberLists[i], arrayNums);
                 }
 
                 if (memberLists[i].div10) {
                     div10_edit.value = memberLists[i].div10;
-                    div10_plus_hcp.value = addHndcp(memberLists[i].div10);
-                    memberLists[i].div10_plus_hcp = addHndcp(memberLists[i].div10);
+                    div10_plus_hcp.value = addHndcp(memberLists[i].div10, multiplier);
+                    memberLists[i].div10_plus_hcp = addHndcp(memberLists[i].div10, multiplier);
                     div10_plus_hcp.value = memberLists[i].div10_plus_hcp;
                     buildScorObjs(memberLists[i], arrayNums);
                 }
@@ -1476,18 +1488,21 @@ function initData() {
         localStorage.setItem("eventNumDivs", JSON.stringify(eventData[0].eventNumDivs));
         localStorage.setItem("eventDivs", JSON.stringify(eventData[0].eventDivs));
         localStorage.setItem("companyID", JSON.stringify(eventData[0].companyID));
+        localStorage.setItem("eventID", JSON.stringify(eventData[0].eventID));
     } else {
         eventObj = JSON.parse(localStorage.getItem("eventLists"));
         eventLists = eventObj.filter((item) => item.active == true);
         numOfGames = JSON.parse(localStorage.getItem("numOfGames"));
         eventNumDivs = JSON.parse(localStorage.getItem("eventNumDivs"));
         companyID = JSON.parse(localStorage.getItem("companyID"));
+        eventID = JSON.parse(localStorage.getItem("eventID"));
 
         const arr = memberLists;
         arr.forEach((element) => {
             element.numofgames = numOfGames;
             element.eventnumdivs = eventNumDivs;
             element.company_id = companyID;
+            element.event_id = eventID;
         });
         localStorage.setItem("memberLists", JSON.stringify(arr));
     }
@@ -1999,7 +2014,8 @@ function showCurrTable(sortvalue) {
     let stringKeys2 = "[" + '"' + "div" + currSort2 + '"' + "," + '"' + "div" + currSort2 + "_plus_hcp" + '"' + "]";
     let newArrayKeys = keys_1.concat(JSON.parse(stringKeys2));
     console.log(keys_1);
-    showTitle.textContent = sortvalue.replace(/_/g, " ").toUpperCase();
+    let newTitle = sortvalue.replace(/_/g, " ").replace("plus", "+");
+    showTitle.textContent = newTitle.toUpperCase();
     mergedEventData.forEach((herosGroup) => {
         let tableModal = document.getElementById("TableDataExport");
         tableModal.innerHTML = "";
@@ -2121,7 +2137,7 @@ function showAllTable() {
     });
 }
 
-function downloadCSVFile(csv_data, fS) {
+function downloadCSVFile(csv_data, fS, eVnt) {
     // Create CSV file object and feed
     // our csv_data into it
     CSVFile = new Blob([csv_data], {
@@ -2133,7 +2149,7 @@ function downloadCSVFile(csv_data, fS) {
     let temp_link = document.createElement("a");
 
     // Download csv file
-    temp_link.download = fS + ".csv";
+    temp_link.download = eVnt + "-" + fS + ".csv";
     let url = window.URL.createObjectURL(CSVFile);
     temp_link.href = url;
 
@@ -2181,6 +2197,7 @@ let dlAllCSVData = document.getElementById("dlAllCSVData");
 
 dlCurrCSVData.onclick = function () {
     let filsort = localStorage.getItem("sortBy");
+    let evnt_id = localStorage.getItem("eventID");
     let thisTbl = document.getElementById("GameResults");
     // Variable to store the final csv data
     let csv_data = [];
@@ -2207,11 +2224,12 @@ dlCurrCSVData.onclick = function () {
     csv_data = csv_data.join("\n");
 
     // Call this function to download csv file
-    downloadCSVFile(csv_data, filsort);
+    downloadCSVFile(csv_data, filsort, evnt_id);
 };
 
 dlAllCSVData.onclick = function () {
     let filsort = "all_divisions";
+    let evnt_id = localStorage.getItem("eventID");
     let thisTbl = document.getElementById("GameAllResults");
     // Variable to store the final csv data
     let csv_data = [];
@@ -2238,7 +2256,7 @@ dlAllCSVData.onclick = function () {
     csv_data = csv_data.join("\n");
 
     // Call this function to download csv file
-    downloadCSVFile(csv_data, filsort);
+    downloadCSVFile(csv_data, filsort, evnt_id);
 };
 /************ JSON - TABLE TO CSV */
 
