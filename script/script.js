@@ -409,7 +409,7 @@ function editData(iD) {
             let stepVal = memberLists[i].step;
             let arrString = memberLists[i].scorecard.toString();
             arrItems = arrString.split(delimiter);
-            // alert(stepVal);
+
             arrayNums = arrItems.map((i) => Number(i));
             console.log("current", arrayNums);
             console.log("current length", arrayNums.length);
@@ -423,7 +423,12 @@ function editData(iD) {
             }, 0);
 
             function addHndcp(div, mltplier) {
-                if (div !== null || (div !== NaN && mltplier !== null) || mltplier !== NaN || mltplier != undefined) {
+                //  alert(stepVal);
+                if (
+                    ((div !== null || div !== NaN) && mltplier !== null) ||
+                    mltplier !== NaN ||
+                    mltplier !== "undefined"
+                ) {
                     console.log(mltplier);
                     return scratch + parseInt(div) * parseInt(mltplier);
                 } else {
@@ -639,7 +644,7 @@ function editData(iD) {
             };
 
             function updateScores(multiplier) {
-                // alert(multiplier);
+                //   alert(multiplier);
                 if (memberLists[i].div1) {
                     div1_edit.value = memberLists[i].div1;
                     div1_plus_hcp.value = addHndcp(memberLists[i].div1, multiplier);
@@ -796,62 +801,62 @@ function editData(iD) {
             /****** DYNAMIC EDIT INPUTS *******/
             if (memberLists[i].div1) {
                 div1_edit.value = memberLists[i].div1;
-                memberLists[i].div1_plus_hcp = addHndcp(memberLists[i].div1);
+                memberLists[i].div1_plus_hcp = addHndcp(memberLists[i].div1, memberLists[i].step);
                 div1_plus_hcp.value = memberLists[i].div1_plus_hcp;
             }
 
             if (memberLists[i].div2) {
                 div2_edit.value = memberLists[i].div2;
-                memberLists[i].div2_plus_hcp = addHndcp(memberLists[i].div2);
-                console.log(addHndcp(memberLists[i].div2));
+                memberLists[i].div2_plus_hcp = addHndcp(memberLists[i].div2, memberLists[i].step);
+                console.log(addHndcp(memberLists[i].div2, memberLists[i].step));
                 div2_plus_hcp.value = memberLists[i].div2_plus_hcp;
             }
 
             if (memberLists[i].div3) {
                 div3_edit.value = memberLists[i].div3;
-                memberLists[i].div3_plus_hcp = addHndcp(memberLists[i].div3);
+                memberLists[i].div3_plus_hcp = addHndcp(memberLists[i].div3, memberLists[i].step);
                 div3_plus_hcp.value = memberLists[i].div3_plus_hcp;
             }
 
             if (memberLists[i].div4) {
                 div4_edit.value = memberLists[i].div4;
-                memberLists[i].div4_plus_hcp = addHndcp(memberLists[i].div4);
+                memberLists[i].div4_plus_hcp = addHndcp(memberLists[i].div4, memberLists[i].step);
                 div4_plus_hcp.value = memberLists[i].div4_plus_hcp;
             }
 
             if (memberLists[i].div5) {
                 div5_edit.value = memberLists[i].div5;
-                memberLists[i].div5_plus_hcp = addHndcp(memberLists[i].div5);
+                memberLists[i].div5_plus_hcp = addHndcp(memberLists[i].div5, memberLists[i].step);
                 div5_plus_hcp.value = memberLists[i].div5_plus_hcp;
             }
 
             if (memberLists[i].div6) {
                 div6_edit.value = memberLists[i].div6;
-                memberLists[i].div6_plus_hcp = addHndcp(memberLists[i].div6);
+                memberLists[i].div6_plus_hcp = addHndcp(memberLists[i].div6, memberLists[i].step);
                 div6_plus_hcp.value = memberLists[i].div6_plus_hcp;
             }
 
             if (memberLists[i].div7) {
                 div7_edit.value = memberLists[i].div7;
-                memberLists[i].div7_plus_hcp = addHndcp(memberLists[i].div7);
+                memberLists[i].div7_plus_hcp = addHndcp(memberLists[i].div7, memberLists[i].step);
                 div7_plus_hcp.value = memberLists[i].div7_plus_hcp;
             }
 
             if (memberLists[i].div8) {
                 div8_edit.value = memberLists[i].div8;
-                memberLists[i].div8_plus_hcp = addHndcp(memberLists[i].div8);
+                memberLists[i].div8_plus_hcp = addHndcp(memberLists[i].div8, memberLists[i].step);
                 div8_plus_hcp.value = memberLists[i].div8_plus_hcp;
             }
 
             if (memberLists[i].div9) {
                 div9_edit.value = memberLists[i].div9;
-                memberLists[i].div9_plus_hcp = addHndcp(memberLists[i].div9);
+                memberLists[i].div9_plus_hcp = addHndcp(memberLists[i].div9, memberLists[i].step);
                 div9_plus_hcp.value = memberLists[i].div9_plus_hcp;
             }
 
             if (memberLists[i].div10) {
                 div10_edit.value = memberLists[i].div10;
-                memberLists[i].div10_plus_hcp = addHndcp(memberLists[i].div10);
+                memberLists[i].div10_plus_hcp = addHndcp(memberLists[i].div10, memberLists[i].step);
                 div10_plus_hcp.value = memberLists[i].div10_plus_hcp;
             }
 
@@ -1610,6 +1615,7 @@ function filterStepsBy(listObjID) {
         homeChart.classList.add("d-none");
         filterTitle.innerText = "Ranking";
         document.body.classList.add("ranKing");
+        selectElem.focus();
         //   localStorage.setItem("canRank", JSON.stringify(filteredMembers.length));
         console.log("Registered", filteredMembers);
         filter_table.classList.remove("d-none");
