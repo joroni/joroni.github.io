@@ -1552,7 +1552,7 @@ function filterStepsBy(listObjID) {
         filter_table.classList.add("d-none");
         selectElem.classList.add("d-none");
         document.body.classList.add("isHome");
-        document.querySelector("footer").classList.add("hidden");
+        //  document.querySelector("footer").classList.add("hidden");
         console.log("unRegistered", filteredMembers);
         //  return filtrdStepComp(filteredMembers, "#registerModal");
     } else if (listObjID == "reGister") {
@@ -2267,13 +2267,16 @@ dlAllCSVData.onclick = function () {
 /************ JSON - TABLE TO CSV */
 
 /*********GET SCROLL POSITION FOR FOOTER */
-let firstHandlerScroll = debounce(handleScroll, 200);
+let firstHandlerScroll = debounce(handleScroll, 10);
 window.addEventListener("scroll", firstHandlerScroll);
+var cHeight = document.querySelector(".card-body-all").clientHeight;
 var Bod = document.body;
+console.log("cHeight", cHeight);
 function handleScroll() {
     let scrollPosition =
         window.pageYOffset || window.scrollY || document.body.scrollTop || document.documentElement.scrollTop;
-    if (scrollPosition >= 50) {
+    console.log(scrollPosition);
+    if (scrollPosition >= 200) {
         console.log("more than 50");
         Bod.classList.remove("footer-is-shown");
     } else {

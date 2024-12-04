@@ -549,7 +549,7 @@ body.reGister .search {
 }
 
 body.isHome #curd-table,
-body.isHome footer {
+body.isHome footerx {
     display: none;
 }
 
