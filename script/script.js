@@ -167,6 +167,7 @@ let searchForm = `<form id='searchMember' class='search '>
 function handleSearchForm(container) {
     let registerBox = document.getElementById(container);
     registerBox.innerHTML = searchForm;
+    document.getElementById("searchHolder").innerHTML = "";
     //registerBox
 }
 function showData() {
@@ -1551,7 +1552,10 @@ function filterStepsBy(listObjID) {
         curd_table.classList.add("d-none");
         filter_table.classList.add("d-none");
         selectElem.classList.add("d-none");
+        homeChart.classList.remove("d-none");
         document.body.classList.add("isHome");
+        showChart();
+        document.body.classList.remove("reGister", "isNowPlaying", "ranKing");
         //  document.querySelector("footer").classList.add("hidden");
         console.log("unRegistered", filteredMembers);
         //  return filtrdStepComp(filteredMembers, "#registerModal");
@@ -1565,8 +1569,9 @@ function filterStepsBy(listObjID) {
         filterTitle.innerText = "";
         handleSearchForm("registerBox");
         document.body.classList.add("reGister");
-        document.body.classList.remove("isHome");
-        document.querySelector("footer").classList.add("hidden");
+        document.body.classList.remove("isHome", "isNowPlaying", "ranKing");
+        //document.body.classList.remove("isHome");
+        // document.querySelector("footer").classList.add("hidden");
         localStorage.setItem("toRegister", JSON.stringify(filteredMembers.length));
         //   filterMsg.innerText = "Congratulations!";
         // searchMemberForm.classList.remove("d-none");
@@ -1591,6 +1596,7 @@ function filterStepsBy(listObjID) {
         filter_table.classList.remove("d-none");
         homeChart.classList.add("d-none");
         document.body.classList.add("isNowPlaying");
+        document.body.classList.remove("isHome", "reGister", "ranKing");
         if (playedMembers.length == 0) {
             document.querySelector("footer").classList.add("hidden");
         }
@@ -1615,6 +1621,7 @@ function filterStepsBy(listObjID) {
         homeChart.classList.add("d-none");
         filterTitle.innerText = "Ranking";
         document.body.classList.add("ranKing");
+        document.body.classList.remove("isHome", "reGister", "isNowPlaying");
         selectElem.focus();
         //   localStorage.setItem("canRank", JSON.stringify(filteredMembers.length));
         console.log("Registered", filteredMembers);
@@ -1770,8 +1777,13 @@ filterStepsSetup();
 var prev = null;
 for (var i = 0; i < overlayType_radio.length; i++) {
     overlayType_radio[i].addEventListener("change", function () {
-        location.reload();
-        console.log("reloaded");
+        /*   location.reload();
+        console.log("reloaded"); */
+        function myGreeting() {
+            location.reload();
+            console.log("reloaded");
+        }
+        setTimeout(myGreeting, 500);
         prev ? console.log("radio prev value", prev.value) : null;
         if (this !== prev) {
             prev = this;
@@ -1844,7 +1856,6 @@ function showChart() {
             </div>
         </div>
     </div>`;
-
     homeChart.innerHTML = html;
 }
 
@@ -2275,12 +2286,12 @@ console.log("cHeight", cHeight);
 function handleScroll() {
     let scrollPosition =
         window.pageYOffset || window.scrollY || document.body.scrollTop || document.documentElement.scrollTop;
-    console.log(scrollPosition);
+    // console.log(scrollPosition);
     if (scrollPosition >= 200) {
-        console.log("more than 50");
+        // console.log("more than 50");
         Bod.classList.remove("footer-is-shown");
     } else {
-        console.log("less than 50");
+        //  console.log("less than 50");
         Bod.classList.add("footer-is-shown");
     }
 }
