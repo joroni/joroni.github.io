@@ -157,18 +157,23 @@ function validateForm() {
  *
  * @param none
  */
-let searchForm = `<form id='searchMember' class='search '>
+
+function handleSearchForm(newCont, prevCont, searchOn) {
+    let searchForm = `<form id='searchMember' class='search '>
     <div class='search__wrapper'>
         <input type='text' name='' placeholder='Search for...' class='search__field shadow'
             oninput='searchBarConditional()' id='serachProductText'>
         <button type='submit' class='fa fa-search search__icon'></button>
     </div>`;
-
-function handleSearchForm(container) {
-    let registerBox = document.getElementById(container);
-    registerBox.innerHTML = searchForm;
-    document.getElementById("searchHolder").innerHTML = "";
-    //registerBox
+    let registerBox = document.getElementById(newCont);
+    let registerPrev = document.getElementById(prevCont);
+    if (searchOn === false) {
+        registerBox.innerHTML = "";
+        registerPrev.innerHTML = "";
+    } else {
+        registerBox.innerHTML = searchForm;
+        registerPrev.innerHTML = "";
+    }
 }
 function showData() {
     let memberLists;
@@ -1538,7 +1543,8 @@ initData();
 function filterStepsBy(listObjID) {
     let memberLists = JSON.parse(localStorage.getItem("memberLists")) ?? [];
     let filteredMembers = JSON.parse(localStorage.getItem("filteredMembers")) ?? [];
-
+    let Bod = document.body;
+    let noFooter = Bod.classList.contains("footer-hide");
     filteredMembers = memberLists;
 
     localStorage.setItem("filteredMembers", JSON.stringify(filteredMembers));
@@ -1552,10 +1558,14 @@ function filterStepsBy(listObjID) {
         curd_table.classList.add("d-none");
         filter_table.classList.add("d-none");
         selectElem.classList.add("d-none");
+        filterTitle.innerText = "Dashboard";
         homeChart.classList.remove("d-none");
-        document.body.classList.add("isHome");
-        showChart();
-        document.body.classList.remove("reGister", "isNowPlaying", "ranKing");
+        Bod.classList.add("isHome", "footer-hide");
+        loadChart(true);
+        Bod.classList.remove("reGister", "isNowPlaying", "ranKing", "footer-is-shown");
+        /*   if (noFooter) {
+            Bod.classList.remove("footer-is-shown");
+        } */
         //  document.querySelector("footer").classList.add("hidden");
         console.log("unRegistered", filteredMembers);
         //  return filtrdStepComp(filteredMembers, "#registerModal");
@@ -1566,10 +1576,11 @@ function filterStepsBy(listObjID) {
         toPlayMembers = memberLists.filter((memberLists) => memberLists.isplaying == "true");
         localStorage.setItem("toPlay", JSON.stringify(toPlayMembers.length));
         homeChart.classList.add("d-none");
-        filterTitle.innerText = "";
-        handleSearchForm("registerBox");
-        document.body.classList.add("reGister");
-        document.body.classList.remove("isHome", "isNowPlaying", "ranKing");
+        filterTitle.innerText = "Registration";
+        loadChart(false);
+        handleSearchForm("registerBox", "searchHolder", true);
+        Bod.classList.add("reGister", "footer-hide");
+        Bod.classList.remove("isHome", "isNowPlaying", "ranKing", "footer-is-shown");
         //document.body.classList.remove("isHome");
         // document.querySelector("footer").classList.add("hidden");
         localStorage.setItem("toRegister", JSON.stringify(filteredMembers.length));
@@ -1590,18 +1601,18 @@ function filterStepsBy(listObjID) {
         localStorage.setItem("filteredMembers", JSON.stringify(filteredMembers));
         localStorage.setItem("toPlay", JSON.stringify(filteredMembers.length));
         localStorage.setItem("playEd", JSON.stringify(playedMembers.length));
-
         selectElem.classList.add("d-none");
-        handleSearchForm("searchHolder");
+        loadChart(false);
         filter_table.classList.remove("d-none");
         homeChart.classList.add("d-none");
-        document.body.classList.add("isNowPlaying");
-        document.body.classList.remove("isHome", "reGister", "ranKing");
-        if (playedMembers.length == 0) {
+        Bod.classList.add("isNowPlaying");
+        Bod.classList.remove("isHome", "reGister", "ranKing", "footer-hide");
+        /* if (playedMembers.length == 0) {
             document.querySelector("footer").classList.add("hidden");
-        }
+        } */
         //  searchMemberForm.classList.remove("d-none");
         filterTitle.innerText = "Now Playing";
+        handleSearchForm("searchHolder", "registerBox", true);
         localStorage.setItem("joIned", JSON.stringify(filteredMembers.length));
         console.log("Registered", filteredMembers);
         return filtrdStepComp(filteredMembers, "#editMemberModal");
@@ -1612,16 +1623,14 @@ function filterStepsBy(listObjID) {
         playedMembers = filteredMembers.filter(
             (filteredMember) => filteredMember.isplaying == "true" && filteredMember.scorecard != ""
         );
-
+        loadChart(false);
         localStorage.setItem("filteredMembers", JSON.stringify(filteredMembers));
         localStorage.setItem("playEd", JSON.stringify(playedMembers.length));
         selectElem.classList.remove("d-none");
-        //  searchMemberForm.classList.add("d-none");
-        document.body.classList.remove("isHome");
-        homeChart.classList.add("d-none");
         filterTitle.innerText = "Ranking";
-        document.body.classList.add("ranKing");
-        document.body.classList.remove("isHome", "reGister", "isNowPlaying");
+        Bod.classList.add("ranKing");
+        Bod.classList.remove("isHome", "reGister", "isNowPlaying", "footer-hide");
+        handleSearchForm("searchHolder", "registerBox", false);
         selectElem.focus();
         //   localStorage.setItem("canRank", JSON.stringify(filteredMembers.length));
         console.log("Registered", filteredMembers);
@@ -1739,8 +1748,7 @@ function filtrdStepComp(filtrdMembers, modalTarget) {
 }
 
 let overlayType_radio = document.querySelectorAll('input[type=radio][name="fiLSteps"]');
-//let toRegister = localStorage.getItem("toRegister");
-//let reGisterRad = document.getElementById("reGister");
+
 function filterStepsSetup() {
     let stpID;
     if (localStorage.getItem("stpID") == null) {
@@ -1758,32 +1766,22 @@ function filterStepsSetup() {
             filterStepsBy(el.id);
         }
     });
-    //alert(JSON.parse(toRegister));
-    /* if (JSON.parse(toRegister).length == 0) {
-        reGisterEl.parentNode.classList.add("hidden");
-    } */
 }
 
 filterStepsSetup();
 
-/* function ResetStepFilter() {
-    localStorage.removeItem("stpID");
-    location.reload();
-    console.log("reloaded");
-}
- */
-// console.log('overlayType_radio', overlayType_radio);
-
 var prev = null;
 for (var i = 0; i < overlayType_radio.length; i++) {
-    overlayType_radio[i].addEventListener("change", function () {
-        /*   location.reload();
-        console.log("reloaded"); */
-        function myGreeting() {
-            location.reload();
-            console.log("reloaded");
+    overlayType_radio[i].addEventListener("change", function (event) {
+        let needRef = event.currentTarget.dataset.refresh;
+        if (needRef == "true") {
+            function myGreeting() {
+                location.reload();
+                console.log("reloaded");
+            }
+            setTimeout(myGreeting, 500);
         }
-        setTimeout(myGreeting, 500);
+
         prev ? console.log("radio prev value", prev.value) : null;
         if (this !== prev) {
             prev = this;
@@ -1809,14 +1807,8 @@ const myModal2 = new bootstrap.Modal("#registerModal", {
     backdrop: "static",
 });
 
-function showChart() {
-    let html = `<div class='container'>
-        <div class='row my-3'>
-            <div class='col'>
-                <h4>Bootstrap 5 Chart.js</h4>
-            </div>
-        </div>
-        <div class='row my-2'>
+function loadChart(isLoad) {
+    let html = `<div class='row my-2x'>
             <div class='col-md-6 py-1'>
                 <div class='card'>
                     <div class='card-body'>
@@ -1832,7 +1824,7 @@ function showChart() {
                 </div>
             </div>
         </div>
-        <div class='row py-2'>
+        <div class='row py-2x'>
             <div class='col-md-4 py-1'>
                 <div class='card'>
                     <div class='card-body'>
@@ -1854,9 +1846,12 @@ function showChart() {
                     </div>
                 </div>
             </div>
-        </div>
-    </div>`;
-    homeChart.innerHTML = html;
+        </div>`;
+    if (isLoad === true) {
+        homeChart.innerHTML = html;
+    } else {
+        homeChart.innerHTML = "";
+    }
 }
 
 function searchBarConditional() {
@@ -2282,13 +2277,16 @@ let firstHandlerScroll = debounce(handleScroll, 10);
 window.addEventListener("scroll", firstHandlerScroll);
 var cHeight = document.querySelector(".card-body-all").clientHeight;
 var Bod = document.body;
+var noFooter = Bod.classList.contains("footer-hide");
 console.log("cHeight", cHeight);
 function handleScroll() {
     let scrollPosition =
         window.pageYOffset || window.scrollY || document.body.scrollTop || document.documentElement.scrollTop;
-    // console.log(scrollPosition);
+    console.log(scrollPosition);
     if (scrollPosition >= 200) {
         // console.log("more than 50");
+        Bod.classList.remove("footer-is-shown");
+    } else if (noFooter) {
         Bod.classList.remove("footer-is-shown");
     } else {
         //  console.log("less than 50");

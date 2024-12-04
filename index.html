@@ -101,6 +101,11 @@
     </nav>
  -->
     <div class="container card-body-all">
+        <div class="mt-3 card-container flex-wrap mt-4">
+            <div class="col">
+                <h4 id="filterTitle">Title</h4>
+            </div>
+        </div>
         <div class="mt-3 card-container d-flex flex-wrap" id="curd-table">
             <ul class="pl-0 list-group">
             </ul>
@@ -110,48 +115,7 @@
             <ol class="row list-group list-group-numbered m-widget4 m-widget4--progress"></ol>
         </div>
         <div class="mt-3 card-container d-flex flex-wrap" id="HomeChart">
-            <h4 id="listTitle">Dashboard</h4>
-            <div class="container">
-                <div class="row my-2">
-                    <div class="col-md-6 py-1">
-                        <div class="card">
-                            <div class="card-body">
-                                <canvas id="chLine"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 py-1">
-                        <div class="card">
-                            <div class="card-body">
-                                <canvas id="chBar"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row py-2">
-                    <div class="col-md-4 py-1">
-                        <div class="card">
-                            <div class="card-body">
-                                <canvas id="chDonut1"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 py-1">
-                        <div class="card">
-                            <div class="card-body">
-                                <canvas id="chDonut2"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 py-1">
-                        <div class="card">
-                            <div class="card-body">
-                                <canvas id="chDonut3"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </div>
 
         <div class="mt-3 mb-5 card-container d-flex flex-wrap" id="registerBox">
@@ -164,7 +128,7 @@
 
         <div class="mt-3 card-container d-flex flex-wrap" id="filter-table">
             <div class="d-flex align-items-center justify-content-between">
-                <h4 id="filterTitle">Title</h4>
+
                 <div id="gameChecker"></div>
             </div>
 
@@ -612,30 +576,30 @@
                     <!-- <span class="fa-lg mb-5">Steps</span> -->
                     <div class="os-l-2" data-mdb-filter="bySteps">
                         <div class="custom-form-check mt-3 ">
-                            <input class="btn-check form-check-input filter-step" type="radio" name="fiLSteps"
-                                id="isHome" value="isHome" data-bs-dismiss="offcanvas" />
+                            <input class="btn-check form-check-input filter-step" data-refresh="true" type="radio"
+                                name="fiLSteps" id="isHome" value="isHome" data-bs-dismiss="offcanvas" />
                             <label class="btn btn-outline-primary form-check-label w-100" for="isHome">Home</label>
                         </div>
 
 
                         <div class="custom-form-check ">
-                            <input class="btn-check form-check-input filter-step" type="radio" name="fiLSteps"
-                                id="reGister" value="reGister" data-bs-dismiss="offcanvas" />
+                            <input class="btn-check form-check-input filter-step" data-refresh="false" type="radio"
+                                name="fiLSteps" id="reGister" value="reGister" data-bs-dismiss="offcanvas" />
 
                             <label class="btn btn-outline-primary form-check-label  w-100"
                                 for="reGister">Registration</label>
                         </div>
 
                         <div class="custom-form-check">
-                            <input class="btn-check form-check-input filter-step" type="radio" name="fiLSteps"
-                                id="isNowPlaying" value="isNowPlaying" data-bs-dismiss="offcanvas" />
+                            <input class="btn-check form-check-input filter-step" data-refresh="false" type="radio"
+                                name="fiLSteps" id="isNowPlaying" value="isNowPlaying" data-bs-dismiss="offcanvas" />
                             <label class="btn btn-outline-primary form-check-label  w-100" for="isNowPlaying">Get
                                 Scores</label>
                         </div>
 
                         <div class="custom-form-check">
-                            <input class="btn-check form-check-input filter-step" type="radio" name="fiLSteps"
-                                id="ranKing" value="ranKing" data-bs-dismiss="offcanvas" />
+                            <input class="btn-check form-check-input filter-step" data-refresh="false" type="radio"
+                                name="fiLSteps" id="ranKing" value="ranKing" data-bs-dismiss="offcanvas" />
                             <label class="btn btn-outline-primary form-check-label  w-100" for="ranKing">Ranking</label>
                         </div>
 
