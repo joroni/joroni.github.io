@@ -1627,7 +1627,7 @@ function filterStepsBy(listObjID) {
         localStorage.setItem("filteredMembers", JSON.stringify(filteredMembers));
         localStorage.setItem("playEd", JSON.stringify(playedMembers.length));
         selectElem.classList.remove("d-none");
-        filterTitle.innerText = "Ranking";
+        filterTitle.innerText = "Leaderboard";
         Bod.classList.add("ranKing");
         Bod.classList.remove("isHome", "reGister", "isNowPlaying", "footer-hide");
         handleSearchForm("searchHolder", "registerBox", false);
