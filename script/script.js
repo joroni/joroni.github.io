@@ -40,6 +40,8 @@ let scorecard_edit = document.getElementById("scorecard-edit"),
     name_edit_text = document.getElementById("name-edit-text"),
     id_edit = document.getElementById("id-edit"),
     onpot_toggle = document.getElementById("onpot-toggle"),
+    addScoreParent = document.getElementById("addScore"),
+    cardBodyAll = document.querySelector(".card-body-all"),
     onpot_edit = document.getElementById("onpot-edit"),
     isplaying_toggle = document.getElementById("isplaying-toggle"),
     isplaying_edit = document.getElementById("isplaying-edit"),
@@ -452,8 +454,10 @@ function editData(iD) {
 
             if (arrayNums.length == numOfGames) {
                 scorecard_edit.disabled = true;
+                addScoreParent.classList.add("hidden");
             } else {
                 scorecard_edit.disabled = false;
+                addScoreParent.classList.remove("hidden");
             }
 
             id_edit.value = memberLists[i].id;
@@ -1774,12 +1778,13 @@ var prev = null;
 for (var i = 0; i < overlayType_radio.length; i++) {
     overlayType_radio[i].addEventListener("change", function (event) {
         let needRef = event.currentTarget.dataset.refresh;
+        cardBodyAll.classList.toggle("enter");
         if (needRef == "true") {
-            function myGreeting() {
+            function loadReload() {
                 location.reload();
                 console.log("reloaded");
             }
-            setTimeout(myGreeting, 500);
+            setTimeout(loadReload, 500);
         }
 
         prev ? console.log("radio prev value", prev.value) : null;

@@ -748,3 +748,30 @@ body.ranKing #registerBox {
     opacity: 1;
     visibility: visible !important;
 }
+
+@keyframes slide-in {
+    from {
+        transform: translateX(-100%);
+        opacity: 0.25;
+    }
+    to {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+}
+
+@keyframes slide-up {
+    from {
+        transform: translateY(100%);
+        opacity: 0.25;
+    }
+    to {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+}
+
+.enter {
+    animation: slide-up 900ms;
+    animation-iteration-count: 1;
+}
