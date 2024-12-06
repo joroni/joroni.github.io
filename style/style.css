@@ -273,7 +273,9 @@ i.fas.fa-ellipsis-vertical:hover {
     padding-right: 0;
     text-align: center;
 }
-
+body.isHome #sort-table {
+    display: none;
+}
 .toggle:focus > .toggle-group > .btn,
 .toggle:hover > .toggle-group > .btn {
     background-color: var(--green-color);
@@ -282,6 +284,11 @@ i.fas.fa-ellipsis-vertical:hover {
 .toggle > .toggle-group > .btn {
     text-align: center;
     padding: 0.5rem 0px;
+}
+
+.card-container ul,
+.card-container ol {
+    margin-bottom: 5rem;
 }
 
 @media (max-width: 1024px) {
@@ -551,8 +558,10 @@ i.fas.fa-ellipsis-vertical:hover {
     padding: 10px;
 }
 
-.searchx .search__field:focus {
+.searchx .search__field:focus,
+.searchx .search__field:focus-visible {
     border: none;
+    outline: none;
 }
 
 .list-group-numbered > li::before {
@@ -655,17 +664,30 @@ body.ranKing #registerBox {
     cursor: pointer;
     transition: all 0.3s ease-in-out;
 }
+#addscore {
+    font-size: 1.2rem;
+    max-width: 200px;
+    min-width: 170px;
+}
+
 .search__field:focus {
     border-bottom-color: #ccc;
     width: 50vw;
     color: #2b2b2b;
     cursor: default;
 }
+
+body.reGister .searchx .search__field {
+    width: 50vw;
+}
 .search__field:focus ~ .search__icon {
     background-color: transparent;
     color: #39b44a;
     cursor: pointer;
     pointer-events: auto;
+}
+form#searchMember {
+    margin: 0 auto;
 }
 .search__icon {
     position: absolute;

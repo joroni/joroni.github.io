@@ -43,6 +43,7 @@ let scorecard_edit = document.getElementById("scorecard-edit"),
     onpot_toggle = document.getElementById("onpot-toggle"),
     addScoreParent = document.getElementById("addScore"),
     cardBodyAll = document.querySelector(".card-body-all"),
+    profile_img = document.getElementById("profile-img"),
     onpot_edit = document.getElementById("onpot-edit"),
     isplaying_toggle = document.getElementById("isplaying-toggle"),
     isplaying_edit = document.getElementById("isplaying-edit"),
@@ -184,7 +185,7 @@ function validateForm() {
  */
 
 function handleSearchForm(newCont, prevCont, searchOn) {
-    let searchForm = `<form id='searchMember' class='search '>
+    let searchForm = `<form id='searchMember' class='searchx'>
     <div class='search__wrapper'>
         <input type='text' name='' placeholder='Search for...' class='search__field shadow'
             oninput='searchBarConditional()' id='serachProductText'>
@@ -477,7 +478,18 @@ function editData(iD) {
                         return null;
                     }
                 } */
-
+            function imgSwitcher(img, name) {
+                if (!img) {
+                    return `<div id="name-image-show" class='circle' style='background-color: ${randColor()};'>
+                                            <p class='circle-inner' style=' height:100px; width: 100px;'>${getInitials(
+                                                name
+                                            )}</p>
+                                        </div>`;
+                } else {
+                    return `<img id="image-show" src="${img}" class="rounded-circle img-thumbnail"
+                                            alt="profile-image" style='height: 100px; width: 100px;'>`;
+                }
+            }
             function imgHandler(img) {
                 if (!img) {
                     return "./img/no-pic.jpg";
@@ -497,6 +509,8 @@ function editData(iD) {
             name_show.textContent = memberLists[i].name;
             //name_image_show.textContent = getInitials(memberLists[i].name);
             /* name_image_show.stye.backgroundColor = randColor(); */
+
+            profile_img.innerHTML = imgSwitcher(memberLists[i].image, memberLists[i].name);
             image_show.src = imgHandler(memberLists[i].image);
             name_edit.value = memberLists[i].name;
             name_edit_text.innerText = memberLists[i].name;
@@ -980,11 +994,10 @@ function editData(iD) {
                 memberLists[i].scorecard = scorecard_edit.value;
                 memberLists[i].scratch = scratch_edit.value;
                 memberLists[i].step = step_edit.value;
-
+                checkNumRegister();
                 // this line is used to convert the array to a JSON string before it is saved to local storage.
                 localStorage.setItem("memberLists", JSON.stringify(memberLists));
                 // The is method, which refreshes the page with the updated data.
-                location.reload();
 
                 showData();
                 id_edit.value = "";
@@ -993,9 +1006,11 @@ function editData(iD) {
                 divisions_edit.value = "";
                 event_id_edit.value = "";
                 step_edit.value = "";
+
                 //  document.getElementById("close-btn").click();
                 document.querySelector(".btn-close").click();
                 //     alert("Data Updated Successfully");
+                location.reload();
             };
         }
     }
@@ -1730,9 +1745,7 @@ function filterStepsBy(listObjID) {
         loadChart(false);
         handleSearchForm("registerBox", "searchHolder", true);
         Bod.classList.add("reGister", "footer-hide");
-        Bod.classList.remove("isHome", "isNowPlaying", "ranKing", "footer-is-shown");
-        //document.body.classList.remove("isHome");
-        // document.querySelector("footer").classList.add("hidden");
+        Bod.classList.remove("isHome", "isNowPlaying", "ranKing");
         localStorage.setItem("toRegister", JSON.stringify(filteredMembers.length));
         //   filterMsg.innerText = "Congratulations!";
         // searchMemberForm.classList.remove("d-none");
@@ -2461,20 +2474,27 @@ function scrollDetect() {
         if (currentScroll > 0 && lastScroll <= currentScroll) {
             lastScroll = currentScroll;
             console.log("Scrolling DOWN");
-            Bod.classList.add("footer-is-shown");
+            buttonShowHide();
+            Bod.classList.remove("footer-is-shown");
         } else {
             lastScroll = currentScroll;
             console.log("Scrolling UP");
-            Bod.classList.remove("footer-is-shown");
-        }
-        if ((plyEd) => 1) {
-            console.log("Is greater");
+            buttonShowHide();
             Bod.classList.add("footer-is-shown");
         }
-        if (Bod.classList.contains("footer-hide")) {
-            Bod.classList.remove("footer-is-shown");
-        }
     };
+
+    function buttonShowHide() {
+        if ((plyEd) => 1) {
+            console.log("You have some recorded scores already");
+            Bod.classList.add("footer-is-shown");
+        } else if (noFooter === true) {
+            console.log("You have some recorded scores already");
+            Bod.classList.remove("footer-is-shown");
+        } else {
+            Bod.classList.add("footer-is-shown");
+        }
+    }
 }
 
 scrollDetect();
@@ -2511,15 +2531,22 @@ function debounce(fn, delay) {
 }
  */
 /********* HIDE REGISTRATION AND RANKING IF EMPTY */
+function checkNumRegister() {
+    let toRegister,
+        reGister = document.getElementById("reGister");
+    if (localStorage.getItem("toRegister") == null) {
+        toRegister = [];
+    } else {
+        toRegister = JSON.parse(localStorage.getItem("toRegister"));
+    }
 
-let toRegister,
-    reGister = document.getElementById("reGister");
-if (localStorage.getItem("toRegister") == null) {
-    toRegister = [];
-} else {
-    toRegister = JSON.parse(localStorage.getItem("toRegister"));
+    if (parseInt(toRegister) === 0) {
+        reGister.parentNode.classList.add("hidden");
+        localStorage.setItem("stpID", "isNowPlaying");
+        filterStepsSetup();
+        // location.reload();
+    }
 }
-
 let playEd,
     ranKing = document.getElementById("ranKing");
 if (localStorage.getItem("playEd") == null) {
@@ -2535,22 +2562,8 @@ if (localStorage.getItem("toPlay") == null) {
 } else {
     toPlay = JSON.parse(localStorage.getItem("toPlay"));
 }
-/* 
-if (parseInt(toRegister) === 0) {
-    reGister.parentNode.classList.add("hidden");
-    localStorage.setItem("stpID", "isNowPlaying");
-} else if (!toRegister) {
-    reGister.parentNode.classList.remove("hidden");
-} else {
-    reGister.parentNode.classList.remove("hidden");
-}
- */
 
-if (parseInt(toRegister) === 0) {
-    reGister.parentNode.classList.add("hidden");
-    //localStorage.setItem("stpID", "isNowPlaying");
-}
-
+checkNumRegister();
 if (parseInt(playEd) === 0) {
     ranKing.parentNode.classList.add("hidden");
     // localStorage.getItem("stpID", "isNowPlaying");
@@ -2563,9 +2576,11 @@ if (parseInt(toPlay) === 0) {
 function clearStorage() {
     if (confirm("Are you sure you want to clear data")) {
         localStorage.clear();
+        document.getElementById("isHome").cheked = true;
+        filterStepsSetup();
         showData();
-        location.reload(); // Reload the current page
     }
+    location.reload(); // Reload the current page
 }
 
 function modalFS() {
