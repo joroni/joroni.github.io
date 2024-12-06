@@ -36,6 +36,7 @@ if (btnCls) {
 /****** EDIT INPUTS / CONTAINERS *******/
 let scorecard_edit = document.getElementById("scorecard-edit"),
     name_show = document.getElementById("name-show"),
+    name_image_show = document.querySelector("#name-image-show .circle-inner"),
     name_edit = document.getElementById("name-edit"),
     name_edit_text = document.getElementById("name-edit-text"),
     id_edit = document.getElementById("id-edit"),
@@ -67,6 +68,28 @@ let scorecard_edit = document.getElementById("scorecard-edit"),
     gameChecker = document.getElementById("gameChecker");
 
 /****** EDIT INPUTS *******/
+var getInitials = function (name) {
+    var parts = name.split(" ");
+    var initials = "";
+    for (var i = 0; i < parts.length; i++) {
+        if (parts[i].length > 0 && parts[i] !== "") {
+            initials += parts[i][0];
+        }
+    }
+    return initials;
+};
+
+function randColor() {
+    var letters = "0123456789ABCDEF".split("");
+    var color = "#";
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    /* name_image_show.stye.backgroundColor = randColor(); */
+    return color;
+}
+
+//console.log(randColor());
 
 function validateForm() {
     // Get references to the form elements
@@ -201,11 +224,14 @@ function showData() {
         memberLists.forEach(function (element, index) {
             let img = function () {
                 if (!element.image) {
+                    return `<div class='circle' style='background-color: ${randColor()}'>
+                    <p class='circle-inner'>${getInitials(element.name)}</p>
+                    </div>`;
+                } /*  if (!element.image) {
                     return `<img src='./img/no-pic.jpg'
               class='rounded-circle img-thumbnail'
               alt='profile-image' style='height: 62px; width: 62px;'
-              />`;
-                } else {
+              />`; */ else {
                     return `<img
               src='${element.image}'
               class='rounded-circle img-thumbnail'
@@ -452,6 +478,13 @@ function editData(iD) {
                     }
                 } */
 
+            function imgHandler(img) {
+                if (!img) {
+                    return "./img/no-pic.jpg";
+                } else {
+                    return img;
+                }
+            }
             if (arrayNums.length == numOfGames) {
                 scorecard_edit.disabled = true;
                 addScoreParent.classList.add("hidden");
@@ -462,7 +495,9 @@ function editData(iD) {
 
             id_edit.value = memberLists[i].id;
             name_show.textContent = memberLists[i].name;
-            image_show.src = memberLists[i].image;
+            //name_image_show.textContent = getInitials(memberLists[i].name);
+            /* name_image_show.stye.backgroundColor = randColor(); */
+            image_show.src = imgHandler(memberLists[i].image);
             name_edit.value = memberLists[i].name;
             name_edit_text.innerText = memberLists[i].name;
             isplaying_edit.value = memberLists[i].isplaying;
@@ -1024,11 +1059,15 @@ function searchMember(sortedItem) {
         sortedItem.forEach(function (element, index) {
             let img = function () {
                 if (!element.image) {
+                    return `<div class='circle' style='background-color: ${randColor()}'>
+                <p class='circle-inner'  style='height: 100px; width: 100px;>${getInitials(element.name)}</p>
+                </div>`;
+                } /* {
                     return `<img src='./img/no-pic.jpg'
               class='rounded-circle img-thumbnail'
               alt='profile-image' style='height: 100px; width: 100px;'
               />`;
-                } else {
+                }  */ else {
                     return `<img
               src='${element.image}'
               class='rounded-circle img-thumbnail'
@@ -1248,6 +1287,7 @@ function filterSort(sortvalue) {
  *
  * @param sortedMembers (as a Array format)
  */
+
 function filteredData(sortedMembers, sortvalue) {
     document.querySelector("#sort-table").classList.remove("d-flex");
     let html = "";
@@ -1272,6 +1312,7 @@ function filteredData(sortedMembers, sortvalue) {
     console.log("EVENT ALL", eventAllData);
     showCurrTable(sortvalue);
     showAllTable();
+
     // console.log("currentFilterSort", currentFilterSort);
     if (sortedMembers.length === 0) {
         document.getElementById("footerExport").classList.add("hidden");
@@ -1290,13 +1331,18 @@ function filteredData(sortedMembers, sortvalue) {
         document.getElementById("footerExport").classList.remove("hidden");
         sortedMembers.forEach(function (element, index) {
             // This Below HTML code is generate Card For Sorted Items.
+
             let img = function () {
                 if (!element.image) {
+                    return `<div class='circle' style='background-color: ${randColor()}'>
+                    <p class='circle-inner'>${getInitials(element.name)}</p>
+                    </div>`;
+                } /*  {
                     return `<img src='./img/no-pic.jpg'
               class='rounded-circle img-thumbnail'
               alt='profile-image'
               />`;
-                } else {
+                } */ else {
                     return `<img
               src='${element.image}'
               class='rounded-circle img-thumbnail'
@@ -1487,6 +1533,106 @@ function initData() {
             onpot: false,
             isplaying: false,
         },
+        {
+            id: 5,
+            name: "Bonnie Green",
+            event_id: "AAA-001",
+            price: "190",
+            image: "",
+            divisions: "div2",
+            div2: "62",
+            div1_plus_hcp: "",
+            div2_plus_hcp: "",
+            div3_plus_hcp: "",
+            scorecard: "",
+            numofgames: "6",
+            onpot: false,
+            isplaying: false,
+        },
+        {
+            id: 6,
+            name: "Michael Gough",
+            event_id: "AAA-001",
+            price: "190",
+            image: "",
+            divisions: "div2,div3",
+            div2: "45",
+            div3: "50",
+            div1_plus_hcp: "",
+            div2_plus_hcp: "",
+            div3_plus_hcp: "",
+            scorecard: "",
+            numofgames: "6",
+            onpot: false,
+            isplaying: false,
+        },
+
+        {
+            id: 7,
+            name: "Robert Brown",
+            event_id: "AAA-001",
+            price: "190",
+            image: "",
+            divisions: "div1",
+            div1: "15",
+            div1_plus_hcp: "",
+            div2_plus_hcp: "",
+            div3_plus_hcp: "",
+            scorecard: "",
+            numofgames: "6",
+            onpot: false,
+            isplaying: false,
+        },
+
+        {
+            id: 8,
+            name: "Thomas Lean",
+            event_id: "AAA-001",
+            price: "190",
+            image: "",
+            divisions: "div2",
+            div2: "45",
+            div1_plus_hcp: "",
+            div2_plus_hcp: "",
+            div3_plus_hcp: "",
+            scorecard: "",
+            numofgames: "6",
+            onpot: false,
+            isplaying: false,
+        },
+
+        {
+            id: 9,
+            name: "Lana Byrd",
+            event_id: "AAA-001",
+            price: "190",
+            image: "",
+            divisions: "div1",
+            div1: "1",
+            div1_plus_hcp: "",
+            div2_plus_hcp: "",
+            div3_plus_hcp: "",
+            scorecard: "",
+            numofgames: "6",
+            onpot: false,
+            isplaying: false,
+        },
+        {
+            id: 10,
+            name: "Leslie Livingston",
+            event_id: "AAA-001",
+            price: "190",
+            image: "",
+            divisions: "div1",
+            div1: "10",
+            div1_plus_hcp: "",
+            div2_plus_hcp: "",
+            div3_plus_hcp: "",
+            scorecard: "",
+            numofgames: "6",
+            onpot: false,
+            isplaying: false,
+        },
     ];
 
     memberLists = "";
@@ -1614,8 +1760,7 @@ function filterStepsBy(listObjID) {
         /* if (playedMembers.length == 0) {
             document.querySelector("footer").classList.add("hidden");
         } */
-        //  searchMemberForm.classList.remove("d-none");
-        filterTitle.innerText = "Now Playing";
+        filterTitle.innerText = "Get Scores";
         handleSearchForm("searchHolder", "registerBox", true);
         localStorage.setItem("joIned", JSON.stringify(filteredMembers.length));
         console.log("Registered", filteredMembers);
@@ -1695,11 +1840,15 @@ function filtrdStepComp(filtrdMembers, modalTarget) {
 
             let img = function () {
                 if (!element.image) {
+                    return `<div class='circle' style='background-color: ${randColor()}'>
+                    <p class='circle-inner'>${getInitials(element.name)}</p>
+                    </div>`;
+                } /* {
                     return `<img src='./img/no-pic.jpg'
               class='rounded-circle img-thumbnail'
               alt='profile-image'
               />`;
-                } else {
+                }  */ else {
                     return `<img
               src='${element.image}'
               class='rounded-circle img-thumbnail'
@@ -1793,13 +1942,7 @@ for (var i = 0; i < overlayType_radio.length; i++) {
         function removeEnterClass() {
             cardBodyAll.classList.remove("enter");
         }
-        // removeEnterClass();
-        //  setTimeout(loadReload, 500);
 
-        /*      function removeClass() { */
-
-        /* } */
-        //  removeClass();
         prev ? console.log("radio prev value", prev.value) : null;
         if (this !== prev) {
             prev = this;
@@ -1923,11 +2066,15 @@ function searchMemberByStep(sortedItem, modalID) {
             // This Below HTML code is generate Card For Sorted Items.
             let img = function () {
                 if (!element.image) {
+                    return `<div class='circle' style='background-color: ${randColor()}'>
+                <p class='circle-inner'>${getInitials(element.name)}</p>
+                </div>`;
+                } /*  {
                     return `<img src='./img/no-pic.jpg'
               class='rounded-circle img-thumbnail'
               alt='profile-image'
               />`;
-                } else {
+                }  */ else {
                     return `<img
               src='${element.image}'
               class='rounded-circle img-thumbnail'
@@ -2291,21 +2438,62 @@ dlAllCSVData.onclick = function () {
 /************ JSON - TABLE TO CSV */
 
 /*********GET SCROLL POSITION FOR FOOTER */
-let firstHandlerScroll = debounce(handleScroll, 10);
-window.addEventListener("scroll", firstHandlerScroll);
+let plyEd;
+
+if (localStorage.getItem("playEd") == null) {
+    plyEd = 0;
+} else {
+    plyEd = JSON.parse(localStorage.getItem("playEd"));
+}
+
+/* let firstHandlerScroll = debounce(handleScroll, 10);
+window.addEventListener("scroll", firstHandlerScroll); */
 var cHeight = document.querySelector(".card-body-all").clientHeight;
 var Bod = document.body;
 var noFooter = Bod.classList.contains("footer-hide");
-console.log("cHeight", cHeight);
+
+function scrollDetect() {
+    var lastScroll = 0;
+
+    window.onscroll = function () {
+        let currentScroll = document.documentElement.scrollTop || document.body.scrollTop; // Get Current Scroll Value
+
+        if (currentScroll > 0 && lastScroll <= currentScroll) {
+            lastScroll = currentScroll;
+            console.log("Scrolling DOWN");
+            Bod.classList.add("footer-is-shown");
+        } else {
+            lastScroll = currentScroll;
+            console.log("Scrolling UP");
+            Bod.classList.remove("footer-is-shown");
+        }
+        if ((plyEd) => 1) {
+            console.log("Is greater");
+            Bod.classList.add("footer-is-shown");
+        }
+        if (Bod.classList.contains("isHome", "footer-hide")) {
+            Bod.classList.remove("footer-is-shown");
+        }
+    };
+}
+
+scrollDetect();
+
+/* console.log("cHeight", cHeight);
 function handleScroll() {
     let scrollPosition =
         window.pageYOffset || window.scrollY || document.body.scrollTop || document.documentElement.scrollTop;
     console.log(scrollPosition);
+    console.log("playEd", playEd);
+
     if (scrollPosition >= 200) {
         // console.log("more than 50");
         Bod.classList.remove("footer-is-shown");
     } else if (noFooter) {
         Bod.classList.remove("footer-is-shown");
+    } else if ((plyEd) => 1) {
+        console.log("Is greater");
+        Bod.classList.add("footer-is-shown");
     } else {
         //  console.log("less than 50");
         Bod.classList.add("footer-is-shown");
@@ -2321,7 +2509,7 @@ function debounce(fn, delay) {
         }, delay);
     };
 }
-
+ */
 /********* HIDE REGISTRATION AND RANKING IF EMPTY */
 
 let toRegister,

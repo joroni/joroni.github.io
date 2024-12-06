@@ -55,7 +55,23 @@ body.ranKing #footerRanking {
 body.isNowPlaying #footerScoring {
     display: none;
 }
+.circle {
+    display: inline-block;
+    /* background-color: #00d53b; */
+    margin: 0 auto;
+    border-radius: 50%;
+}
 
+.circle-inner {
+    color: white;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    text-decoration: none;
+    height: 4rem;
+    width: 4rem;
+    font-size: 24px;
+}
 body.reGister #footerRanking,
 body.reGister #footerScoring {
     display: none;
