@@ -557,7 +557,7 @@ i.fas.fa-ellipsis-vertical:hover {
 
 body.reGister .search {
     position: absolute;
-    top: 14%;
+    top: 18%;
     left: 50%;
     margin-top: 5px;
     -webkit-transform: translateX(-50%) translateY(-50%);
