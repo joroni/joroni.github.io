@@ -551,13 +551,17 @@ i.fas.fa-ellipsis-vertical:hover {
     padding: 10px;
 }
 
+.searchx .search__field:focus {
+    border: none;
+}
+
 .list-group-numbered > li::before {
     margin-top: 20px;
 }
 
 body.reGister .search {
     position: absolute;
-    top: 18%;
+    top: 14%;
     left: 50%;
     margin-top: 5px;
     -webkit-transform: translateX(-50%) translateY(-50%);
@@ -788,6 +792,6 @@ body.ranKing #registerBox {
 }
 
 .enter {
-    animation: slide-up 900ms;
+    animation: slide-up 500ms;
     animation-iteration-count: 1;
 }
