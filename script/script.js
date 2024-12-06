@@ -44,6 +44,7 @@ let scorecard_edit = document.getElementById("scorecard-edit"),
     addScoreParent = document.getElementById("addScore"),
     cardBodyAll = document.querySelector(".card-body-all"),
     profile_img = document.getElementById("profile-img"),
+    profile_img2 = document.getElementById("profile-img2"),
     onpot_edit = document.getElementById("onpot-edit"),
     isplaying_toggle = document.getElementById("isplaying-toggle"),
     isplaying_edit = document.getElementById("isplaying-edit"),
@@ -225,7 +226,7 @@ function showData() {
         memberLists.forEach(function (element, index) {
             let img = function () {
                 if (!element.image) {
-                    return `<div class='circle' style='background-color: ${randColor()}'>
+                    return `<div class='circle' style='background-color: ${element.avatar_bg}'>
                     <p class='circle-inner'>${getInitials(element.name)}</p>
                     </div>`;
                 } /*  if (!element.image) {
@@ -480,14 +481,16 @@ function editData(iD) {
                 } */
             function imgSwitcher(img, name) {
                 if (!img) {
-                    return `<div id="name-image-show" class='circle' style='background-color: ${randColor()};'>
-                                            <p class='circle-inner' style=' height:100px; width: 100px;'>${getInitials(
+                    return `<div id="name-image-show" class='circle' style='background-color: ${
+                        memberLists[i].avatar_bg
+                    };'>
+                                            <p class='circle-inner' style='height:6rem; width: 6rem;'>${getInitials(
                                                 name
                                             )}</p>
                                         </div>`;
                 } else {
                     return `<img id="image-show" src="${img}" class="rounded-circle img-thumbnail"
-                                            alt="profile-image" style='height: 100px; width: 100px;'>`;
+                                            alt="profile-image" style='height:6rem; width: 6rem;'>`;
                 }
             }
             function imgHandler(img) {
@@ -511,7 +514,8 @@ function editData(iD) {
             /* name_image_show.stye.backgroundColor = randColor(); */
 
             profile_img.innerHTML = imgSwitcher(memberLists[i].image, memberLists[i].name);
-            image_show.src = imgHandler(memberLists[i].image);
+            profile_img2.innerHTML = imgSwitcher(memberLists[i].image, memberLists[i].name);
+            //  image_show.src = imgHandler(memberLists[i].image);
             name_edit.value = memberLists[i].name;
             name_edit_text.innerText = memberLists[i].name;
             isplaying_edit.value = memberLists[i].isplaying;
@@ -581,9 +585,9 @@ function editData(iD) {
                 }
             };
 
-            let imagePreview = document.getElementById("image-div");
+            /*     let imagePreview = document.getElementById("image-div");
             imagePreview.src = memberLists[i].image;
-            document.getElementById("image-div").innerHTML = img();
+            document.getElementById("image-div").innerHTML = img(); */
 
             /**
              * @function anonymous-Function (Arrow Function)
@@ -1074,7 +1078,7 @@ function searchMember(sortedItem) {
         sortedItem.forEach(function (element, index) {
             let img = function () {
                 if (!element.image) {
-                    return `<div class='circle' style='background-color: ${randColor()}'>
+                    return `<div class='circle' style='background-color: ${element.avatar_bg}'>
                 <p class='circle-inner'  style='height: 100px; width: 100px;>${getInitials(element.name)}</p>
                 </div>`;
                 } /* {
@@ -1330,7 +1334,7 @@ function filteredData(sortedMembers, sortvalue) {
 
     // console.log("currentFilterSort", currentFilterSort);
     if (sortedMembers.length === 0) {
-        document.getElementById("footerExport").classList.add("hidden");
+        //  document.getElementById("footerExport").classList.add("hidden");
         // This Below HTML Code Display when product list's array is Empty.
         html += `<div class="card-body">
         <div class="row gx-2">
@@ -1343,13 +1347,13 @@ function filteredData(sortedMembers, sortvalue) {
         </div>
       </div>`;
     } else {
-        document.getElementById("footerExport").classList.remove("hidden");
+        /*  document.getElementById("footerExport").classList.remove("hidden"); */
         sortedMembers.forEach(function (element, index) {
             // This Below HTML code is generate Card For Sorted Items.
 
             let img = function () {
                 if (!element.image) {
-                    return `<div class='circle' style='background-color: ${randColor()}'>
+                    return `<div class='circle' style='background-color: ${element.avatar_bg}'>
                     <p class='circle-inner'>${getInitials(element.name)}</p>
                     </div>`;
                 } /*  {
@@ -1679,6 +1683,7 @@ function initData() {
             element.eventnumdivs = eventNumDivs;
             element.company_id = companyID;
             element.event_id = eventID;
+            element.avatar_bg = randColor();
         });
         localStorage.setItem("memberLists", JSON.stringify(arr));
     }
@@ -1725,8 +1730,9 @@ function filterStepsBy(listObjID) {
         selectElem.classList.add("d-none");
         filterTitle.innerText = "Dashboard";
         homeChart.classList.remove("d-none");
-        Bod.classList.add("isHome", "footer-hide");
+        Bod.classList.add("isHome");
         loadChart(true);
+        renderHideBtns(false, false, false);
         Bod.classList.remove("reGister", "isNowPlaying", "ranKing", "footer-is-shown");
         /*   if (noFooter) {
             Bod.classList.remove("footer-is-shown");
@@ -1743,6 +1749,7 @@ function filterStepsBy(listObjID) {
         homeChart.classList.add("d-none");
         filterTitle.innerText = "Registration";
         loadChart(false);
+        renderHideBtns(false, true, false);
         handleSearchForm("registerBox", "searchHolder", true);
         Bod.classList.add("reGister", "footer-hide");
         Bod.classList.remove("isHome", "isNowPlaying", "ranKing");
@@ -1790,10 +1797,11 @@ function filterStepsBy(listObjID) {
         localStorage.setItem("playEd", JSON.stringify(playedMembers.length));
         selectElem.classList.remove("d-none");
         filterTitle.innerText = "Leaderboard";
-        Bod.classList.add("ranKing");
+        Bod.classList.add("ranKing", "footer-is-shown");
         Bod.classList.remove("isHome", "reGister", "isNowPlaying", "footer-hide");
         handleSearchForm("searchHolder", "registerBox", false);
         selectElem.focus();
+        renderHideBtns(true, true, true);
         //   localStorage.setItem("canRank", JSON.stringify(filteredMembers.length));
         console.log("Registered", filteredMembers);
         filter_table.classList.remove("d-none");
@@ -1853,7 +1861,7 @@ function filtrdStepComp(filtrdMembers, modalTarget) {
 
             let img = function () {
                 if (!element.image) {
-                    return `<div class='circle' style='background-color: ${randColor()}'>
+                    return `<div class='circle' style='background-color: ${element.avatar_bg}'>
                     <p class='circle-inner'>${getInitials(element.name)}</p>
                     </div>`;
                 } /* {
@@ -2079,7 +2087,7 @@ function searchMemberByStep(sortedItem, modalID) {
             // This Below HTML code is generate Card For Sorted Items.
             let img = function () {
                 if (!element.image) {
-                    return `<div class='circle' style='background-color: ${randColor()}'>
+                    return `<div class='circle' style='background-color: ${element.avatar_bg}'>
                 <p class='circle-inner'>${getInitials(element.name)}</p>
                 </div>`;
                 } /*  {
@@ -2474,17 +2482,26 @@ function scrollDetect() {
         if (currentScroll > 0 && lastScroll <= currentScroll) {
             lastScroll = currentScroll;
             console.log("Scrolling DOWN");
-            buttonShowHide();
             Bod.classList.remove("footer-is-shown");
+        } else if (Bod.classList.contains("isHome")) {
+            lastScroll = currentScroll;
+            console.log("Scrolling DOWN");
+            Bod.classList.remove("footer-is-shown");
+        } else if (Bod.classList.contains("footer-hide")) {
+            lastScroll = currentScroll;
+            console.log("Scrolling DOWN");
+            Bod.classList.remove("footer-is-shown");
+        } else if ((plyEd) => 1) {
+            console.log("You have some recorded scores already");
+            Bod.classList.add("footer-is-shown");
         } else {
             lastScroll = currentScroll;
             console.log("Scrolling UP");
-            buttonShowHide();
             Bod.classList.add("footer-is-shown");
         }
     };
 
-    function buttonShowHide() {
+    /*    function buttonShowHide() {
         if ((plyEd) => 1) {
             console.log("You have some recorded scores already");
             Bod.classList.add("footer-is-shown");
@@ -2494,10 +2511,58 @@ function scrollDetect() {
         } else {
             Bod.classList.add("footer-is-shown");
         }
-    }
+    } */
 }
-
 scrollDetect();
+
+/************ FOOTER BUTTON COMPONENTS */
+function renderHideBtns(on1, on2, on3) {
+    let footerEl = document.getElementById("Footer");
+    /*  if (footerBtns.children().length === 0) {
+        console.log("footr is empty");
+        footerBtns.classList.add("hidden");
+    } else {
+        footerEl.classList.remove("hidden");
+    } */
+    const footerScoring = `<div class='col' id='footerScoring'>
+    <input class='btn-check form-check-input filter-step' type='radio' name='fiLSteps2'
+       id='isNowPlayingB' value='isNowPlaying' data-bs-dismiss='offcanvas' />
+    <label class='btn btn-success-no-outline form-check-label  w-100' for='isNowPlaying'>Get
+    Scores</label>
+ </div>`;
+
+    const footerRanking = `<div class='col' id='footerRanking'>
+    <input class='btn-check form-check-input filter-step' type='radio' name='fiLSteps2' id='ranKingB'
+       value='ranKing' data-bs-dismiss='offcanvas' />
+    <label class='btn btn-success-no-outline form-check-label  w-100' for='ranKing'>Ranking</label>
+ </div>`;
+
+    const footerExport = `<div class='col' id='footerExport'>
+    <button type='button' class='btn btn-success-no-outline w-100' data-bs-toggle='modal'
+       data-bs-target='#showTableModal'>Export</button>
+ </div>`;
+
+    let div0 = document.createElement("div");
+    div0.classList.add("container", "text-center", "pt-2", "pb-2");
+    footerEl.appendChild(div0);
+
+    let div1 = document.createElement("div");
+    div1.classList.add("row");
+    div1.setAttribute("id", "footerBtns");
+    div0.appendChild(div1);
+
+    /*  if (on1 == true) {
+        div1.appendChild(footerScoring);
+    }
+    if (on2 == true) {
+        div1.appendChild(footerRanking);
+    }
+    if (on3 == true) {
+        div1.appendChild(footerExport);
+    } */
+    console.log("footerEl", footerEl);
+}
+/************ FOOTER BUTTON COMPONENTS */
 
 /* console.log("cHeight", cHeight);
 function handleScroll() {
