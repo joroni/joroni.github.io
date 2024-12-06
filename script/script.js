@@ -2471,7 +2471,7 @@ function scrollDetect() {
             console.log("Is greater");
             Bod.classList.add("footer-is-shown");
         }
-        if (Bod.classList.contains("isHome", "footer-hide")) {
+        if (Bod.classList.contains("footer-hide")) {
             Bod.classList.remove("footer-is-shown");
         }
     };
