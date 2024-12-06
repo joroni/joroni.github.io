@@ -1786,7 +1786,20 @@ for (var i = 0; i < overlayType_radio.length; i++) {
             }
             setTimeout(loadReload, 500);
         }
+        if (cardBodyAll.classList.contains("enter")) {
+            setTimeout(removeEnterClass, 2000);
+        }
 
+        function removeEnterClass() {
+            cardBodyAll.classList.remove("enter");
+        }
+        // removeEnterClass();
+        //  setTimeout(loadReload, 500);
+
+        /*      function removeClass() { */
+
+        /* } */
+        //  removeClass();
         prev ? console.log("radio prev value", prev.value) : null;
         if (this !== prev) {
             prev = this;
