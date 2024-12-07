@@ -23,6 +23,30 @@ body.footer-is-shown footer {
     opacity: 1;
 }
 
+#profile-img .circle-inner {
+    height: 100px;
+    width: 100px;
+}
+#profile-img img#image-show {
+    width: 100px;
+    height: auto;
+}
+
+#profile-img2 .circle-inner {
+    height: 75px;
+    width: 75px;
+}
+
+#profile-img img#image-show2 {
+    width: 100px;
+    height: auto;
+}
+
+#profile-img2 img#image-show2 {
+    width: 100px;
+    height: auto;
+}
+
 footer {
     position: fixed;
     height: 100px;

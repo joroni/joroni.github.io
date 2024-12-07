@@ -54,6 +54,7 @@ let scorecard_edit = document.getElementById("scorecard-edit"),
     event_id_edit = document.getElementById("event_id-edit"),
     image_edit = document.getElementById("image-edit"),
     image_show = document.getElementById("image-show"),
+    image_show2 = document.getElementById("image-show2"),
     myTab = document.getElementById("myTab"),
     myTabContent = document.getElementById("myTabContent"),
     curd_table = document.querySelector("#curd-table"),
@@ -484,13 +485,11 @@ function editData(iD) {
                     return `<div id="name-image-show" class='circle' style='background-color: ${
                         memberLists[i].avatar_bg
                     };'>
-                                            <p class='circle-inner' style='height:6rem; width: 6rem;'>${getInitials(
-                                                name
-                                            )}</p>
+                                            <p class='circle-inner'>${getInitials(name)}</p>
                                         </div>`;
                 } else {
-                    return `<img id="image-show" src="${img}" class="rounded-circle img-thumbnail"
-                                            alt="profile-image" style='height:6rem; width: 6rem;'>`;
+                    return `<img id="image-show2" src="${img}" class="rounded-circle img-thumbnail"
+                                            alt="profile-image">`;
                 }
             }
             function imgHandler(img) {
