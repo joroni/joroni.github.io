@@ -32,9 +32,14 @@ body.footer-is-shown footer {
     height: auto;
 }
 
+div#profile-img,
+div#profile-img2 {
+    width: 100px;
+    height: 100px;
+}
 #profile-img2 .circle-inner {
-    height: 75px;
-    width: 75px;
+    height: 100px;
+    width: 100px;
 }
 
 #profile-img img#image-show2 {
@@ -49,7 +54,7 @@ body.footer-is-shown footer {
 
 footer {
     position: fixed;
-    height: 100px;
+    height: 75px;
     bottom: 0;
     width: 100%;
     background: #ffffff;
@@ -72,13 +77,13 @@ body.ranKing #filter-table ul li > div.dropdown {
     pointer-events: none;
 }
 
-body.ranKing #footerRanking {
+/* body.ranKing #footerRanking {
     display: none;
 }
 
 body.isNowPlaying #footerScoring {
     display: none;
-}
+} */
 .circle {
     display: inline-block;
     /* background-color: #00d53b; */
@@ -96,10 +101,10 @@ body.isNowPlaying #footerScoring {
     width: 4rem;
     font-size: 24px;
 }
-body.reGister #footerRanking,
+/* body.reGister #footerRanking,
 body.reGister #footerScoring {
     display: none;
-}
+} */
 
 .progress-bar {
     height: 18px;
@@ -288,9 +293,20 @@ i.fas.fa-ellipsis-vertical:hover {
     border-color: transparent;
 }
 .toggle > .toggle-group > .toggle-off {
-    background-color: var(--gray-color);
+    background-color: var(--gray-color) !important;
     border-color: transparent;
 }
+.toggle:focus > .toggle-group > .btn,
+.toggle:hover > .toggle-group > .btn {
+    color: var(--bs-btn-hover-color);
+    background-color: var(--green-color) !important;
+    border-color: var(--bs-btn-hover-border-color);
+}
+
+.toggle:focus > .toggle-group > .btn.toggle-off {
+    background-color: var(--gray-color) !important;
+}
+
 .toggle > .toggle-group > .toggle-off.btn,
 .toggle > .toggle-group > .toggle-on.btn {
     padding-left: 0;
@@ -302,7 +318,7 @@ body.isHome #sort-table {
 }
 .toggle:focus > .toggle-group > .btn,
 .toggle:hover > .toggle-group > .btn {
-    background-color: var(--green-color);
+    background-color: var(--green-color) !important;
     border-color: transparent;
 }
 .toggle > .toggle-group > .btn {
@@ -696,13 +712,13 @@ body.ranKing #registerBox {
 
 .search__field:focus {
     border-bottom-color: #ccc;
-    width: 50vw;
+    width: 70vw;
     color: #2b2b2b;
     cursor: default;
 }
 
 body.reGister .searchx .search__field {
-    width: 50vw;
+    width: 75vw;
 }
 .search__field:focus ~ .search__icon {
     background-color: transparent;

@@ -1164,6 +1164,9 @@ selectElem.addEventListener("change", (event) => {
     localStorage.setItem("sortBy", sortBy);
     if (sortBy == "refresh-btn") {
         location.reload(); // refresh the page
+        renderHideBtns(true, false, false);
+    } else {
+        renderHideBtns(true, false, true);
     }
 });
 
@@ -1682,7 +1685,9 @@ function initData() {
             element.eventnumdivs = eventNumDivs;
             element.company_id = companyID;
             element.event_id = eventID;
-            element.avatar_bg = randColor();
+            if (!element.hasOwnProperty("avatar_bg")) {
+                element.avatar_bg = randColor();
+            }
         });
         localStorage.setItem("memberLists", JSON.stringify(arr));
     }
@@ -1732,7 +1737,8 @@ function filterStepsBy(listObjID) {
         Bod.classList.add("isHome");
         loadChart(true);
         renderHideBtns(false, false, false);
-        Bod.classList.remove("reGister", "isNowPlaying", "ranKing", "footer-is-shown");
+        Bod.classList.remove("reGister", "isNowPlaying", "ranKing");
+        scrollDetect();
         /*   if (noFooter) {
             Bod.classList.remove("footer-is-shown");
         } */
@@ -1748,9 +1754,10 @@ function filterStepsBy(listObjID) {
         homeChart.classList.add("d-none");
         filterTitle.innerText = "Registration";
         loadChart(false);
-        renderHideBtns(false, true, false);
+        renderHideBtns(true, false, false);
         handleSearchForm("registerBox", "searchHolder", true);
-        Bod.classList.add("reGister", "footer-hide");
+        // Bod.classList.add("reGister", "footer-hide");
+        Bod.classList.add("reGister");
         Bod.classList.remove("isHome", "isNowPlaying", "ranKing");
         localStorage.setItem("toRegister", JSON.stringify(filteredMembers.length));
         //   filterMsg.innerText = "Congratulations!";
@@ -1761,28 +1768,34 @@ function filterStepsBy(listObjID) {
             document.querySelector("footer").classList.remove("hidden");
         }
         console.log("unRegistered", filteredMembers);
+        scrollDetect();
         return filtrdStepComp(filteredMembers, "#registerModal");
     } else if (listObjID == "isNowPlaying") {
         filteredMembers = filteredMembers.filter((filteredMember) => filteredMember.isplaying == "true");
         playedMembers = filteredMembers.filter(
             (filteredMember) => filteredMember.isplaying == "true" && filteredMember.scorecard != ""
         );
+
         localStorage.setItem("filteredMembers", JSON.stringify(filteredMembers));
         localStorage.setItem("toPlay", JSON.stringify(filteredMembers.length));
         localStorage.setItem("playEd", JSON.stringify(playedMembers.length));
         selectElem.classList.add("d-none");
         loadChart(false);
+
         filter_table.classList.remove("d-none");
         homeChart.classList.add("d-none");
-        Bod.classList.add("isNowPlaying");
+        Bod.classList.add("isNowPlaying", "footer-is-shown");
         Bod.classList.remove("isHome", "reGister", "ranKing", "footer-hide");
         /* if (playedMembers.length == 0) {
             document.querySelector("footer").classList.add("hidden");
         } */
         filterTitle.innerText = "Get Scores";
         handleSearchForm("searchHolder", "registerBox", true);
+        renderHideBtns(false, false, false);
+        checkNumPlayed();
         localStorage.setItem("joIned", JSON.stringify(filteredMembers.length));
         console.log("Registered", filteredMembers);
+        scrollDetect();
         return filtrdStepComp(filteredMembers, "#editMemberModal");
     } else if (listObjID == "ranKing") {
         filteredMembers = filteredMembers.filter(
@@ -1800,10 +1813,11 @@ function filterStepsBy(listObjID) {
         Bod.classList.remove("isHome", "reGister", "isNowPlaying", "footer-hide");
         handleSearchForm("searchHolder", "registerBox", false);
         selectElem.focus();
-        renderHideBtns(true, true, true);
+        renderHideBtns(true, false, false);
         //   localStorage.setItem("canRank", JSON.stringify(filteredMembers.length));
         console.log("Registered", filteredMembers);
         filter_table.classList.remove("d-none");
+        scrollDetect();
         return filtrdStepComp(filteredMembers, "#editMemberModal");
     } else {
         return false;
@@ -2516,86 +2530,81 @@ scrollDetect();
 
 /************ FOOTER BUTTON COMPONENTS */
 function renderHideBtns(on1, on2, on3) {
-    let footerEl = document.getElementById("Footer");
-    /*  if (footerBtns.children().length === 0) {
-        console.log("footr is empty");
-        footerBtns.classList.add("hidden");
-    } else {
-        footerEl.classList.remove("hidden");
-    } */
-    const footerScoring = `<div class='col' id='footerScoring'>
+    let footerEl = document.getElementById("Footer"),
+        Bod = document.body,
+        footerBtns = footerEl.querySelector("div#footerBtns");
+
+    footerBtns.innerHTML = "";
+
+    let footerScoring = `
     <input class='btn-check form-check-input filter-step' type='radio' name='fiLSteps2'
        id='isNowPlayingB' value='isNowPlaying' data-bs-dismiss='offcanvas' />
     <label class='btn btn-success-no-outline form-check-label  w-100' for='isNowPlaying'>Get
     Scores</label>
- </div>`;
+ `;
 
-    const footerRanking = `<div class='col' id='footerRanking'>
+    let footerRanking = `
     <input class='btn-check form-check-input filter-step' type='radio' name='fiLSteps2' id='ranKingB'
        value='ranKing' data-bs-dismiss='offcanvas' />
     <label class='btn btn-success-no-outline form-check-label  w-100' for='ranKing'>Ranking</label>
- </div>`;
+ `;
 
-    const footerExport = `<div class='col' id='footerExport'>
+    let footerExport = `
     <button type='button' class='btn btn-success-no-outline w-100' data-bs-toggle='modal'
        data-bs-target='#showTableModal'>Export</button>
- </div>`;
+ `;
 
-    let div0 = document.createElement("div");
-    div0.classList.add("container", "text-center", "pt-2", "pb-2");
-    footerEl.appendChild(div0);
-
-    let div1 = document.createElement("div");
-    div1.classList.add("row");
-    div1.setAttribute("id", "footerBtns");
-    div0.appendChild(div1);
-
-    /*  if (on1 == true) {
-        div1.appendChild(footerScoring);
+    if (on1 == true) {
+        let div = document.createElement("div");
+        div.classList.add("col");
+        div.setAttribute("id", "footerScoring");
+        div.innerHTML = footerScoring;
+        footerBtns.appendChild(div);
     }
     if (on2 == true) {
+        let div = document.createElement("div");
+        div.classList.add("col");
+        div.setAttribute("id", "footerRanking");
+        div.innerHTML = footerRanking;
+        footerBtns.appendChild(div);
+    }
+    if (on3 == true) {
+        let div = document.createElement("div");
+        div.classList.add("col");
+        div.setAttribute("id", "footerExport");
+        div.innerHTML = footerExport;
+        footerBtns.appendChild(div);
+    }
+    /*   if (on2 == true) {
         div1.appendChild(footerRanking);
     }
     if (on3 == true) {
         div1.appendChild(footerExport);
     } */
     console.log("footerEl", footerEl);
-}
-/************ FOOTER BUTTON COMPONENTS */
+    console.log(footerBtns);
 
-/* console.log("cHeight", cHeight);
-function handleScroll() {
-    let scrollPosition =
-        window.pageYOffset || window.scrollY || document.body.scrollTop || document.documentElement.scrollTop;
-    console.log(scrollPosition);
-    console.log("playEd", playEd);
-
-    if (scrollPosition >= 200) {
-        // console.log("more than 50");
+    if (on1 === false && on2 === false && on3 === false) {
+        console.log("footr is empty");
+        //footerEl.classList.add("hidden");
         Bod.classList.remove("footer-is-shown");
-    } else if (noFooter) {
-        Bod.classList.remove("footer-is-shown");
-    } else if ((plyEd) => 1) {
-        console.log("Is greater");
-        Bod.classList.add("footer-is-shown");
     } else {
-        //  console.log("less than 50");
+        //  footerEl.classList.remove("hidden");
         Bod.classList.add("footer-is-shown");
     }
 }
+/************ FOOTER BUTTON COMPONENTS */
 
-function debounce(fn, delay) {
-    let timer = null;
-    return function () {
-        clearTimeout(timer);
-        timer = setTimeout(function () {
-            fn();
-        }, delay);
-    };
-}
- */
 /********* HIDE REGISTRATION AND RANKING IF EMPTY */
 function checkNumRegister() {
+    let stpID;
+    if (localStorage.getItem("stpID") == null) {
+        stpID = "";
+        localStorage.setItem("stpID", "isHome");
+    } else {
+        stpID = localStorage.getItem("stpID");
+    }
+
     let toRegister,
         reGister = document.getElementById("reGister");
     if (localStorage.getItem("toRegister") == null) {
@@ -2606,18 +2615,41 @@ function checkNumRegister() {
 
     if (parseInt(toRegister) === 0) {
         reGister.parentNode.classList.add("hidden");
-        localStorage.setItem("stpID", "isNowPlaying");
+        if (stpID == "reGister") {
+            localStorage.setItem("stpID", "isNowPlaying");
+        }
         filterStepsSetup();
         // location.reload();
     }
 }
-let playEd,
-    ranKing = document.getElementById("ranKing");
-if (localStorage.getItem("playEd") == null) {
-    playEd = 0;
-} else {
-    playEd = JSON.parse(localStorage.getItem("playEd"));
+
+/********* SHOW RANKING IF PLAYED > 1 */
+function checkNumPlayed() {
+    let stpID;
+    if (localStorage.getItem("stpID") == null) {
+        stpID = "";
+        localStorage.setItem("stpID", "isHome");
+    } else {
+        stpID = localStorage.getItem("stpID");
+    }
+
+    let playEd;
+    if (localStorage.getItem("playEd") == null) {
+        playEd = 0;
+    } else {
+        playEd = JSON.parse(localStorage.getItem("playEd"));
+    }
+
+    if (parseInt(playEd) > 1) {
+        if (stpID == "isNowPlaying") {
+            renderHideBtns(false, true, false);
+        }
+    }
 }
+
+checkNumPlayed();
+
+checkNumRegister();
 
 let toPlay,
     isNowPlaying = document.getElementById("isNowPlaying");
@@ -2627,14 +2659,20 @@ if (localStorage.getItem("toPlay") == null) {
     toPlay = JSON.parse(localStorage.getItem("toPlay"));
 }
 
-checkNumRegister();
+if (parseInt(toPlay) === 0) {
+    isNowPlaying.parentNode.classList.add("hidden");
+}
+
+let playEd;
+if (localStorage.getItem("playEd") == null) {
+    playEd = 0;
+} else {
+    playEd = JSON.parse(localStorage.getItem("playEd"));
+}
+
 if (parseInt(playEd) === 0) {
     ranKing.parentNode.classList.add("hidden");
     // localStorage.getItem("stpID", "isNowPlaying");
-}
-
-if (parseInt(toPlay) === 0) {
-    isNowPlaying.parentNode.classList.add("hidden");
 }
 
 function clearStorage() {
