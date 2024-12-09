@@ -296,6 +296,9 @@ i.fas.fa-ellipsis-vertical:hover {
     background-color: var(--gray-color) !important;
     border-color: transparent;
 }
+.text-text-truncate {
+    max-width: 180px;
+}
 .toggle:focus > .toggle-group > .btn,
 .toggle:hover > .toggle-group > .btn {
     color: var(--bs-btn-hover-color);
@@ -303,6 +306,9 @@ i.fas.fa-ellipsis-vertical:hover {
     border-color: var(--bs-btn-hover-border-color);
 }
 
+.btn-footer {
+    font-size: 1.25rem;
+}
 .toggle:focus > .toggle-group > .btn.toggle-off {
     background-color: var(--gray-color) !important;
 }
@@ -359,6 +365,9 @@ body.isHome #sort-table {
     }
     .btn-del {
         width: 9rem;
+    }
+    .text-truncate {
+        max-width: 120px;
     }
 }
 @media (max-width: 377px) {

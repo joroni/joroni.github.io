@@ -251,7 +251,7 @@ function showData() {
                         ${img()}
                     </div>
                     <div class="ms-2 me-auto max-w-s mt-auto mb-auto">
-                        <div class="fw-bold" onclick='editData("${
+                        <div class="fw-bold text-truncate d-inline-block" onclick='editData("${
                             element.id
                         }")' type='button' data-bs-toggle='modal' data-bs-target='#registerModal'>${element.name}</div>
                       
@@ -1399,7 +1399,7 @@ function filteredData(sortedMembers, sortvalue) {
                         ${img()}
                     </div>
                     <div class="ms-2 me-auto max-w-s mt-auto mb-auto">
-                        <div class="fw-bold">${element.name}</div>
+                        <div class="fw-bold text-truncate d-inline-block">${element.name}</div>
                         <span class="fw-bold">${scrTch()}</span> points | <span> ${divHCP}</span>
                     </div>
                     ${stepPercent()}
@@ -1900,7 +1900,7 @@ function filtrdStepComp(filtrdMembers, modalTarget) {
                         ${img()}
                     </div>
                     <div class="ms-2 me-auto max-w-s mt-auto mb-auto">
-                        <div class="fw-bold" onclick='editData("${
+                        <div class="fw-bold text-truncate d-inline-block" onclick='editData("${
                             element.id
                         }")' type='button' data-bs-toggle='modal' data-bs-target='${modalTarget}'>${element.name}</div>
                       
@@ -2539,19 +2539,19 @@ function renderHideBtns(on1, on2, on3) {
     let footerScoring = `
     <input class='btn-check form-check-input filter-step' type='radio' name='fiLSteps2'
        id='isNowPlayingB' value='isNowPlaying' data-bs-dismiss='offcanvas' />
-    <label class='btn btn-success-no-outline form-check-label  w-100' for='isNowPlaying'>Get
+    <label class='btn btn-footer btn-success-no-outline form-check-label  w-100' for='isNowPlaying'>Get
     Scores</label>
  `;
 
     let footerRanking = `
     <input class='btn-check form-check-input filter-step' type='radio' name='fiLSteps2' id='ranKingB'
        value='ranKing' data-bs-dismiss='offcanvas' />
-    <label class='btn btn-success-no-outline form-check-label  w-100' for='ranKing'>Ranking</label>
+    <label class='btn btn-footer btn-success-no-outline form-check-label  w-100' for='ranKing'>Ranking</label>
  `;
 
     let footerExport = `
-    <button type='button' class='btn btn-success-no-outline w-100' data-bs-toggle='modal'
-       data-bs-target='#showTableModal'>Export</button>
+    <button type='button' class='btn btn-footer btn-success-no-outline w-100' data-bs-toggle='modal'
+       data-bs-target='#showTableModal'>CSV</button>
  `;
 
     if (on1 == true) {
