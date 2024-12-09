@@ -251,7 +251,7 @@ function showData() {
                         ${img()}
                     </div>
                     <div class="ms-2 me-auto max-w-s mt-auto mb-auto">
-                        <div class="fw-bold text-truncate d-inline-block" onclick='editData("${
+                        <div class="fw-bold text-truncate d-inline-blockxk" onclick='editData("${
                             element.id
                         }")' type='button' data-bs-toggle='modal' data-bs-target='#registerModal'>${element.name}</div>
                       
@@ -1300,6 +1300,14 @@ function filterSort(sortvalue) {
     }
 }
 
+function listBGGradient() {
+    let filterTable = document.getElementById("filter-table");
+    filterList = filterTable.querySelectorAll("ul li");
+    for (var i = 0; i < filterList.length; i++) {
+        let tot = filterList.length;
+    }
+}
+
 /**
  * @function filteredData
  *
@@ -1399,7 +1407,7 @@ function filteredData(sortedMembers, sortvalue) {
                         ${img()}
                     </div>
                     <div class="ms-2 me-auto max-w-s mt-auto mb-auto">
-                        <div class="fw-bold text-truncate d-inline-block">${element.name}</div>
+                        <div class="fw-bold text-truncate">${element.name}</div>
                         <span class="fw-bold">${scrTch()}</span> points | <span> ${divHCP}</span>
                     </div>
                     ${stepPercent()}
@@ -1900,7 +1908,7 @@ function filtrdStepComp(filtrdMembers, modalTarget) {
                         ${img()}
                     </div>
                     <div class="ms-2 me-auto max-w-s mt-auto mb-auto">
-                        <div class="fw-bold text-truncate d-inline-block" onclick='editData("${
+                        <div class="fw-bold text-truncate" onclick='editData("${
                             element.id
                         }")' type='button' data-bs-toggle='modal' data-bs-target='${modalTarget}'>${element.name}</div>
                       
