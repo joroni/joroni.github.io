@@ -44,6 +44,7 @@ self.addEventListener("install", (event) => {
                 "./img/maple-icon-white.svg",
                 "./img/maple-icon-white.svg",
                 "./img/maple-leaf.png",
+                "./img/img/maple-logo-512x512.svg",
                 "./img/maximize.svg",
                 "./img/minmax.svg",
                 "./img/no-data-found.jpg",
