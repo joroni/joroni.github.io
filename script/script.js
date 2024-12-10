@@ -1929,7 +1929,7 @@ function filtrdStepComp(filtrdMembers, modalTarget) {
                     </div>
                      <div class="mt-auto mb-auto m-widget4__ext game-stepper">${gameStepper()}</div>
 
-                        <div class="dropdown ms-5 mt-auto mb-auto">
+                        <div class="dropdown ms-lg-5 mt-auto ms-sm-2 mb-auto">
                                         <i class="fas fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
                                         <ul class="dropdown-menu" style="">
                                             <li>
