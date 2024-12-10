@@ -721,13 +721,13 @@ body.ranKing #registerBox {
 
 .search__field:focus {
     border-bottom-color: #ccc;
-    width: 70vw;
+    width: 50vw;
     color: #2b2b2b;
     cursor: default;
 }
 
 body.reGister .searchx .search__field {
-    width: 75vw;
+    width: 65vw;
 }
 .search__field:focus ~ .search__icon {
     background-color: transparent;

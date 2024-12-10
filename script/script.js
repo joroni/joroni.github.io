@@ -412,6 +412,19 @@ function calcPercentage(x, y) {
 
 var result = document.getElementById("scorecard-edit-error-msg");
 
+function allnumeric(inputtxt) {
+    var numbers = /^[0-9]+$/;
+    if (inputtxt.match(numbers)) {
+        // alert("Your Registration number has accepted....");
+        /*  document.form1.text1.focus(); */
+        return true;
+    } else {
+        // alert("Please input numeric characters only");
+        /*  document.form1.text1.focus(); */
+        return false;
+    }
+}
+
 function CheckNumeric(e) {
     if (window.event) {
         // IE
@@ -488,7 +501,7 @@ function editData(iD) {
                                             <p class='circle-inner'>${getInitials(name)}</p>
                                         </div>`;
                 } else {
-                    return `<img id="image-show2" src="${img}" class="rounded-circle img-thumbnail"
+                    return `<img id="image-show2" src="${imgHandler(img)}" class="rounded-circle img-thumbnail"
                                             alt="profile-image">`;
                 }
             }
@@ -626,23 +639,24 @@ function editData(iD) {
                 let ajaxForm = document.getElementById("ajxForm");
 
                 ajaxForm.innerHTML = `<div class="input-group input-group-lg mb-3">
-                                                        <input type="number" id="Glive" style="margin-top: 0px;" class="score-inputs form-control form-control-lg" placeholder="" aria-label="" aria-describedby="button-addon2">
+                                                        <input type="number" id="Glive"  style="margin-top: 0px;" class="score-inputs form-control form-control-lg" placeholder="" aria-label="" aria-describedby="button-addon2">
                                                       
                                                         <button class="btn btn-outline-success" type="button" id="acceptScore"> <i class="fa-solid fa-check"></i></button>
                                                        <div id="GliveFeedback" class="invalid-feedback">
-                                        Invalid score. Max value is 300.
+                                        Invalid score. Value should be a whole number between 1 to 300 only.
                                         </div>
                                                         </div>`;
                 let gLive = document.getElementById("Glive"),
                     acceptScore = document.querySelector("#acceptScore");
                 addScore.classList.add("hidden");
                 gLive.focus();
+
                 updateBtn.disabled = true;
                 console.log("arrayNums", arrayNums);
                 let scoreArray = arrayNums;
                 acceptScore.onclick = function () {
                     var score = gLive.value;
-                    if (gLive.value > 300) {
+                    if (gLive.value > 300 || !gLive.value || allnumeric(score) === false) {
                         gLive.classList.add("is-invalid");
                         addScore.disabled = true;
                         acceptScore.disabled = true;
@@ -1907,10 +1921,10 @@ function filtrdStepComp(filtrdMembers, modalTarget) {
                     }")' type='button' data-bs-toggle='modal' data-bs-target='${modalTarget}'>
                         ${img()}
                     </div>
-                    <div class="ms-2 me-auto max-w-s mt-auto mb-auto">
-                        <div class="fw-bold text-truncate" onclick='editData("${
-                            element.id
-                        }")' type='button' data-bs-toggle='modal' data-bs-target='${modalTarget}'>${element.name}</div>
+                    <div onclick='editData("${
+                        element.id
+                    }")' type='button' data-bs-toggle='modal' data-bs-target='${modalTarget}' class="ms-2 me-auto max-w-s mt-auto mb-auto">
+                        <div class="fw-bold text-truncate">${element.name}</div>
                       
                     </div>
                      <div class="mt-auto mb-auto m-widget4__ext game-stepper">${gameStepper()}</div>

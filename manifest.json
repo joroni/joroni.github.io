@@ -1,7 +1,7 @@
 {
     "name": "Maple by Joroni",
     "short_name": "Maple",
-    "description": "CodeChef-VIT is a non-commercial organisation with a goal to provide a platform for programmers and developers everywhere to meet, compete & have fun.",
+    "description": "Local Storage app",
     "start_url": "/",
     "background_color": "#F4F4F4",
     "display": "standalone",
@@ -15,6 +15,11 @@
         {
             "src": "./favicon-32x32.png",
             "sizes": "32x32",
+            "type": "image/png"
+        },
+        {
+            "src": "./android-chrome-512x512.png",
+            "sizes": "512x512",
             "type": "image/png"
         }
     ]
